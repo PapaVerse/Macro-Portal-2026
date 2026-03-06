@@ -132,7 +132,7 @@
 
                     <a href="{{ url('/contact') }}" 
                        class="border-2 border-white/30 hover:border-white/100 text-white backdrop-blur-sm px-10 py-4 rounded-full text-lg font-bold transition-all duration-300 text-center w-full sm:w-auto">
-                        Get In Touch
+                        Get In Touch Now
                     </a>
                 </div>
             </div>

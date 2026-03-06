@@ -19,7 +19,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
-        /* --- NAVIGATION BAR --- */
+                /* --- NAVIGATION BAR (Synced with Login) --- */
         nav { 
             background: #001e30; 
             height: 90px; 
@@ -84,10 +84,7 @@
             100% { transform: scaleX(0.3); transform-origin: center right; }
         }
         .active-link { color: #60a5fa !important; }
-        .active-link::after { 
-            transform: scaleX(1) !important; 
-            animation: backAndForth 2s ease-in-out infinite; 
-        }
+        .active-link::after { transform: scaleX(1); animation: backAndForth 2s ease-in-out infinite; }
 
         /* --- MOBILE MENU --- */
         .checkbtn { font-size: 30px; color: white; float: right; line-height: 90px; margin-right: 40px; cursor: pointer; display: none; }
@@ -117,17 +114,48 @@
         }
         @keyframes pulse-glow { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
         [x-cloak] { display: none !important; }
-    </style>
+  
+               /* --- UTILS --- */
+        [x-cloak] { display: none !important; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .glass-button { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.4); }
+    
+  
+  </style>
 </head>
 
-<body class="bg-gray-50 font-sans antialiased" 
-    x-data="{ 
+<body x-data="{ 
+        showScrollTop: false, 
+        isAtBottom: false,
+        isVisible: false,
+        isWelcoming: false,
+        hasAgreedMain: false,
         currentPath: window.location.pathname,
+
+        init() {
+            if (!localStorage.getItem('macro_cookies_accepted')) {
+                this.isVisible = true;
+                document.body.style.overflow = 'hidden';
+            }
+        },
+        handleAccept() {
+            if (!this.hasAgreedMain) return;
+            this.isWelcoming = true;
+            setTimeout(() => {
+                localStorage.setItem('macro_cookies_accepted', 'true');
+                this.isVisible = false;
+                this.isWelcoming = false;
+                document.body.style.overflow = 'auto';
+            }, 3200);
+        },
         handleScroll() {
-            // Add any scroll logic if needed
+            this.showScrollTop = window.scrollY > 400;
+            this.isAtBottom = (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 150);
         }
     }" 
-    @scroll.window="handleScroll()">
+    @scroll.window="handleScroll"
+    class="bg-slate-50 font-sans antialiased text-slate-900">
 
     <nav>
         <input type="checkbox" id="check">
@@ -153,6 +181,10 @@
         @include('pages.section.product-section')
         @include('footer') 
     </main>
-
+    <button @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+        class="fixed z-[999] p-4 rounded-full transition-all duration-500 hover:bg-blue-600 hover:text-white glass-button"
+        :class="{ 'bottom-32 right-8': isAtBottom, 'bottom-8 right-8': !isAtBottom, 'opacity-100 scale-100': showScrollTop, 'opacity-0 scale-50 pointer-events-none': !showScrollTop }">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 </body>
 </html>

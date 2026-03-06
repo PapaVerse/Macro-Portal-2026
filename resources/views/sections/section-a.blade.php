@@ -109,10 +109,10 @@
         </video>
         <div class="video-overlay"></div>
 
-        <div class="relative z-10 text-center px-6 -mt-24">
+        <div class="relative z-10 text-center px-6 -mt-32">
             <img src="{{ asset('images/mwtci_logo.png') }}" class="mwtci-logo-custom mx-auto mb-8 drop-shadow-lg" />
             
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl mx-auto -mt-10">
                 <p class="text-blue-400 text-xs md:text-sm font-bold tracking-[0.4em] uppercase mb-4">
                     Precision Wire Harness Solutions
                 </p>

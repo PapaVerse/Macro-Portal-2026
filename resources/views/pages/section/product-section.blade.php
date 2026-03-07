@@ -230,9 +230,4 @@
         </div>
     </div>
 
-    <button @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
-        class="fixed z-50 p-4 bg-white/20 backdrop-blur-md text-gray-800 rounded-full shadow-xl border border-white/40 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:-translate-y-2 active:scale-95 flex items-center justify-center"
-        :class="[isAtBottom ? 'bottom-24 right-8' : 'bottom-8 right-8', showScrollTop ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none']">
-        <i class="fas fa-arrow-up"></i>
-    </button>
 </section>

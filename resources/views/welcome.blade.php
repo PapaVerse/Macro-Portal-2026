@@ -254,7 +254,7 @@
         <label class="logo" onclick="window.location.href='{{ url('/') }}'">Macro Wiring</label>
         <ul>
             <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
-            <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''">Products</a></li><li>
+            <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''"></a>
     <a href="{{ route('products') }}" 
        class="nav-link-animated" 
        :class="currentPath.includes('products') ? 'active-link' : ''">

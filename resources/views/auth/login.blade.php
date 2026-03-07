@@ -169,28 +169,91 @@
         </ul>
     </nav>
 
-    <div class="login-container">
-        <div class="w-full max-w-md p-8 bg-white rounded-3xl shadow-2xl border border-slate-100 text-center">
-            <div class="text-2xl font-black text-slate-900 mb-8">Macro<span class="text-blue-600">Wiring</span></div>
+ <div class="login-container">
+    <div x-data="{ 
+            email: '{{ old('email') }}', 
+            hasError: {{ $errors->any() ? 'true' : 'false' }},
+            get isEmailValid() {
+                if (this.email.length === 0) return true;
+                return /^\S+@\S+\.\S+$/.test(this.email);
+            }
+        }" 
+        class="w-full max-w-md p-8 bg-white rounded-[3rem] shadow-2xl border border-slate-100 text-center relative overflow-hidden transition-all duration-500"
+        :class="hasError ? 'ring-2 ring-red-500 shadow-[0_0_40px_rgba(239,68,68,0.2)] animate-shake' : ''"
+    >
+        
+        <div class="text-2xl font-black text-slate-900 mb-8 mt-4">Macro<span class="text-blue-600">Wiring</span></div>
+        
+        <form method="POST" action="{{ route('login') }}" class="text-left" @submit="!isEmailValid && $event.preventDefault()">
+            @csrf
             
-            <form method="POST" action="{{ route('login') }}" class="text-left">
-                @csrf
-                <div class="mb-4">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                    <input type="email" name="email" required class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500/20 transition-all" placeholder="name@company.com">
+            {{-- Email Field with Real-time Validation --}}
+            <div class="mb-4">
+                <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 ml-1">Email Address</label>
+                <div class="relative">
+                    <input 
+                        type="email" 
+                        name="email" 
+                        x-model="email"
+                        required 
+                        class="w-full p-4 rounded-2xl border bg-slate-50 outline-none transition-all duration-300"
+                        :class="!isEmailValid || (hasError && email.length > 0) ? 'border-red-500 bg-red-50' : 'border-slate-200 focus:ring-2 focus:ring-blue-500/20'"
+                        placeholder="name@company.com">
+                    
+                    {{-- Status Icon Indicator --}}
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 transition-opacity duration-300" x-show="email.length > 0">
+                        <i :class="isEmailValid ? 'fas fa-check-circle text-green-500' : 'fas fa-times-circle text-red-500'"></i>
+                    </div>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Password</label>
-                    <input type="password" name="password" required class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500/20 transition-all" placeholder="••••••••">
-                </div>
-                <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all active:scale-95 shadow-lg shadow-blue-100">
-                    LOG IN
-                </button>
-            </form>
-            
-            <p class="mt-8 text-[10px] text-slate-400 uppercase tracking-widest font-bold">Macro Admin Portal © 2026</p>
-        </div>
-    </div>
+                
+                <p x-show="!isEmailValid" x-transition class="mt-2 text-[10px] text-red-600 font-bold uppercase tracking-tight flex items-center gap-1 ml-1">
+                    <i class="fas fa-exclamation-triangle"></i> Invalid email format
+                </p>
+            </div>
 
+            {{-- Password Field --}}
+            <div class="mb-6">
+                <label class="block text-[10px] font-black uppercase tracking-widest text-slate-500 mb-2 ml-1">Password</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    required 
+                    @input="hasError = false"
+                    class="w-full p-4 rounded-2xl border bg-slate-50 outline-none transition-all duration-300"
+                    :class="hasError ? 'border-red-500 bg-red-50 focus:ring-red-500/20' : 'border-slate-200 focus:ring-2 focus:ring-blue-500/20'" 
+                    placeholder="••••••••">
+                
+                {{-- Server-side Error Message (Wrong Password) --}}
+                @if ($errors->any())
+                    <p x-show="hasError" x-transition class="mt-3 text-[11px] text-red-600 font-bold uppercase tracking-tight flex items-center justify-center gap-2 bg-red-100/50 py-2 rounded-lg">
+                        <i class="fas fa-lock text-[10px]"></i> Invalid credentials
+                    </p>
+                @endif
+            </div>
+
+            <button 
+                type="submit" 
+                :disabled="!isEmailValid"
+                class="w-full py-4 bg-slate-900 hover:bg-black text-white font-black uppercase text-xs tracking-[0.2em] rounded-2xl transition-all active:scale-95 shadow-lg shadow-slate-200 disabled:opacity-50">
+                LOG IN
+            </button>
+        </form>
+        
+        <p class="mt-8 text-[10px] text-slate-400 uppercase tracking-widest font-bold">Macro Admin Portal © 2026</p>
+    </div>
+</div>
+
+<style>
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-10px); }
+        40% { transform: translateX(10px); }
+        60% { transform: translateX(-10px); }
+        80% { transform: translateX(10px); }
+    }
+    .animate-shake {
+        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+</style>
 </body>
 </html>

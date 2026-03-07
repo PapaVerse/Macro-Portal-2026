@@ -27,5 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+// contacts 
+
+use App\Http\Controllers\ContactController;
+
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contacts.send');
+
 // This file contains the 'login' and 'register' named routes
 require __DIR__.'/auth.php';

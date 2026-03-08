@@ -450,7 +450,7 @@
                      x-transition:enter-start="opacity-0 scale-95"
                      x-transition:enter-end="opacity-100 scale-100">
                     
-                    <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <div class="p-8 border-b border-slate-100 flex justify-between items-start bg-slate-50/50">
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-xl" x-text="selectedInquiry.full_name.charAt(0)"></div>
                             <div>
@@ -461,8 +461,20 @@
                                 <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest" x-text="selectedInquiry.email"></p>
                             </div>
                         </div>
-                        <button @click="selectedInquiry = null" class="text-2xl text-slate-300 hover:text-slate-900">&times;</button>
+
+                        <div class="flex items-center gap-4">
+                            <div class="text-right">
+                                <div class="text-[10px] font-black text-slate-900 uppercase tracking-tighter" 
+                                     x-text="new Date(selectedInquiry.created_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })"></div>
+                                <div class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]" 
+                                     x-text="new Date(selectedInquiry.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })"></div>
+                            </div>
+                            <button @click="selectedInquiry = null" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-200/50 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-all text-xl font-light">
+                                &times;
+                            </button>
+                        </div>
                     </div>
+
                     <div class="p-10 space-y-6">
                         <div>
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Subject</p>

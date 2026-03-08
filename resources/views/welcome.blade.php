@@ -21,27 +21,50 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
-        /* --- NAVIGATION BAR (Synced with Login) --- */
-        nav { 
-            background: #001e30; 
-            height: 90px; 
-            width: 100%; 
-            font-family: "Montserrat", sans-serif; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1001; 
-        }
-        
-        label.logo { 
-            color: white; 
-            font-size: 24px; 
-            line-height: 90px; 
-            padding: 0 40px; 
-            font-weight: 800; 
-            white-space: nowrap; 
-            cursor: pointer; 
-            transition: color 0.3s;
-        }
+
+                /* --- NAVIGATION BAR (Synced with Login) --- */
+/* --- UPDATED NAVIGATION BAR --- */
+nav { 
+    background: #001e30; 
+    height: 90px; 
+    width: 100%; 
+    font-family: "Montserrat", sans-serif; 
+    position: sticky; 
+    top: 0; 
+    z-index: 1001;
+    /* FLEXBOX FIX: Ensures logo and menu stay on opposite sides */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+label.logo { 
+    color: white; 
+    font-size: 24px; 
+    font-weight: 800; 
+    cursor: pointer; 
+    transition: color 0.3s;
+    /* TRUNCATION FIX: Prevents text from overlapping menu */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%; /* Limits logo to half the screen width */
+    line-height: 90px;
+}
+
+/* --- MOBILE RESPONSIVE FIX --- */
+@media (max-width: 1100px) {
+    label.logo {
+        font-size: 18px; /* Smaller font for mobile */
+        max-width: 70%;  /* Gives more room to the hamburger icon */
+    }
+    .checkbtn { 
+        display: block; 
+        margin-right: 0; /* Adjusted for flexbox */
+        order: 2; /* Ensures it stays on the right */
+    }
+}
         
         nav ul { 
             float: right; 
@@ -253,7 +276,9 @@
         <label for="check" class="checkbtn">
             <i class="fas fa-bars"></i>
         </label>
-        <label class="logo" onclick="window.location.href='{{ url('/') }}'">Macro Wiring</label>
+<label class="logo" onclick="window.location.href='{{ url('/') }}'">
+    {{ \App\Models\User::find(1)->name ?? 'Macro Wiring' }}
+</label>
         <ul>
             <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
         

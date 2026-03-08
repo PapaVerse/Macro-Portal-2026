@@ -45,6 +45,10 @@
         chartLabels: @js($chartLabels),
         stats: @js($stats),
         chartInstance: null,
+        
+        // Pagination Logic
+        currentPage: 1,
+        perPage: 10,
 
         highlight(text) {
             if (!this.search.trim()) return text;
@@ -57,7 +61,7 @@
             return this.inquiries.filter(i => i.status === 'unread' && !i.deleted_at).length;
         },
         
-        get filteredInquiries() {
+        get totalFiltered() {
             return this.inquiries.filter(i => {
                 const searchTerm = this.search.toLowerCase();
                 const matchesSearch = 
@@ -73,8 +77,19 @@
             });
         },
 
+        get filteredInquiries() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.totalFiltered.slice(start, end);
+        },
+
+        get totalPages() {
+            return Math.ceil(this.totalFiltered.length / this.perPage);
+        },
+
         async updateFilter() {
             this.filtering = true;
+            this.currentPage = 1; // Reset to page 1 on filter
             const params = new URLSearchParams();
             if (this.selectedRange) params.append('range', this.selectedRange);
             if (this.selectedMonth) params.append('month', this.selectedMonth);
@@ -346,7 +361,7 @@
                                 <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Logs & Records</p>
                             </div>
                             <div class="flex bg-slate-100 p-1 rounded-xl">
-                                <button @click="view = 'active'; selectedIds = []" 
+                                <button @click="view = 'active'; selectedIds = []; currentPage = 1" 
                                     :class="view === 'active' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500'" 
                                     class="relative px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all">
                                     Inbox
@@ -354,7 +369,7 @@
                                         <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[8px] font-bold text-white shadow-sm" x-text="unreadCount"></span>
                                     </template>
                                 </button>
-                                <button @click="view = 'trash'; selectedIds = []" :class="view === 'trash' ? 'bg-white shadow-sm text-red-600' : 'text-slate-500'" class="px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all">Trash</button>
+                                <button @click="view = 'trash'; selectedIds = []; currentPage = 1" :class="view === 'trash' ? 'bg-white shadow-sm text-red-600' : 'text-slate-500'" class="px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all">Trash</button>
                             </div>
                         </div>
 
@@ -376,7 +391,7 @@
                                     </template>
                                 </form>
                             </div>
-                            <input type="text" x-model="search" placeholder="Search logs or Ref #..." class="w-full lg:w-80 bg-slate-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 font-semibold text-slate-700">
+                            <input type="text" x-model="search" @input="currentPage = 1" placeholder="Search logs or Ref #..." class="w-full lg:w-80 bg-slate-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 font-semibold text-slate-700">
                         </div>
                     </div>
 
@@ -438,6 +453,33 @@
                                 </template>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="px-8 py-6 bg-slate-50/50 border-t border-slate-50 flex items-center justify-between">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            Showing <span class="text-slate-900" x-text="filteredInquiries.length"></span> of <span class="text-slate-900" x-text="totalFiltered.length"></span> inquiries
+                        </p>
+                        <div class="flex gap-2" x-show="totalPages > 1">
+                            <button 
+                                @click="currentPage--" 
+                                :disabled="currentPage === 1"
+                                :class="currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-slate-900 hover:text-white'"
+                                class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all shadow-sm">
+                                Previous
+                            </button>
+                            <div class="flex items-center px-4 text-[10px] font-black text-slate-400">
+                                <span class="text-blue-600" x-text="currentPage"></span>
+                                <span class="mx-1">/</span>
+                                <span x-text="totalPages"></span>
+                            </div>
+                            <button 
+                                @click="currentPage++" 
+                                :disabled="currentPage === totalPages"
+                                :class="currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:bg-slate-900 hover:text-white'"
+                                class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all shadow-sm">
+                                Next
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -485,30 +485,33 @@
             </div>
         </div>
 
-        <template x-if="selectedInquiry">
-            <div class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-6" @click.self="selectedInquiry = null" x-transition.opacity>
-                <div class="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden" 
+<template x-if="selectedInquiry">
+            <div class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6" @click.self="selectedInquiry = null" x-transition.opacity>
+                
+                <div class="bg-white w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] rounded-[2rem] sm:rounded-[3rem] shadow-2xl overflow-hidden flex flex-col" 
                      x-transition:enter="transition ease-out duration-300"
                      x-transition:enter-start="opacity-0 scale-95"
                      x-transition:enter-end="opacity-100 scale-100">
                     
-                    <div class="p-8 border-b border-slate-100 flex justify-between items-start bg-slate-50/50">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-xl" x-text="selectedInquiry.full_name.charAt(0)"></div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h3 class="text-lg font-black text-slate-900" x-text="selectedInquiry.full_name"></h3>
-                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-black" x-text="'#' + selectedInquiry.id.toString().padStart(4, '0')"></span>
-                                </div>
-                                <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest" x-text="selectedInquiry.email"></p>
-                            </div>
-                        </div>
+                    <div class="p-6 sm:p-8 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start gap-4 bg-slate-50/50 flex-shrink-0">
+<div class="flex items-center gap-4">
+    <div class="w-12 h-12 flex-shrink-0 aspect-square rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-xl" 
+         x-text="selectedInquiry.full_name.charAt(0)">
+    </div>
+    <div class="min-w-0"> <div class="flex items-center gap-2">
+            <h3 class="text-lg font-black text-slate-900 truncate" x-text="selectedInquiry.full_name"></h3>
+            <span class="flex-shrink-0 text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-black" 
+                  x-text="'#' + selectedInquiry.id.toString().padStart(4, '0')"></span>
+        </div>
+        <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest truncate" x-text="selectedInquiry.email"></p>
+    </div>
+</div>
 
-                        <div class="flex items-center gap-4">
-                            <div class="text-right">
-                                <div class="text-[10px] font-black text-slate-900 uppercase tracking-tighter" 
+                        <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
+                            <div class="text-left sm:text-right">
+                                <div class="text-[9px] sm:text-[10px] font-black text-slate-900 uppercase tracking-tighter" 
                                      x-text="new Date(selectedInquiry.created_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })"></div>
-                                <div class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]" 
+                                <div class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]" 
                                      x-text="new Date(selectedInquiry.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })"></div>
                             </div>
                             <button @click="selectedInquiry = null" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-200/50 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-all text-xl font-light">
@@ -517,19 +520,30 @@
                         </div>
                     </div>
 
-                    <div class="p-10 space-y-6">
+                    <div class="p-6 sm:p-10 overflow-y-auto custom-scrollbar flex-grow space-y-6">
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Subject</p>
-                            <h4 class="text-base font-bold text-slate-800" x-text="selectedInquiry.subject"></h4>
+                            <p class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Subject</p>
+                            <h4 class="text-sm sm:text-base font-bold text-slate-800" x-text="selectedInquiry.subject"></h4>
                         </div>
-                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 min-h-[150px]">
-                            <p class="text-sm text-slate-600 leading-relaxed italic" x-text="selectedInquiry.message"></p>
-                        </div>
-                        <div class="flex gap-4 pt-4">
-                            <a :href="'mailto:' + selectedInquiry.email" class="flex-1 bg-slate-900 text-white text-center py-4 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-blue-600 transition-all shadow-lg">Reply via Client</a>
-                            <button @click="selectedInquiry = null" class="px-8 py-4 bg-slate-100 text-slate-500 rounded-xl font-black uppercase text-[10px] tracking-widest">Dismiss</button>
+                        
+                        <div class="bg-slate-50 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-slate-100 shadow-inner">
+                            <p class="text-[9px] sm:text-[10px] font-black text-slate-300 uppercase tracking-widest mb-4">Message Body</p>
+                            <div class="text-xs sm:text-sm text-slate-600 leading-[1.8] whitespace-pre-line font-medium" x-text="selectedInquiry.message"></div>
                         </div>
                     </div>
+
+<div class="p-8 border-t border-slate-50 bg-white flex-shrink-0">
+    <div class="flex flex-col sm:flex-row gap-4">
+        <a :href="'mailto:' + selectedInquiry.email" 
+           class="flex-1 whitespace-nowrap bg-slate-900 text-white text-center py-4 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-blue-600 transition-all shadow-lg">
+           Reply via Client
+        </a>
+        <button @click="selectedInquiry = null" 
+                class="px-8 py-4 whitespace-nowrap bg-slate-100 text-slate-500 rounded-xl font-black uppercase text-[10px] tracking-widest">
+                Dismiss
+        </button>
+    </div>
+</div>
                 </div>
             </div>
         </template>

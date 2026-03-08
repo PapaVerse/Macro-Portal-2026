@@ -111,7 +111,15 @@ setTimeout(() => {
                         Rosario, Cavite, Philippines 4106
                     </p>
                     <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-200 border border-slate-100 grayscale hover:grayscale-0 transition-all duration-1000">
-                        <iframe src="https://maps.google.com/maps?q=Cavite%20Economic%20Zone%20Rosario%20Cavite&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="220" class="w-full" loading="lazy" style="border:0;"></iframe>
+                        <iframe 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3864.8859942691373!2d120.8655396758656!3d14.40604208204618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33962ce801673fb3%3A0x12d1e9c8a709652b!2sMacro%20Wiring%20Technologies%20Co.%20Inc.!5e0!3m2!1sen!2sph!4v1710000000000!5m2!1sen!2sph" 
+    width="100%" 
+    height="100%" 
+    style="border:0;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+</iframe>
                     </div>
                 </div>
             </div>

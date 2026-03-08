@@ -61,9 +61,12 @@ return [
             // ],
         ],
 
-        'resend' => [
-            'transport' => 'resend',
-        ],
+'resend' => [
+    'transport' => 'resend',
+    'client' => [
+        'verify' => false, // This bypasses the certificate path error (cURL 77)
+    ],
+],
 
         'sendmail' => [
             'transport' => 'sendmail',

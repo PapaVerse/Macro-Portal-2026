@@ -145,86 +145,112 @@
             }
         },
 
-        initChart() {
-            const canvas = document.getElementById('inquiryChart');
-            if (!canvas) return;
 
-            const ctx = canvas.getContext('2d');
-            if (this.chartInstance) {
-                this.chartInstance.destroy();
-            }
-            
-            this.chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: this.chartLabels,
-                    datasets: [{
-                        data: this.chartData,
-                        borderColor: '#2563eb',
-                        borderWidth: 3,
-                        tension: 0.4,
-                        pointRadius: 0,
-                        pointHoverRadius: 6,
-                        pointBackgroundColor: '#2563eb',
-                        fill: true,
-                        backgroundColor: (context) => {
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) return null;
-                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                            gradient.addColorStop(0, 'rgba(37, 99, 235, 0)');
-                            gradient.addColorStop(1, 'rgba(37, 99, 235, 0.1)');
-                            return gradient;
-                        },
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false, 
-                    resizeDelay: 50,
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: {
-                            enabled: true,
-                            backgroundColor: '#0f172a',
-                            titleFont: { size: 10, weight: 'bold' },
-                            bodyFont: { size: 12, weight: 'black' },
-                            padding: 12,
-                            displayColors: false,
-                            callbacks: {
-                                label: function(context) {
-                                    return 'Inquiries: ' + context.parsed.y;
-                                }
-                            }
-                        }
-                    },
-                    scales: { 
-                        x: { 
-                            display: true,
-                            grid: { display: false },
-                            ticks: {
-                                font: { size: 9, weight: 'bold' },
-                                color: '#94a3b8',
-                                autoSkip: true,
-                                maxTicksLimit: 7
-                            }
-                        }, 
-                        y: { 
-                            display: true,
-                            beginAtZero: true,
-                            grid: { color: '#f8fafc' },
-                            border: { display: false },
-                            ticks: {
-                                font: { size: 9, weight: 'bold' },
-                                color: '#94a3b8',
-                                precision: 0,
-                                padding: 10
-                            }
-                        } 
+
+
+
+
+
+        
+initChart() {
+    const canvas = document.getElementById('inquiryChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (this.chartInstance) {
+        this.chartInstance.destroy();
+    }
+    
+    // Create a sophisticated vertical gradient
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(37, 99, 235, 0.25)');   // Blue-600 with opacity
+    gradient.addColorStop(0.5, 'rgba(37, 99, 235, 0.05)'); // Fading out
+    gradient.addColorStop(1, 'rgba(37, 99, 235, 0)');      // Transparent at bottom
+
+    this.chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: this.chartLabels,
+            datasets: [{
+                label: 'Inquiries',
+                data: this.chartData,
+                fill: true,
+                backgroundColor: gradient,
+                borderColor: '#2563eb',
+                borderWidth: 4,
+                pointBackgroundColor: '#fff',
+                pointBorderColor: '#2563eb',
+                pointBorderWidth: 3,
+                pointRadius: 4,
+                pointHoverRadius: 8,
+                pointHoverBackgroundColor: '#2563eb',
+                pointHoverBorderColor: '#fff',
+                pointHoverBorderWidth: 3,
+                tension: 0.4, // Smooth curves
+                borderCapStyle: 'round',
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: { top: 20, right: 20, left: 10, bottom: 10 }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: '#0f172a', // Slate-900
+                    titleFont: { size: 12, weight: '900', family: 'Inter' },
+                    bodyFont: { size: 13, weight: 'bold', family: 'Inter' },
+                    padding: 16,
+                    cornerRadius: 12,
+                    displayColors: false,
+                    callbacks: {
+                        title: (context) => `Timeline: ${context[0].label}`,
+                        label: (context) => ` ${context.parsed.y} Total Inquiries`
                     }
                 }
-            });
+            },
+            scales: {
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        color: '#94a3b8',
+                        font: { size: 10, weight: '900' },
+                        padding: 10
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(241, 245, 249, 1)', // Slate-100 lines
+                        drawBorder: false,
+                    },
+                    ticks: {
+                        color: '#94a3b8',
+                        font: { size: 10, weight: '900' },
+                        padding: 10,
+                        stepSize: 1, // Detailed increments
+                        callback: (value) => value + ' qty'
+                    }
+                }
+            },
+            interaction: {
+                mode: 'nearest',
+                axis: 'x',
+                intersect: false
+            }
         }
+    });
+}
+
+
+
+
+
     }" x-init="setTimeout(() => { loading = false; $nextTick(() => { setTimeout(() => { initChart(); }, 100); }); }, 1500)">
         
         <template x-if="loading">

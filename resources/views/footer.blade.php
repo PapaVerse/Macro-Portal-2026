@@ -1,3 +1,4 @@
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 <footer x-data="{ modalOpen: false, modalType: '', hasAgreed: false }" class="bg-gray-900 text-gray-300 py-16 px-6 relative">
@@ -49,20 +50,23 @@
 
         <div class="h-48 lg:h-full min-h-[150px] rounded-2xl overflow-hidden border border-gray-800 grayscale hover:grayscale-0 transition-all duration-500">
             <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3864.8859942691373!2d120.8655396758656!3d14.40604208204618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33962ce801673fb3%3A0x12d1e9c8a709652b!2sMacro%20Wiring%20Technologies%20Co.%20Inc.!5e0!3m2!1sen!2sph!4v1710000000000!5m2!1sen!2sph" 
-    width="100%" 
-    height="100%" 
-    style="border:0;" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-</iframe>
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3864.8859942691373!2d120.8655396758656!3d14.40604208204618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33962ce801673fb3%3A0x12d1e9c8a709652b!2sMacro%20Wiring%20Technologies%20Co.%20Inc.!5e0!3m2!1sen!2sph!4v1710000000000!5m2!1sen!2sph" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
         </div>
     </div>
 
     <div class="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs text-center">
         <p>© 2026 Macro Wiring Technologies Co. Inc. All Rights Reserved.</p>
-        <div class="flex gap-6">
+        <div class="flex items-center gap-6">
+            <button @click="modalOpen = true; modalType = 'faq'; hasAgreed = true" class="hover:text-blue-400 transition" title="Frequently Asked Questions">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </button>
             <button @click="modalOpen = true; modalType = 'privacy'; hasAgreed = false" class="hover:text-white transition uppercase font-bold tracking-tighter">Privacy Policy</button>
             <button @click="modalOpen = true; modalType = 'terms'; hasAgreed = false" class="hover:text-white transition uppercase font-bold tracking-tighter">Terms of Service</button>
         </div>
@@ -77,8 +81,11 @@
              x-transition:enter-end="opacity-100 scale-100">
             
             <div @click.away="modalOpen = false" class="bg-white w-full max-w-xl max-h-[75vh] rounded-[2.5rem] overflow-hidden flex flex-col shadow-2xl mt-5">
-                <div class="p-10 pb-6 flex items-start gap-5">
+                <div class="p-10 pb-6 flex items-start gap-5 shrink-0">
                     <div class="p-4 rounded-2xl" :class="modalType === 'privacy' ? 'bg-green-50' : 'bg-blue-50'">
+                        <template x-if="modalType === 'faq'">
+                            <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </template>
                         <template x-if="modalType === 'privacy'">
                             <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                         </template>
@@ -87,12 +94,53 @@
                         </template>
                     </div>
                     <div>
-                        <h2 class="text-3xl font-black text-slate-900" x-text="modalType === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions'"></h2>
-                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1">Legal Acknowledgment Required</p>
+                        <h2 class="text-3xl font-black text-slate-900" x-text="modalType === 'faq' ? 'Frequently Asked Questions' : (modalType === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions')"></h2>
+                        <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mt-1" x-text="modalType === 'faq' ? 'Technical Specifications' : 'Legal Acknowledgment Required'"></p>
                     </div>
                 </div>
                 
-                <div class="px-10 overflow-y-auto text-[15px] text-slate-600 space-y-8 pb-10 leading-relaxed">
+                <div class="px-10 overflow-y-auto text-[15px] text-slate-600 pb-10 leading-relaxed">
+                    
+                    <template x-if="modalType === 'faq'">
+                        <div x-data="{ active: null }" class="space-y-3">
+                            <div class="border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                                <button @click="active = (active === 1 ? null : 1)" class="w-full p-5 text-left flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                                    <span class="font-bold text-slate-900 italic">What industries do you serve?</span>
+                                    <svg class="w-5 h-5 text-blue-500 transition-transform" :class="active === 1 ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </button>
+                                <div x-show="active === 1" x-collapse>
+                                    <div class="p-5 text-slate-600 bg-white border-t border-slate-100">
+                                        We provide solutions for consumer electronics, telecommunications, automotive, home appliances, industrial, and energy sectors.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                                <button @click="active = (active === 2 ? null : 2)" class="w-full p-5 text-left flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                                    <span class="font-bold text-slate-900 italic">How is world-class quality maintained?</span>
+                                    <svg class="w-5 h-5 text-blue-500 transition-transform" :class="active === 2 ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </button>
+                                <div x-show="active === 2" x-collapse>
+                                    <div class="p-5 text-slate-600 bg-white border-t border-slate-100">
+                                        Our facility is certified to ISO 9001:2015 and ISO 14001:2015 standards, ensuring quality excellence and environmental stewardship.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+                                <button @click="active = (active === 3 ? null : 3)" class="w-full p-5 text-left flex justify-between items-center bg-slate-50 hover:bg-slate-100 transition-colors">
+                                    <span class="font-bold text-slate-900 italic">What is your production range?</span>
+                                    <svg class="w-5 h-5 text-blue-500 transition-transform" :class="active === 3 ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                                </button>
+                                <div x-show="active === 3" x-collapse>
+                                    <div class="p-5 text-slate-600 bg-white border-t border-slate-100">
+                                        We produce wire harnesses ranging from AWG#32 to 350 MCM, suitable for a wide variety of industrial and consumer applications.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
                     <template x-if="modalType === 'privacy'">
                         <div class="space-y-6">
                             <p>In compliance with the <strong>Philippine Data Privacy Act of 2012 (RA 10173)</strong>, Macro Wiring Technologies Co. Inc. ensures all personal data submitted through our contact channels is handled securely.</p>
@@ -142,20 +190,23 @@
                     </template>
                 </div>
 
-                <div class="p-10 pt-0">
-                    <label class="flex items-center gap-4 cursor-pointer group mb-6">
-                        <div class="relative">
-                            <input type="checkbox" x-model="hasAgreed" class="peer appearance-none w-7 h-7 border-2 border-slate-200 rounded-xl checked:bg-blue-600 checked:border-blue-600 transition-all">
-                            <svg class="absolute inset-0 w-7 h-7 text-white opacity-0 peer-checked:opacity-100 p-1.5 transition-opacity" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
-                        </div>
-                        <span class="text-xs font-black text-slate-800 uppercase tracking-tighter select-none">
-                            I have read and agree to the <span x-text="modalType === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions'"></span>
-                        </span>
-                    </label>
+                <div class="p-10 pt-0 shrink-0">
+                    <template x-if="modalType !== 'faq'">
+                        <label class="flex items-center gap-4 cursor-pointer group mb-6">
+                            <div class="relative">
+                                <input type="checkbox" x-model="hasAgreed" class="peer appearance-none w-7 h-7 border-2 border-slate-200 rounded-xl checked:bg-blue-600 checked:border-blue-600 transition-all">
+                                <svg class="absolute inset-0 w-7 h-7 text-white opacity-0 peer-checked:opacity-100 p-1.5 transition-opacity" fill="none" stroke="currentColor" stroke-width="4" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+                            </div>
+                            <span class="text-xs font-black text-slate-800 uppercase tracking-tighter select-none">
+                                I have read and agree to the <span x-text="modalType === 'privacy' ? 'Privacy Policy' : 'Terms & Conditions'"></span>
+                            </span>
+                        </label>
+                    </template>
+                    
                     <button :disabled="!hasAgreed" @click="modalOpen = false" 
                             class="w-full py-5 rounded-2xl font-black uppercase tracking-[0.1em] transition-all text-sm shadow-xl shadow-blue-100"
                             :class="hasAgreed ? 'bg-slate-900 text-white hover:bg-black' : 'bg-slate-100 text-slate-300 cursor-not-allowed'">
-                        I Understand & Accept
+                        <span x-text="modalType === 'faq' ? 'Close FAQ' : 'I Understand & Accept'"></span>
                     </button>
                 </div>
             </div>

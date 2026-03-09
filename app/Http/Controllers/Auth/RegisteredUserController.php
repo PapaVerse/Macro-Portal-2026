@@ -31,20 +31,33 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            // Updated to be more reliable for your phpMyAdmin setup
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    $user = User::create([
+    'name' => $request->name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'is_admin' => true, // Force this to true just for a test
+]);
+
+        // Debug line to confirm database storage
+        if (!$user) { 
+            dd("Database failed to save the user"); 
+        }
 
         event(new Registered($user));
 
+        // Prevents logging you out when you create a new staff account
+        if (auth()->check() && auth()->user()->is_admin) {
+            return back()->with('status', 'admin-created');
+        }
+
+        // Standard login for guests/initial registration
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
     }
-}
+} // Properly closing the class

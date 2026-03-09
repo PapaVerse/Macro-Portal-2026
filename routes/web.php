@@ -7,7 +7,6 @@ use App\Http\Controllers\InquiryController;
 use Illuminate\Support\Facades\Route;
 
 // --- Admin Inquiry Routes ---
-// Fixed the syntax from .php to ::class
 Route::get('/admin/inquiries', [InquiryController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('admin.inquiries.index');
@@ -23,15 +22,22 @@ Route::view('/about-us', 'pages.about-us')->name('about-us');
 Route::view('/contact', 'pages.contact')->name('contact');
 
 // --- Auth & Dashboard ---
-// This handles the main analytics view
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // Standard Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Admin-Specific Staff Management
+    // This handles the inline delete button in the staff list
+    Route::delete('/admin/user/{user}', [ProfileController::class, 'adminDestroy'])->name('admin.destroy');
+    
+    // This handles the Administrative Password Reset form
+    Route::put('/admin/password-update', [ProfileController::class, 'adminUpdatePassword'])->name('admin.password.update');
 });
 
 // --- Inquiry Actions ---

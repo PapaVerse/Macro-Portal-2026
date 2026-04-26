@@ -651,16 +651,6 @@ x-text="step.desc"></p>
 </section>
 
 
-{{-- SCROLL TO TOP --}}
-<button
-@click="window.scrollTo({top:0,behavior:'smooth'})"
-class="fixed z-50 p-4 bg-white/20 backdrop-blur-md text-gray-800 rounded-full shadow-xl border border-white/40 transition-all duration-500"
-:class="[
-isAtBottom ? 'bottom-24 right-8':'bottom-8 right-8',
-showScrollTop ? 'opacity-100 scale-100':'opacity-0 scale-50 translate-y-10 pointer-events-none'
-]"
->
-↑
-</button>
+
 
 </section>

@@ -112,69 +112,99 @@
     <div class="max-w-7xl mx-auto px-6 md:px-12 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
             
-            <div class="md:col-span-1">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-28 h-fit">
-                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <i class="fas fa-search text-blue-600"></i> Filter
-                    </h2>
-                    <div class="mb-8">
-                        <input
-                            type="text"
-                            placeholder="Search products..."
-                            class="w-full border border-gray-200 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition"
-                            x-model="searchTerm"
+                <div class="md:col-span-1">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-28 h-fit">
+                        <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                            <i class="fas fa-search text-blue-600"></i> Filter
+                        </h2>
+                        <div class="mb-8">
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                class="w-full border border-gray-200 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition"
+                                x-model="searchTerm"
                         />
+</div>
+                       <div class="space-y-2">
+    <h3 class="font-semibold text-gray-400 text-xs uppercase tracking-widest mb-4">
+        Categories
+    </h3>
+
+    <template x-for="cat in productData" :key="cat.category">
+        <button
+            @click="toggleCategory(cat.category)"
+            class="w-full flex justify-between items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300"
+            
+            :class="selectedCategories.includes(cat.category)
+                ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] translate-x-1'
+                : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'"
+        >
+            <span class="tracking-tight" x-text="cat.category"></span>
+
+            <span 
+                class="text-[10px] px-2 py-0.5 rounded-md font-bold transition-all duration-300"
+                :class="selectedCategories.includes(cat.category)
+                    ? 'bg-white/20 text-white border border-white/30'
+                    : 'bg-blue-50 text-blue-600 border border-blue-100'"
+                x-text="cat.items.length.toString().padStart(2, '0')"
+            ></span>
+        </button>
+    </template>
+</div>
                     </div>
-                    <div class="space-y-3">
-                        <h3 class="font-semibold text-gray-400 text-xs uppercase tracking-widest mb-4">Categories</h3>
-                        <template x-for="cat in productData" :key="cat.category">
-                            <label class="flex items-center justify-between p-2 rounded-lg cursor-pointer group transition-all duration-300"
-                                :class="selectedCategories.includes(cat.category) ? 'bg-blue-50/50' : 'hover:bg-gray-50'">
-                                <div class="flex items-center space-x-3">
-                                    <input type="checkbox" 
-                                        :checked="selectedCategories.includes(cat.category)" 
-                                        @change="toggleCategory(cat.category)"
-                                        class="w-4 h-4 accent-blue-600 rounded cursor-pointer" />
-                                    <span class="text-sm transition-colors duration-300" 
-                                        :class="selectedCategories.includes(cat.category) ? 'text-blue-700 font-semibold' : 'text-gray-700 group-hover:text-blue-600'" 
-                                        x-text="cat.category"></span>
-                                </div>
-                                <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold border transition-all duration-300"
-                                    :class="selectedCategories.includes(cat.category) ? 'bg-blue-600 text-white border-blue-400' : 'bg-gray-100 text-gray-500 border-gray-200'"
-                                    x-text="cat.items.length.toString().padStart(2, '0')"></span>
-                            </label>
-                        </template>
-                    </div>
+                </div>
+
+                <div class="md:col-span-3">
+                    <div x-show="filteredProducts.length === 0" x-cloak class="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300">
+                        <p class="text-gray-500">No products found matching your criteria.</p>
+                </div>
+                
+
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <template x-for="(product, i) in filteredProducts" :key="i">
+            <div class="relative group">
+
+            <!-- CARD -->
+            <div class="bg-white p-6 rounded-2xl border border-gray-100 
+                        shadow-sm hover:shadow-xl hover:-translate-y-1 
+                        transition-all duration-300">
+
+                <!-- IMAGE (MATCHED TO CERTIFICATIONS) -->
+                <div class="h-40 flex items-center justify-center mb-6 
+                            bg-gray-50 rounded-xl p-4 overflow-hidden">
+                    <img :src="product.image"
+                        class="max-h-full object-contain 
+                               transition-transform duration-500 
+                               group-hover:scale-110" />
+                </div>
+
+                <!-- TEXT -->
+                <div>
+                    <h3 class="font-bold text-gray-900 leading-tight mb-1"
+                        x-html="highlight(product.name)"></h3>
+
+                    <p class="text-sm text-gray-500"
+                       x-html="highlight(product.description)"></p>
                 </div>
             </div>
 
-            <div class="md:col-span-3">
-                <div x-show="filteredProducts.length === 0" x-cloak class="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300">
-                    <p class="text-gray-500">No products found matching your criteria.</p>
-                </div>
+            <!-- OVERLAY BUTTON -->
+            <div class="absolute inset-0 flex items-center justify-center 
+                        bg-black/40 opacity-0 group-hover:opacity-100 
+                        transition-opacity duration-300 rounded-2xl">
 
-                <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    <template x-for="(product, i) in filteredProducts" :key="i">
-                        <div class="relative group">
-                            <div class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all duration-300 group-hover:shadow-xl">
-                                <div class="h-52 bg-gray-50 flex items-center justify-center p-6 overflow-hidden">
-                                    <img :src="product.image" class="max-h-full object-contain transition-transform duration-500 group-hover:scale-110" />
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="font-bold text-gray-900 text-lg mb-1" x-html="highlight(product.name)"></h3>
-                                    <p class="text-gray-500 text-sm" x-html="highlight(product.description)"></p>
-                                </div>
-                            </div>
+                <button @click="openGallery(product)"
+                    class="bg-white text-blue-600 px-5 py-2 rounded-lg 
+                           font-bold text-sm shadow-xl flex items-center gap-2 
+                           hover:bg-blue-600 hover:text-white 
+                           transition-all transform hover:scale-105">
+                    <i class="fas fa-search-plus"></i> View Details
+                </button>
+            </div>
 
-                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl pointer-events-none">
-                                <button @click="openGallery(product)"
-                                    class="pointer-events-auto bg-white text-blue-600 px-6 py-2.5 rounded-xl font-bold text-sm shadow-2xl flex items-center gap-2 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105">
-                                    <i class="fas fa-search-plus"></i> View Details
-                                </button>
-                            </div>
-                        </div>
-                    </template>
-                </div>
+        </div>
+    </template>
+</div>
             </div>
         </div>
     </div>
@@ -206,8 +236,7 @@
                 class="absolute left-0 md:-left-16 z-10 p-4 bg-white/10 hover:bg-white text-white hover:text-blue-600 rounded-full transition-all active:scale-90">
                 <i class="fas fa-chevron-left text-2xl"></i>
             </button>
-
-            <div class="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl shadow-2xl border border-white/10">
+<div class="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl shadow-2xl border border-white/10">
                 <img :src="currentGallery[currentImgIndex]" 
                     class="max-w-full max-h-full object-contain transition-all duration-500 transform" 
                     :key="currentImgIndex" />
@@ -230,9 +259,5 @@
         </div>
     </div>
 
-    <button @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
-        class="fixed z-50 p-4 bg-white/20 backdrop-blur-md text-gray-800 rounded-full shadow-xl border border-white/40 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:-translate-y-2 active:scale-95 flex items-center justify-center"
-        :class="[isAtBottom ? 'bottom-24 right-8' : 'bottom-8 right-8', showScrollTop ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none']">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+   
 </section>

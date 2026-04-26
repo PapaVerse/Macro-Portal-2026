@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- BASIC SEO -->
+        <title>@yield('title', 'Macro Portal')</title>
+        <meta name="description" content="@yield('meta_description', 'Macro Portal system')">
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

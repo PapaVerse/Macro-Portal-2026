@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Macro Wiring Technologies') }}</title>
 
+
+
+    <!--BASIC SEO-->
+    @section('title', 'Macro Portal - Home')
+    @section('meta_description', 'Welcome to Macro Portal. Manage your business efficiently.')
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />

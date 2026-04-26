@@ -132,26 +132,72 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
 
             <!-- ================= FILTER ================= -->
+            @php
+            $totalProducts = 0;
+
+            foreach ($products as $category) {
+            $totalProducts += count($category['items']);
+            }
+            @endphp
             <div class="md:col-span-1">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border sticky top-28">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-28 h-fit">
 
-                    <h2 class="text-xl font-bold mb-4">Filter Products</h2>
+                    <!-- TITLE -->
+                    <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-search text-blue-600 text-sm"></i> Filter
+                    </h2>
 
-                    <input
-                        type="text"
-                        placeholder="Search wire harness, cables..."
-                        class="w-full border rounded-xl px-4 py-2 mb-6"
-                        x-model="searchTerm">
+                    <!-- SEARCH -->
+                    <div class="mb-8">
+                        <input
+                            type="text"
+                            placeholder="Search products..."
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2 
+                       focus:ring-2 focus:ring-blue-500 outline-none transition"
+                            x-model="searchTerm" />
+                    </div>
 
+                    <!-- CATEGORIES -->
                     <div class="space-y-2">
-                        <template x-for="cat in categories">
-                            <button
-                                @click="toggleCategory(cat)"
-                                class="w-full flex justify-between px-4 py-2 rounded-lg"
-                                :class="selected.includes(cat) ? 'bg-blue-600 text-white' : 'bg-gray-100'">
-                                <span x-text="cat"></span>
-                            </button>
-                        </template>
+                        <h3 class="font-semibold text-gray-400 text-xs uppercase tracking-widest mb-4">
+                            Categories
+                        </h3>
+
+                        <!-- ALL BUTTON -->
+                        <button
+                            @click="selected = []"
+                            class="w-full flex justify-between items-center px-4 py-2 rounded-lg"
+                            :class="selected.length === 0 ? 'bg-blue-600 text-white' : 'bg-gray-100'">
+
+                            <span>All</span>
+
+                            <span class="text-xs font-bold bg-white/20 px-2 py-1 rounded">
+                                {{ $totalProducts }}
+                            </span>
+                        </button>
+
+                        <!-- CATEGORY BUTTONS -->
+                        @foreach ($products as $cat)
+                        <button
+                            @click="toggleCategory('{{ $cat['category'] }}')"
+                            class="w-full flex justify-between items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300"
+                            :class="selected.includes('{{ $cat['category'] }}')
+                    ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] translate-x-1'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'">
+
+                            <span>{{ $cat['category'] }}</span>
+
+                            <span
+                                class="text-[10px] px-2 py-0.5 rounded-md font-bold"
+                                :class="selected.includes('{{ $cat['category'] }}')
+                        ? 'bg-white/20 text-white border border-white/30'
+                        : 'bg-blue-50 text-blue-600 border border-blue-100'">
+
+                                {{ count($cat['items']) }}
+                            </span>
+                        </button>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
@@ -165,7 +211,8 @@
                     @foreach ($category['items'] as $product)
 
                     <article
-                        class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-xl transition"
+                        @click="openGallery({{ \Illuminate\Support\Js::from($product) }})"
+                        class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-xl transition cursor-pointer"
                         x-show="filterProduct('{{ strtolower($product['name']) }}', '{{ $category['category'] }}')">
 
                         <div class="h-40 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
@@ -173,7 +220,7 @@
                                 src="{{ $product['image'] }}"
                                 alt="{{ $product['name'] }} Philippines - {{ $product['description'] }}"
                                 loading="lazy"
-                                class="max-h-full object-contain">
+                                class="max-h-full object-contain pointer-events-none">
                         </div>
 
                         <h2 class="font-bold text-gray-900">
@@ -185,7 +232,7 @@
                         </p>
 
                         <button
-                            @click='openGallery(@json($product))'
+                            @click.stop="openGallery({{ \Illuminate\Support\Js::from($product) }})"
                             class="mt-4 text-blue-600 font-semibold">
                             View Details
                         </button>
@@ -202,45 +249,73 @@
     </div>
 
     <!-- ================= GALLERY ================= -->
-    <div x-show="isOpen"
-        @click.self="close()"
-        class="fixed inset-0 bg-black/90 flex flex-col items-center justify-center z-50 p-6">
+    <div
+        x-show="isOpen"
+        x-transition
+        @click="close()"
 
-        <!-- TOP BAR -->
-        <div class="absolute top-6 left-6 right-6 flex justify-between text-white">
-            <h2 class="font-bold" x-text="productName"></h2>
-            <button @click="close()" class="text-2xl">✕</button>
-        </div>
+        @keydown.window.escape="close()"
+        @keydown.window.arrow-right.prevent="next()"
+        @keydown.window.arrow-left.prevent="prev()"
 
-        <!-- IMAGE VIEWER -->
-        <div class="relative flex items-center justify-center w-full max-w-5xl h-[70vh]">
+        class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
 
-            <!-- PREV -->
-            <button @click="prev()"
-                class="absolute left-0 p-4 text-white bg-white/10 rounded-full">
-                ‹
+        <!-- CLOSE BUTTON -->
+        <button
+            @click="close()"
+            class="absolute top-6 right-6 text-white text-2xl z-50">
+            ✕
+        </button>
+
+        <div class="relative flex items-center justify-center w-full max-w-5xl">
+
+            <!-- LEFT ARROW -->
+            <button
+                @click.stop="prev()"
+                class="absolute -left-12 md:-left-16 top-1/2 -translate-y-1/2 
+           w-12 h-12 flex items-center justify-center
+           bg-white/10 hover:bg-white text-white hover:text-blue-600
+           rounded-full transition-all z-50">
+
+                <i class="fas fa-chevron-left text-xl"></i>
             </button>
 
             <!-- IMAGE -->
-            <img :src="gallery[index]"
-                class="max-h-full object-contain">
+            <img
+                :src="gallery.length ? gallery[index] : ''"
+                @click.stop
+                class="max-h-[70vh] object-contain rounded-xl shadow-2xl transition-all duration-300">
 
-            <!-- NEXT -->
-            <button @click="next()"
-                class="absolute right-0 p-4 text-white bg-white/10 rounded-full">
-                ›
+            <!-- RIGHT ARROW -->
+            <button
+                @click.stop="next()"
+                class="absolute -right-12 md:-right-16 top-1/2 -translate-y-1/2 
+           w-12 h-12 flex items-center justify-center
+           bg-white/10 hover:bg-white text-white hover:text-blue-600
+           rounded-full transition-all z-50">
+
+                <i class="fas fa-chevron-right text-xl"></i>
+
             </button>
+
         </div>
 
-        <!-- THUMBNAILS -->
-        <div class="flex gap-3 mt-6">
-            <template x-for="(img, i) in gallery" :key="i">
-                <img :src="img"
-                    @click="index = i"
-                    class="w-16 h-16 object-cover rounded cursor-pointer border"
-                    :class="index === i ? 'border-blue-500' : 'opacity-50'">
-            </template>
+        <div class="absolute bottom-6 left-0 right-0 flex justify-center">
+            <div class="flex gap-3 overflow-x-auto px-4 py-2 bg-white/10 backdrop-blur rounded-xl">
+
+                <template x-for="(img, i) in gallery" :key="i">
+                    <img
+                        :src="img"
+                        @click.stop="index = i"
+                        class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all"
+                        :class="index === i 
+                    ? 'border-blue-500 scale-110' 
+                    : 'border-transparent opacity-60 hover:opacity-100'">
+                </template>
+
+            </div>
         </div>
+
     </div>
 
 

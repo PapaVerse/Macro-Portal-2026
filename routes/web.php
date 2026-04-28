@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
 // contacts 
 
-use App\Http\Controllers\ContactController;
+
 
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contacts.send');
 Route::post('/admin/inquiries/bulk', [DashboardController::class, 'bulkAction'])->name('admin.inquiries.bulk');

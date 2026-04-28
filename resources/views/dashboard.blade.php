@@ -2,14 +2,23 @@
     @push('styles')
     <style>
         @keyframes reverse-spin {
-            from { transform: rotate(360deg); }
-            to { transform: rotate(0deg); }
+            from {
+                transform: rotate(360deg);
+            }
+
+            to {
+                transform: rotate(0deg);
+            }
         }
+
         .animate-reverse-spin {
             animation: reverse-spin 3s linear infinite;
         }
-        [x-cloak] { display: none !important; }
-        
+
+        [x-cloak] {
+            display: none !important;
+        }
+
         mark.search-highlight {
             background-color: #dbeafe;
             color: #1e40af;
@@ -21,9 +30,11 @@
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 10px;
@@ -252,7 +263,7 @@ initChart() {
 
 
     }" x-init="setTimeout(() => { loading = false; $nextTick(() => { setTimeout(() => { initChart(); }, 100); }); }, 1500)">
-        
+
         <template x-if="loading">
             <div class="fixed inset-0 z-[9999] bg-slate-50 flex flex-col items-center justify-center overflow-hidden">
                 <div class="absolute inset-0 pointer-events-none opacity-20">
@@ -285,7 +296,7 @@ initChart() {
 
         <div x-show="!loading" x-cloak class="min-h-screen bg-slate-50">
             <div class="max-w-7xl mx-auto px-6 py-10">
-                
+
                 <div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-4">
                     <div>
                         <h2 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Dashboard Overview</h2>
@@ -295,7 +306,7 @@ initChart() {
                         <div x-show="filtering" class="absolute inset-0 bg-white/50 backdrop-blur-[1px] z-10 rounded-2xl flex items-center justify-center">
                             <div class="w-4 h-4 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
                         </div>
-                        
+
                         <select x-model="selectedRange" @change="updateFilter()" class="w-48 bg-slate-50 border-none rounded-xl text-[10px] font-black uppercase px-4 focus:ring-2 focus:ring-blue-500">
                             <option value="">Range: All Time</option>
                             <option value="1day">Past 24 Hours</option>
@@ -314,14 +325,14 @@ initChart() {
                         <select x-model="selectedMonth" @change="updateFilter()" class="w-48 bg-slate-50 border-none rounded-xl text-[10px] font-black uppercase px-4 focus:ring-2 focus:ring-blue-500">
                             <option value="">Month: All</option>
                             @foreach(range(1, 12) as $m)
-                                <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}</option>
+                            <option value="{{ $m }}">{{ date('F', mktime(0, 0, 0, $m, 1)) }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-10">
-                    
+
                     <div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-white p-5 rounded-[2rem] shadow-sm border border-slate-100 flex justify-between items-center group transition-all hover:shadow-md">
                             <div>
@@ -387,8 +398,8 @@ initChart() {
                                 <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Logs & Records</p>
                             </div>
                             <div class="flex bg-slate-100 p-1 rounded-xl">
-                                <button @click="view = 'active'; selectedIds = []; currentPage = 1" 
-                                    :class="view === 'active' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500'" 
+                                <button @click="view = 'active'; selectedIds = []; currentPage = 1"
+                                    :class="view === 'active' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-500'"
                                     class="relative px-4 py-2 rounded-lg text-[10px] font-black uppercase transition-all">
                                     Inbox
                                     <template x-if="unreadCount > 0">
@@ -486,8 +497,8 @@ initChart() {
                             Showing <span class="text-slate-900" x-text="filteredInquiries.length"></span> of <span class="text-slate-900" x-text="totalFiltered.length"></span> inquiries
                         </p>
                         <div class="flex gap-2" x-show="totalPages > 1">
-                            <button 
-                                @click="currentPage--" 
+                            <button
+                                @click="currentPage--"
                                 :disabled="currentPage === 1"
                                 :class="currentPage === 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-slate-900 hover:text-white'"
                                 class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all shadow-sm">
@@ -498,8 +509,8 @@ initChart() {
                                 <span class="mx-1">/</span>
                                 <span x-text="totalPages"></span>
                             </div>
-                            <button 
-                                @click="currentPage++" 
+                            <button
+                                @click="currentPage++"
                                 :disabled="currentPage === totalPages"
                                 :class="currentPage === totalPages ? 'opacity-30 cursor-not-allowed' : 'hover:bg-slate-900 hover:text-white'"
                                 class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-tighter transition-all shadow-sm">
@@ -511,34 +522,35 @@ initChart() {
             </div>
         </div>
 
-<template x-if="selectedInquiry">
+        <template x-if="selectedInquiry">
             <div class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6" @click.self="selectedInquiry = null" x-transition.opacity>
-                
-                <div class="bg-white w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] rounded-[2rem] sm:rounded-[3rem] shadow-2xl overflow-hidden flex flex-col" 
-                     x-transition:enter="transition ease-out duration-300"
-                     x-transition:enter-start="opacity-0 scale-95"
-                     x-transition:enter-end="opacity-100 scale-100">
-                    
+
+                <div class="bg-white w-full max-w-2xl max-h-[85vh] sm:max-h-[90vh] rounded-[2rem] sm:rounded-[3rem] shadow-2xl overflow-hidden flex flex-col"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100">
+
                     <div class="p-6 sm:p-8 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start gap-4 bg-slate-50/50 flex-shrink-0">
-<div class="flex items-center gap-4">
-    <div class="w-12 h-12 flex-shrink-0 aspect-square rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-xl" 
-         x-text="selectedInquiry.full_name.charAt(0)">
-    </div>
-    <div class="min-w-0"> <div class="flex items-center gap-2">
-            <h3 class="text-lg font-black text-slate-900 truncate" x-text="selectedInquiry.full_name"></h3>
-            <span class="flex-shrink-0 text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-black" 
-                  x-text="'#' + selectedInquiry.id.toString().padStart(4, '0')"></span>
-        </div>
-        <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest truncate" x-text="selectedInquiry.email"></p>
-    </div>
-</div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 flex-shrink-0 aspect-square rounded-2xl bg-blue-600 flex items-center justify-center text-white font-black text-xl"
+                                x-text="selectedInquiry.full_name.charAt(0)">
+                            </div>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-lg font-black text-slate-900 truncate" x-text="selectedInquiry.full_name"></h3>
+                                    <span class="flex-shrink-0 text-[10px] bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-black"
+                                        x-text="'#' + selectedInquiry.id.toString().padStart(4, '0')"></span>
+                                </div>
+                                <p class="text-[10px] text-blue-600 font-black uppercase tracking-widest truncate" x-text="selectedInquiry.email"></p>
+                            </div>
+                        </div>
 
                         <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
                             <div class="text-left sm:text-right">
-                                <div class="text-[9px] sm:text-[10px] font-black text-slate-900 uppercase tracking-tighter" 
-                                     x-text="new Date(selectedInquiry.created_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })"></div>
-                                <div class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]" 
-                                     x-text="new Date(selectedInquiry.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })"></div>
+                                <div class="text-[9px] sm:text-[10px] font-black text-slate-900 uppercase tracking-tighter"
+                                    x-text="new Date(selectedInquiry.created_at).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })"></div>
+                                <div class="text-[8px] sm:text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em]"
+                                    x-text="new Date(selectedInquiry.created_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })"></div>
                             </div>
                             <button @click="selectedInquiry = null" class="w-8 h-8 flex items-center justify-center rounded-xl bg-slate-200/50 text-slate-400 hover:bg-red-50 hover:text-red-600 transition-all text-xl font-light">
                                 &times;
@@ -551,25 +563,25 @@ initChart() {
                             <p class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Subject</p>
                             <h4 class="text-sm sm:text-base font-bold text-slate-800" x-text="selectedInquiry.subject"></h4>
                         </div>
-                        
+
                         <div class="bg-slate-50 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-slate-100 shadow-inner">
                             <p class="text-[9px] sm:text-[10px] font-black text-slate-300 uppercase tracking-widest mb-4">Message Body</p>
                             <div class="text-xs sm:text-sm text-slate-600 leading-[1.8] whitespace-pre-line font-medium" x-text="selectedInquiry.message"></div>
                         </div>
                     </div>
 
-<div class="p-8 border-t border-slate-50 bg-white flex-shrink-0">
-    <div class="flex flex-col sm:flex-row gap-4">
-        <a :href="'mailto:' + selectedInquiry.email" 
-           class="flex-1 whitespace-nowrap bg-slate-900 text-white text-center py-4 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-blue-600 transition-all shadow-lg">
-           Reply via Client
-        </a>
-        <button @click="selectedInquiry = null" 
-                class="px-8 py-4 whitespace-nowrap bg-slate-100 text-slate-500 rounded-xl font-black uppercase text-[10px] tracking-widest">
-                Dismiss
-        </button>
-    </div>
-</div>
+                    <div class="p-8 border-t border-slate-50 bg-white flex-shrink-0">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a :href="'mailto:' + selectedInquiry.email"
+                                class="flex-1 whitespace-nowrap bg-slate-900 text-white text-center py-4 rounded-xl font-black uppercase text-[10px] tracking-widest hover:bg-blue-600 transition-all shadow-lg">
+                                Reply via Client
+                            </a>
+                            <button @click="selectedInquiry = null"
+                                class="px-8 py-4 whitespace-nowrap bg-slate-100 text-slate-500 rounded-xl font-black uppercase text-[10px] tracking-widest">
+                                Dismiss
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>

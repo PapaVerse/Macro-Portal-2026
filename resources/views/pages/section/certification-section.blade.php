@@ -1,4 +1,4 @@
-<section 
+<section
     x-data="{
         searchTerm: '',
         selectedCategory: 'All',
@@ -44,8 +44,7 @@
         }
     }"
     @scroll.window="handleScroll()"
-    class="bg-gray-50 min-h-screen relative"
->
+    class="bg-gray-50 min-h-screen relative">
     <div class="tech-header-container text-white py-16 px-6 relative overflow-hidden">
         <div class="moving-glow"></div>
         <div class="relative z-10 max-w-7xl mx-auto text-center">
@@ -61,7 +60,7 @@
 
     <div class="max-w-7xl mx-auto px-6 md:px-12 py-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
-            
+
             <div class="md:col-span-1">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 md:sticky md:top-28 h-fit">
                     <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
@@ -72,8 +71,7 @@
                             type="text"
                             placeholder="Search standards..."
                             class="w-full border border-gray-200 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition"
-                            x-model="searchTerm"
-                        />
+                            x-model="searchTerm" />
                     </div>
                     <div class="space-y-2">
                         <h3 class="font-semibold text-gray-400 text-xs uppercase tracking-widest mb-4">Categories</h3>
@@ -83,14 +81,12 @@
                                 class="w-full flex justify-between items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300"
                                 :class="selectedCategory === cat 
                                     ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] translate-x-1' 
-                                    : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'"
-                            >
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'">
                                 <span class="tracking-tight" x-text="cat"></span>
-                                <span 
+                                <span
                                     class="text-[10px] px-2 py-0.5 rounded-md font-bold transition-all duration-300"
                                     :class="selectedCategory === cat ? 'bg-white/20 text-white border border-white/30' : 'bg-blue-50 text-blue-600 border border-blue-100'"
-                                    x-text="getCategoryCount(cat)"
-                                ></span>
+                                    x-text="getCategoryCount(cat)"></span>
                             </button>
                         </template>
                     </div>
@@ -120,5 +116,5 @@
         </div>
     </div>
 
-   
+
 </section>

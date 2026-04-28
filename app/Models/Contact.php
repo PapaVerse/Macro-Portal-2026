@@ -3,15 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes; // Add this
 
 class Contact extends Model
 {
-    protected $table = 'contacts';
+    use SoftDeletes; // Add this
 
     protected $fillable = [
         'full_name',
         'email',
         'subject',
-        'message'
+        'message',
+        'status'
     ];
 }

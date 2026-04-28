@@ -1,9 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\InquiryController;
 use Illuminate\Support\Facades\Route;
 
-// Added ->name('home') so route('home') in your navbar works
+// --- Admin Inquiry Routes ---
+Route::get('/admin/inquiries', [InquiryController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('admin.inquiries.index');
+
+// --- Public Pages ---
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -36,11 +44,12 @@ Route::redirect('/about', '/about-us', 301);
 Route::view('/contact', 'pages.contact')->name('contact');
 
 // --- Auth & Dashboard ---
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // Standard Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -52,6 +61,8 @@ Route::middleware('auth')->group(function () {
 use App\Http\Controllers\ContactController;
 
 Route::post('/contact/send', [ContactController::class, 'send'])->name('contacts.send');
+Route::post('/admin/inquiries/bulk', [DashboardController::class, 'bulkAction'])->name('admin.inquiries.bulk');
+Route::post('/admin/inquiries/{contact}/read', [DashboardController::class, 'markAsRead'])->name('admin.inquiries.read');
 
 // This file contains the 'login' and 'register' named routes
 require __DIR__ . '/auth.php';

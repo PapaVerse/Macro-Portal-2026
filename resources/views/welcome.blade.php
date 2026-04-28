@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,44 +18,73 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
-        <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     @endif
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
+
         /* --- NAVIGATION BAR (Synced with Login) --- */
-        nav { 
-            background: #001e30; 
-            height: 90px; 
-            width: 100%; 
-            font-family: "Montserrat", sans-serif; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1001; 
+        /* --- UPDATED NAVIGATION BAR --- */
+        nav {
+            background: #001e30;
+            height: 90px;
+            width: 100%;
+            font-family: "Montserrat", sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+            /* FLEXBOX FIX: Ensures logo and menu stay on opposite sides */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
         }
-        
-        label.logo { 
-            color: white; 
-            font-size: 24px; 
-            line-height: 90px; 
-            padding: 0 40px; 
-            font-weight: 800; 
-            white-space: nowrap; 
-            cursor: pointer; 
+
+        label.logo {
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            cursor: pointer;
             transition: color 0.3s;
+            /* TRUNCATION FIX: Prevents text from overlapping menu */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50%;
+            /* Limits logo to half the screen width */
+            line-height: 90px;
         }
-        
-        nav ul { 
-            float: right; 
-            margin-right: 30px; 
-            list-style: none; 
-            display: flex; 
-            gap: 2rem; 
-            align-items: center; 
-            height: 100%; 
+
+        /* --- MOBILE RESPONSIVE FIX --- */
+        @media (max-width: 1100px) {
+            label.logo {
+                font-size: 18px;
+                /* Smaller font for mobile */
+                max-width: 70%;
+                /* Gives more room to the hamburger icon */
+            }
+
+            .checkbtn {
+                display: block;
+                margin-right: 0;
+                /* Adjusted for flexbox */
+                order: 2;
+                /* Ensures it stays on the right */
+            }
+        }
+
+        nav ul {
+            float: right;
+            margin-right: 30px;
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            height: 100%;
         }
 
         /* --- ANIMATED LINKS --- */
@@ -69,7 +99,11 @@
             cursor: pointer;
             padding-bottom: 8px;
         }
-        .nav-link-animated:hover { color: #60a5fa; }
+
+        .nav-link-animated:hover {
+            color: #60a5fa;
+        }
+
         .nav-link-animated::after {
             content: '';
             position: absolute;
@@ -81,53 +115,203 @@
             transform: scaleX(0);
             transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
         }
-        .nav-link-animated:hover::after { transform: scaleX(1); }
+
+        .nav-link-animated:hover::after {
+            transform: scaleX(1);
+        }
 
         /* --- ACTIVE STATE --- */
         @keyframes backAndForth {
-            0% { transform: scaleX(0.3); transform-origin: center left; }
-            50% { transform: scaleX(1); transform-origin: center; }
-            100% { transform: scaleX(0.3); transform-origin: center right; }
+            0% {
+                transform: scaleX(0.3);
+                transform-origin: center left;
+            }
+
+            50% {
+                transform: scaleX(1);
+                transform-origin: center;
+            }
+
+            100% {
+                transform: scaleX(0.3);
+                transform-origin: center right;
+            }
         }
-        .active-link { color: #60a5fa !important; }
-        .active-link::after { transform: scaleX(1); animation: backAndForth 2s ease-in-out infinite; }
+
+        .active-link {
+            color: #60a5fa !important;
+        }
+
+        .active-link::after {
+            transform: scaleX(1);
+            animation: backAndForth 2s ease-in-out infinite;
+        }
 
         /* --- MOBILE MENU --- */
-        .checkbtn { font-size: 30px; color: white; float: right; line-height: 90px; margin-right: 40px; cursor: pointer; display: none; }
-        #check { display: none; }
+        .checkbtn {
+            font-size: 30px;
+            color: white;
+            float: right;
+            line-height: 90px;
+            margin-right: 40px;
+            cursor: pointer;
+            display: none;
+        }
+
+        #check {
+            display: none;
+        }
 
         @media (max-width: 1100px) {
-            .checkbtn { display: block; }
-            nav ul { 
-                position: fixed; width: 100%; height: 100vh; background: #0b1120; 
-                top: 90px; left: -100%; flex-direction: column; padding-top: 60px; transition: all .4s; 
-                justify-content: start; text-align: center;
+            .checkbtn {
+                display: block;
             }
-            nav ul li { display: block; width: 100%; margin: 15px 0; line-height: normal; }
-            .nav-link-animated { font-size: 20px; display: inline-block; }
-            .nav-link-animated::after { width: 60px; left: 50%; margin-left: -30px; }
-            #check:checked ~ ul { left: 0; }
+
+            nav ul {
+                position: fixed;
+                width: 100%;
+                height: 100vh;
+                background: #0b1120;
+                top: 90px;
+                left: -100%;
+                flex-direction: column;
+                padding-top: 60px;
+                transition: all .4s;
+                justify-content: start;
+                text-align: center;
+            }
+
+            nav ul li {
+                display: block;
+                width: 100%;
+                margin: 15px 0;
+                line-height: normal;
+            }
+
+            .nav-link-animated {
+                font-size: 20px;
+                display: inline-block;
+            }
+
+            .nav-link-animated::after {
+                width: 60px;
+                left: 50%;
+                margin-left: -30px;
+            }
+
+            #check:checked~ul {
+                left: 0;
+            }
         }
 
         /* --- CONSENT & WELCOME ANIMATIONS --- */
-        @keyframes welcomeText { 0% { opacity: 0; transform: translateY(20px); } 20%, 80% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-20px); filter: blur(10px); } }
-        @keyframes textZoomPass { 0% { opacity: 0; transform: scale(0.9); filter: blur(10px); } 40% { opacity: 1; transform: scale(1); filter: blur(0px); } 100% { opacity: 0; transform: scale(1.1); filter: blur(20px); } }
-        @keyframes glowPulse { 0% { opacity: 0; scale: 0.5; } 50% { opacity: 1; scale: 1.2; } 100% { opacity: 0; scale: 2; } }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        
-        .animate-welcome-text { animation: welcomeText 3.2s ease-in-out forwards; }
-        .animate-text-zoom-pass { animation: textZoomPass 3.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-        .animate-glow-pulse { animation: glowPulse 3.2s ease-out forwards; }
-        .animate-fade-in { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes welcomeText {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            20%,
+            80% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-20px);
+                filter: blur(10px);
+            }
+        }
+
+        @keyframes textZoomPass {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+                filter: blur(10px);
+            }
+
+            40% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0px);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.1);
+                filter: blur(20px);
+            }
+        }
+
+        @keyframes glowPulse {
+            0% {
+                opacity: 0;
+                scale: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+                scale: 1.2;
+            }
+
+            100% {
+                opacity: 0;
+                scale: 2;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-welcome-text {
+            animation: welcomeText 3.2s ease-in-out forwards;
+        }
+
+        .animate-text-zoom-pass {
+            animation: textZoomPass 3.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .animate-glow-pulse {
+            animation: glowPulse 3.2s ease-out forwards;
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
         /* --- UTILS --- */
-        [x-cloak] { display: none !important; }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .glass-button { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .glass-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
     </style>
 </head>
-<body 
+
+<body
     x-data="{ 
         showScrollTop: false, 
         isAtBottom: false,
@@ -156,13 +340,12 @@
             this.showScrollTop = window.scrollY > 400;
             this.isAtBottom = (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 150);
         }
-    }" 
+    }"
     @scroll.window="handleScroll"
-    class="bg-slate-50 font-sans antialiased text-slate-900"
->
+    class="bg-slate-50 font-sans antialiased text-slate-900">
 
     <div x-show="isVisible" x-cloak class="fixed inset-0 z-[9999] flex items-center justify-center bg-slate-950/95 backdrop-blur-2xl p-4">
-        
+
         <div x-show="!isWelcoming" class="bg-white w-full max-w-2xl rounded-[3.5rem] shadow-2xl overflow-hidden flex flex-col border border-white/20 animate-fade-in">
             <div class="p-10 pb-6 flex flex-col items-center text-center">
                 <div class="bg-blue-600 text-white p-5 rounded-2xl mb-6 shadow-xl shadow-blue-200">
@@ -224,7 +407,7 @@
                 <label class="flex items-start gap-4 cursor-pointer group">
                     <input type="checkbox" class="hidden" x-model="hasAgreedMain">
                     <div class="mt-0.5 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all"
-                         :class="hasAgreedMain ? 'bg-blue-600 border-blue-600' : 'border-gray-300'">
+                        :class="hasAgreedMain ? 'bg-blue-600 border-blue-600' : 'border-gray-300'">
                         <i x-show="hasAgreedMain" class="fas fa-check text-white text-[10px]"></i>
                     </div>
                     <span class="text-[13px] font-bold text-gray-700 uppercase tracking-tight group-hover:text-blue-600">
@@ -233,8 +416,8 @@
                 </label>
 
                 <button @click="handleAccept" :disabled="!hasAgreedMain"
-                        class="w-full font-black py-5 rounded-2xl transition-all uppercase tracking-widest text-sm shadow-2xl active:scale-95"
-                        :class="hasAgreedMain ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'">
+                    class="w-full font-black py-5 rounded-2xl transition-all uppercase tracking-widest text-sm shadow-2xl active:scale-95"
+                    :class="hasAgreedMain ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-200' : 'bg-gray-200 text-gray-400 cursor-not-allowed'">
                     I Accept and Enter Site
                 </button>
             </div>
@@ -257,17 +440,20 @@
         <label for="check" class="checkbtn">
             <i class="fas fa-bars"></i>
         </label>
-        <label class="logo" onclick="window.location.href='{{ url('/') }}'">Macro Wiring</label>
+        <label class="logo" onclick="window.location.href='{{ url('/') }}'">
+            {{ \App\Models\User::find(1)->name ?? 'Macro Wiring' }}
+        </label>
         <ul>
             <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
-        
+
             <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''"></a>
-    <a href="{{ route('products') }}" 
-       class="nav-link-animated" 
-       :class="currentPath.includes('products') ? 'active-link' : ''">
-       Products
-    </a>
-</li>            <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
+                <a href="{{ route('products') }}"
+                    class="nav-link-animated"
+                    :class="currentPath.includes('products') ? 'active-link' : ''">
+                    Products
+                </a>
+            </li>
+            <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
             <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
             <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
             <li>
@@ -293,4 +479,5 @@
     </button>
 
 </body>
+
 </html>

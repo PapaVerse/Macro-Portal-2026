@@ -16,7 +16,6 @@
                 </div>
             </div>
 
-            <!-- RIGHT SIDE -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
@@ -51,7 +50,6 @@
                 </x-dropdown>
             </div>
 
-            <!-- MOBILE MENU BUTTON -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="p-2 rounded-xl text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors focus:outline-none">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -98,12 +96,5 @@
                 </form>
             </div>
         </div>
-        @endauth
-
-        @guest
-        <div class="pt-4 pb-4 border-t border-gray-200 text-center">
-            <a href="{{ route('login') }}" class="text-gray-700">Admin Login</a>
-        </div>
-        @endguest
     </div>
 </nav>

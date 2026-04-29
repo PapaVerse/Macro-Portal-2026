@@ -13,6 +13,15 @@
                         class="px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 {{ request()->routeIs('dashboard') ? 'bg-blue-50 text-blue-600' : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900' }}">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('inquiry.index')" :active="request()->routeIs('inquiry.*')">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                            </svg>
+                            {{ __('Inquiries') }}
+                        </div>
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +78,10 @@
         <div class="pt-2 pb-3 space-y-1 px-4">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="rounded-xl font-bold">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('inquiry.index')" :active="request()->routeIs('inquiry.*')">
+                {{ __('Inquiries') }}
             </x-responsive-nav-link>
         </div>
 

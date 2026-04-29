@@ -26,6 +26,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+// Grouped under auth middleware for security
 Route::middleware('auth')->group(function () {
     // Standard Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,7 +36,7 @@ Route::middleware('auth')->group(function () {
     // Admin-Specific Staff Management
     // This handles the inline delete button in the staff list
     Route::delete('/admin/user/{user}', [ProfileController::class, 'adminDestroy'])->name('admin.destroy');
-    
+
     // This handles the Administrative Password Reset form
     Route::put('/admin/password-update', [ProfileController::class, 'adminUpdatePassword'])->name('admin.password.update');
 });
@@ -45,4 +46,4 @@ Route::post('/contact/send', [ContactController::class, 'send'])->name('contacts
 Route::post('/admin/inquiries/bulk', [DashboardController::class, 'bulkAction'])->name('admin.inquiries.bulk');
 Route::post('/admin/inquiries/{contact}/read', [DashboardController::class, 'markAsRead'])->name('admin.inquiries.read');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

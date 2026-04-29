@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 use App\Models\Inquiry;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -59,5 +60,14 @@ class InquiryController extends Controller
 
         // Otherwise, return the full blade view
         return view('admin.inquiries.index', compact('inquiries', 'stats', 'chartLabels', 'chartData'));
+=======
+use Illuminate\Http\Request;
+
+class InquiryController extends Controller
+{
+    public function index()
+    {
+        return view('inquiry'); // This loads your inquiry.blade.php
+>>>>>>> a5273f9723aa1500883533595150bff389038351
     }
 }

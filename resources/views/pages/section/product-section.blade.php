@@ -1,231 +1,768 @@
 <section
-    x-data="{
-        searchTerm: '',
-        selectedCategories: [],
-        showScrollTop: false,
-        isAtBottom: false,
-        
-        // Gallery State
-        isGalleryOpen: false,
-        currentGallery: [],
-        currentImgIndex: 0,
-        activeProductName: '',
-
-        // --- PRODUCT DATA ---
-        productData: [
-            {
-                category: 'Cable Assemblies',
-                items: [
-                    { name: 'WH-1001', description: 'Automotive wire harness', image: '{{ asset('images/images/CABLE ASSEMBIES/cable-assy.jpg') }}', gallery: ['{{ asset('images/images/CABLE ASSEMBIES/img-1.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/img-2.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/img-3.jpg') }}'] },
-                    { name: 'WH-1002', description: 'Industrial wire harness', image: '{{ asset('images/images/CABLE ASSEMBIES/cable-assy2.jpg') }}', gallery: ['{{ asset('images/images/CABLE ASSEMBIES/cable-assy2.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/cable-assy3.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/cable-assy4.jpg') }}'] },
-                    { name: 'WH-1003', description: 'Custom wire harness', image: '{{ asset('images/images/CABLE ASSEMBIES/cable-assy3.jpg') }}', gallery: ['{{ asset('images/images/CABLE ASSEMBIES/cable-assy3.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/cable-assy.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/cable-assy4.jpg') }}'] },
-                    { name: 'WH-1004', description: 'Heavy-duty harness', image: '{{ asset('images/images/CABLE ASSEMBIES/cable-assy4.jpg') }}', gallery: ['{{ asset('images/images/CABLE ASSEMBIES/cable-assy4.jpg') }}', '{{ asset('images/images/CABLE ASSEMBIES/cable-assy3.jpg') }}'] }
-                ]
-            },
-            {
-                category: 'Injection Molding',
-                items: [
-                    { name: 'SA-2001', description: 'Precision assembly unit', image: '{{ asset('images/images/INJECTION MOLDING/7.png') }}', gallery: ['{{ asset('images/images/INJECTION MOLDING/7.png') }}'] },
-                    { name: 'SA-2002', description: 'Electronic assembly', image: '{{ asset('images/images/INJECTION MOLDING/8.png') }}', gallery: ['{{ asset('images/images/INJECTION MOLDING/8.png') }}'] },
-                    { name: 'SA-2003', description: 'Mechanical assembly', image: '{{ asset('images/images/INJECTION MOLDING/9.png') }}', gallery: ['{{ asset('images/images/INJECTION MOLDING/9.png') }}'] },
-                    { name: 'SA-2004', description: 'Custom subcon unit', image: '{{ asset('images/images/INJECTION MOLDING/20.png') }}', gallery: ['{{ asset('images/images/INJECTION MOLDING/20.png') }}'] }
-                ]
-            },
-            {
-                category: 'Power Cords',
-                items: [
-                    { name: 'CA-3001', description: 'High-speed cable', image: '{{ asset('images/images/POWER CORDS/24.png') }}', gallery: ['{{ asset('images/images/POWER CORDS/24.png') }}'] },
-                    { name: 'CA-3002', description: 'USB cable assembly', image: '{{ asset('images/images/POWER CORDS/busbar-assemblies1.jpg') }}', gallery: ['{{ asset('images/images/POWER CORDS/busbar-assemblies1.jpg') }}'] },
-                    { name: 'CA-3003', description: 'HDMI assembly', image: '{{ asset('images/images/POWER CORDS/busbar-assemblies2.jpg') }}', gallery: ['{{ asset('images/images/POWER CORDS/busbar-assemblies2.jpg') }}'] },
-                    { name: 'CA-3004', description: 'Industrial cable', image: '{{ asset('images/images/POWER CORDS/hubel-leviton-plugs.jpg') }}', gallery: ['{{ asset('images/images/POWER CORDS/hubel-leviton-plugs.jpg') }}'] },
-                    { name: 'CA-3005', description: 'ICE Cords', image: '{{ asset('images/images/POWER CORDS/ice-cords.jpg') }}', gallery: ['{{ asset('images/images/POWER CORDS/ice-cords.jpg') }}'] }
-                ]
-            }
-        ],
-
-        get filteredProducts() {
-            let all = [];
-            this.productData.forEach(cat => {
-                cat.items.forEach(item => {
-                    all.push({...item, category: cat.category});
-                });
-            });
-            return all.filter(p => {
-                const matchesSearch = p.name.toLowerCase().includes(this.searchTerm.toLowerCase()) || 
-                                     p.description.toLowerCase().includes(this.searchTerm.toLowerCase());
-                const matchesCategory = this.selectedCategories.length === 0 || this.selectedCategories.includes(p.category);
-                return matchesSearch && matchesCategory;
-            });
-        },
-
-        toggleCategory(cat) {
-            if (this.selectedCategories.includes(cat)) {
-                this.selectedCategories = this.selectedCategories.filter(c => c !== cat);
-            } else {
-                this.selectedCategories.push(cat);
-            }
-        },
-
-        openGallery(product) {
-            if (product.gallery && product.gallery.length > 0) {
-                this.currentGallery = product.gallery;
-                this.currentImgIndex = 0;
-                this.activeProductName = product.name;
-                this.isGalleryOpen = true;
-                document.body.style.overflow = 'hidden';
-            }
-        },
-
-        closeGallery() {
-            this.isGalleryOpen = false;
-            document.body.style.overflow = 'auto';
-        },
-
-        highlight(text) {
-            if (!this.searchTerm.trim()) return text;
-            const regex = new RegExp(`(${this.searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return text.replace(regex, `<mark class='bg-yellow-200 text-blue-900 rounded-sm px-0.5 font-bold'>$1</mark>`);
-        },
-
-        handleScroll() {
-            this.showScrollTop = window.scrollY > 400;
-            this.isAtBottom = (window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 120);
-        }
-    }"
-    @scroll.window="handleScroll()"
+    x-data="productPage()"
     class="bg-gray-50 min-h-screen relative">
+
+    <!-- ================= HEADER ================= -->
     <div class="tech-header-container text-white py-16 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="motherboard-traces"></div>
-            <div class="moving-glow"></div>
-        </div>
         <div class="relative z-10 max-w-7xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight uppercase">Products</h1>
-            <div class="h-1 w-20 bg-blue-500 mx-auto mb-6 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
-            <p class="text-blue-100 max-w-xl mx-auto text-base md:text-lg font-light leading-relaxed">
-                High-quality wiring solutions and precision components tailored for global industrial standards.
+            <h1 class="text-4xl md:text-5xl font-black mb-4 uppercase">
+                Wire Harness & Cable Products
+            </h1>
+
+            <p class="text-blue-100 max-w-xl mx-auto text-base md:text-lg">
+                Explore high-quality wire harnesses, cable assemblies, injection molding,
+                and power cords designed for industrial and global standards.
             </p>
         </div>
+
     </div>
 
-    <div class="max-w-7xl mx-auto px-6 md:px-12 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
 
+    @php
+    $products = [
+
+    [
+    'category' => 'Wire Harnesses',
+    'items' => [
+    [
+    'name' => 'Cut/Crimp Wires',
+    'description' => 'Cut/Crimp Wires',
+    'image' => asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big1.jpg'),
+
+
+    'subcategories' => [
+    [
+    'name' => 'Big Wires',
+    'gallery' => [
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big1.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big2.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big3.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big4.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big5.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big6.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big7.jpg')
+    ]
+    ],
+    [
+    'name' => 'Lead Wires',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp1.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp2.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp3.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp4.png')
+
+    ]
+    ],
+    [
+    'name' => 'Tinned Wires',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-AND-TINNED\cut1.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-AND-TINNED\cut2.jpg')
+    ]
+    ],
+    [
+    'name' => 'Cut Wires',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUTTING\cutting1.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUTTING\cutting2.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUTTING\cutting3.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUTTING\cutting4.jpg'),
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUTTING\cutting5.jpg')
+
+    ]
+    ]
+    ],
+
+    // optional fallback gallery
+    'gallery' => []
+    ],
+
+
+
+
+
+    [
+    'name' => 'Fan Motors',
+    'description' => 'Fan Motors',
+    'image' => asset('images\images\WIRE-HARNESSES\FAN-MOTORS\FAN-MOTORS.jpg'),
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\FAN-MOTORS\FAN-MOTORS.jpg'),
+    asset('images\images\WIRE-HARNESSES\FAN-MOTORS\FAN-MOTORS2.jpg')
+    ]
+    ],
+
+
+
+
+    [
+    'name' => 'Wire Assemblies',
+    'description' => 'Wire Assemblies',
+    'image' => asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big1.jpg'),
+
+
+    'subcategories' => [
+    [
+    'name' => 'Wires with Mate-N Lock Housting',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\HOUSING.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\HOUSING2.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\HOUSING3.jpg'),
+
+    ]
+    ],
+    [
+    'name' => 'Wires to Bussbar Assy',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-TO-BUSSBAR-ASSY\BUSSBAR-ASSY.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-TO-BUSSBAR-ASSY\BUSSBAR-ASSY2.jpg'),
+
+
+    ]
+    ],
+    [
+    'name' => 'Wires to Inlet/Outlet Assy ',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRES-TO-INLET-OUTLET-ASSY\INLET1.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRES-TO-INLET-OUTLET-ASSY\INLET2.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRES-TO-INLET-OUTLET-ASSY\INLET3.jpg'),
+    ]
+    ],
+    [
+    'name' => 'Wire with Housing ',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\HOUSING1.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\HOUSING2.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\HOUSING3.jpg'),
+    ]
+    ],
+    [
+    'name' => 'More Wire Harness Assembly',
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\1.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\2.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\3.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\4.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\5.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\6.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\7.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\8.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\9.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\10.png'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\11.png'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\12.png'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\13.png'),
+
+
+    ]
+    ]
+    ],
+
+    // optional fallback gallery
+    'gallery' => []
+    ],
+
+
+
+
+
+    [
+    'name' => 'Ribon Cables',
+    'description' => 'Ribon Cables',
+    'image' => asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\1.jpg'),
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\1.jpg'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\2.jpg'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\3.jpg'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\4.jpg'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\5.jpg'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\6.jpg'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\7.png'),
+    asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\8.png'),
+    ]
+    ],
+
+
+    [
+    'name' => 'Wire Harnesses with Ferrite Core',
+    'description' => 'Wire Harnesses with Ferrite Core',
+    'image' => asset('images\images\WIRE-HARNESSES\FERRITE-CORE\1.jpg'),
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\FERRITE-CORE\1.jpg'),
+    asset('images\images\WIRE-HARNESSES\FERRITE-CORE\2.jpg'),
+    asset('images\images\WIRE-HARNESSES\FERRITE-CORE\3.jpg'),
+    ]
+    ],
+
+    [
+    'name' => 'Power Pole',
+    'description' => 'Power Pole',
+    'image' => asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\1.jpg'),
+    'gallery' => [
+    asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\1.jpg'),
+    asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\2.jpg'),
+    asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\3.jpg'),
+    asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\4.png')
+    ]
+    ]
+    ]
+    ],
+
+
+
+    [
+    'category' => 'Cable Assemblies',
+    'items' => [
+    [
+    'name' => 'Cable Assemblies',
+    'description' => 'Cable Assemblies',
+    'image' => asset('images\images\CABLE-ASSEMBIES\1.jpg'),
+    'gallery' => [
+    asset('images\images\CABLE-ASSEMBIES\1.jpg'),
+    asset('images\images\CABLE-ASSEMBIES\2.jpg'),
+    asset('images\images\CABLE-ASSEMBIES\3.jpg'),
+    asset('images\images\CABLE-ASSEMBIES\4.jpg'),
+    asset('images\images\CABLE-ASSEMBIES\5.jpg'),
+    asset('images\images\CABLE-ASSEMBIES\6.jpg'),
+    asset('images\images\CABLE-ASSEMBIES\7.jpg')
+    ]
+    ]
+    ]
+    ],
+
+
+
+    [
+    'category' => 'Subcon Assemblies',
+    'items' => [
+    [
+    'name' => 'Circuit Breakers',
+    'description' => 'Circuit Breakers',
+    'image' => asset('images\images\SUBCON\CIRCUIT-BREAKERS\1.jpg'),
+    'gallery' => [
+    asset('images\images\SUBCON\CIRCUIT-BREAKERS\1.jpg'),
+    asset('images\images\SUBCON\CIRCUIT-BREAKERS\2.jpg'),
+
+    ]
+    ],
+
+    [
+    'name' => 'Spot Assembly',
+    'description' => 'Spot Assembly',
+    'image' => asset('images\images\SUBCON\SPOT-ASSEMBLY\1.jpg'),
+    'gallery' => [
+    asset('images\images\SUBCON\SPOT-ASSEMBLY\1.jpg'),
+    asset('images\images\SUBCON\SPOT-ASSEMBLY\2.jpg'),
+    asset('images\images\SUBCON\SPOT-ASSEMBLY\3.jpg')
+
+
+    ]
+    ],
+
+    [
+    'name' => 'User Interface Assembly',
+    'description' => 'User Interface Assembly',
+    'image' => asset('images\images\SUBCON\USER-INTERFACE\1.jpg'),
+    'gallery' => [
+    asset('images\images\SUBCON\USER-INTERFACE\1.jpg'),
+    asset('images\images\SUBCON\USER-INTERFACE\2.jpg'),
+    asset('images\images\SUBCON\USER-INTERFACE\3.jpg')
+
+
+
+    ]
+    ],
+
+    [
+    'name' => 'Kits',
+    'description' => 'Kits',
+    'image' => asset('images\images\SUBCON\KITS\LITERATURE\LITKIT4.jpg'),
+
+
+    'subcategories' => [
+    [
+    'name' => 'Hardware',
+    'gallery' => [
+    asset('images\images\SUBCON\KITS\HARDWARE\HARDWARE-KITS.jpg'),
+    asset('images\images\SUBCON\KITS\HARDWARE\HARDWARE-KITS2.jpg'),
+    asset('images\images\SUBCON\KITS\HARDWARE\HARDWARE-KITS3.jpg'),
+    asset('images\images\SUBCON\KITS\HARDWARE\HARDWARE-KITS4.jpg'),
+    asset('images\images\SUBCON\KITS\HARDWARE\HARDWARE-KITS5.jpg')
+
+    ]
+    ],
+    [
+    'name' => 'Literature',
+    'gallery' => [
+    asset('images\images\SUBCON\KITS\LITERATURE\LITKIT.jpg'),
+    asset('images\images\SUBCON\KITS\LITERATURE\LITKIT2.jpg'),
+    asset('images\images\SUBCON\KITS\LITERATURE\LITKIT3.jpg'),
+    asset('images\images\SUBCON\KITS\LITERATURE\LITKIT4.jpg'),
+    asset('images\images\SUBCON\KITS\LITERATURE\LITKIT5.jpg')
+
+
+    ]
+    ],
+    [
+
+    'name' => 'Rail',
+    'gallery' => [
+    asset('images\images\SUBCON\KITS\RAIL\RAILKIT.jpg'),
+    asset('images\images\SUBCON\KITS\RAIL\RAILKIT2.jpg'),
+
+
+    ]
+    ]
+    ],
+
+    // optional fallback gallery
+    'gallery' => []
+    ],
+
+
+
+
+    [
+    'name' => 'Mount and Top Panel Assy',
+    'description' => 'Mount and Top Panel Assy',
+    'image' => asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\1.jpg'),
+
+
+    'subcategories' => [
+    [
+    'name' => 'Metal Bezzel Assy',
+    'gallery' => [
+    asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\1.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\2.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\3.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\4.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\5.jpg'),
+
+    ]
+    ],
+    [
+    'name' => 'Top Panel Assy',
+    'gallery' => [
+    asset('images\images\SUBCON\REAR-PANEL\TOP-PANEL\1.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\TOP-PANEL\2.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\TOP-PANEL\3.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\TOP-PANEL\4.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\TOP-PANEL\5.jpg'),
+
+
+    ]
+    ],
+
+
+    [
+    'name' => 'Rack Mount Assembly',
+    'gallery' => [
+    asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\1.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\2.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\3.jpg'),
+
+
+
+    ]
+    ]
+    ]
+    ]
+    ],
+
+    // optional fallback gallery
+    'gallery' => []
+    ],
+
+
+
+
+
+
+
+
+    [
+    'category' => 'Power Cords',
+    'items' => [
+    [
+    'name' => 'IEC Cords',
+    'description' => 'IEC Cords',
+    'image' => asset('images\images\POWER-CORDS\ice-cords.jpg'),
+    'gallery' => [asset('images\images\POWER-CORDS\ice-cords.jpg')]
+    ],
+    [
+    'name' => 'Hubbel-Leviton',
+    'description' => 'Hubbel-Leviton',
+    'image' => asset('images\images\POWER-CORDS\hubel-leviton-plugs.jpg'),
+    'gallery' => [asset('images\images\POWER-CORDS\hubel-leviton-plugs.jpg')]
+    ],
+    [
+    'name' => 'Bussbar Assemblies',
+    'description' => 'Bussbar Assemblies',
+    'image' => asset('images\images\POWER-CORDS\busbar-assemblies1.jpg'),
+    'gallery' => [
+    asset('images\images\POWER-CORDS\busbar-assemblies1.jpg'),
+    asset('images\images\POWER-CORDS\busbar-assemblies2.jpg'),
+    ]
+    ],
+
+    [
+    'name' => 'Three Prong Cords',
+    'description' => 'Three Prong Cords',
+    'image' => asset('images/images/POWER CORDS/ice-cords.jpg'),
+    'gallery' => [asset('images/images/POWER CORDS/ice-cords.jpg')
+    ]
+    ]
+    ]
+    ]
+    ];
+    @endphp
+
+    <!-- ================= CONTENT ================= -->
+    <div class="max-w-7xl mx-auto px-6 md:px-12 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+            <!-- ================= FILTER ================= -->
+            @php
+            $totalProducts = 0;
+
+            foreach ($products as $category) {
+            $totalProducts += count($category['items']);
+            }
+            @endphp
             <div class="md:col-span-1">
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-28 h-fit">
+
+                    <!-- TITLE -->
                     <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                        <i class="fas fa-search text-blue-600"></i> Filter
+                        <i class="fas fa-search text-blue-600 text-sm"></i> Filter
                     </h2>
+
+                    <!-- SEARCH -->
                     <div class="mb-8">
                         <input
                             type="text"
                             placeholder="Search products..."
-                            class="w-full border border-gray-200 rounded-xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none transition"
+                            class="w-full border border-gray-200 rounded-xl px-4 py-2 
+                       focus:ring-2 focus:ring-blue-500 outline-none transition"
                             x-model="searchTerm" />
                     </div>
-                    <div class="space-y-3">
-                        <h3 class="font-semibold text-gray-400 text-xs uppercase tracking-widest mb-4">Categories</h3>
-                        <template x-for="cat in productData" :key="cat.category">
-                            <label class="flex items-center justify-between p-2 rounded-lg cursor-pointer group transition-all duration-300"
-                                :class="selectedCategories.includes(cat.category) ? 'bg-blue-50/50' : 'hover:bg-gray-50'">
-                                <div class="flex items-center space-x-3">
-                                    <input type="checkbox"
-                                        :checked="selectedCategories.includes(cat.category)"
-                                        @change="toggleCategory(cat.category)"
-                                        class="w-4 h-4 accent-blue-600 rounded cursor-pointer" />
-                                    <span class="text-sm transition-colors duration-300"
-                                        :class="selectedCategories.includes(cat.category) ? 'text-blue-700 font-semibold' : 'text-gray-700 group-hover:text-blue-600'"
-                                        x-text="cat.category"></span>
-                                </div>
-                                <span class="text-[10px] px-2 py-0.5 rounded font-mono font-bold border transition-all duration-300"
-                                    :class="selectedCategories.includes(cat.category) ? 'bg-blue-600 text-white border-blue-400' : 'bg-gray-100 text-gray-500 border-gray-200'"
-                                    x-text="cat.items.length.toString().padStart(2, '0')"></span>
-                            </label>
-                        </template>
+
+                    <!-- CATEGORIES -->
+                    <div class="space-y-2">
+                        <h3 class="font-semibold text-gray-400 text-xs uppercase tracking-widest mb-4">
+                            Categories
+                        </h3>
+
+                        <!-- ALL BUTTON -->
+                        <button
+                            @click="selected = []"
+                            class="w-full flex justify-between items-center px-4 py-2 rounded-lg"
+                            :class="selected.length === 0 ? 'bg-blue-600 text-white' : 'bg-gray-100'">
+
+                            <span>All</span>
+
+                            <span class="text-xs font-bold bg-white/20 px-2 py-1 rounded">
+                                {{ $totalProducts }}
+                            </span>
+                        </button>
+
+                        <!-- CATEGORY BUTTONS -->
+                        @foreach ($products as $cat)
+                        <button
+                            @click="toggleCategory('{{ $cat['category'] }}')"
+                            class="w-full flex justify-between items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-300"
+                            :class="selected.includes('{{ $cat['category'] }}')
+                    ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)] translate-x-1'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'">
+
+                            <span>{{ $cat['category'] }}</span>
+
+                            <span
+                                class="text-[10px] px-2 py-0.5 rounded-md font-bold"
+                                :class="selected.includes('{{ $cat['category'] }}')
+                        ? 'bg-white/20 text-white border border-white/30'
+                        : 'bg-blue-50 text-blue-600 border border-blue-100'">
+
+                                {{ count($cat['items']) }}
+                            </span>
+                        </button>
+                        @endforeach
+
                     </div>
                 </div>
             </div>
 
+
+
+            <!-- ================= PRODUCTS ================= -->
             <div class="md:col-span-3">
-                <div x-show="filteredProducts.length === 0" x-cloak class="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-300">
-                    <p class="text-gray-500">No products found matching your criteria.</p>
-                </div>
+                <div x-show="activeSubcategories.length > 0">
 
-                <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-                    <template x-for="(product, i) in filteredProducts" :key="i">
-                        <div class="relative group">
-                            <div class="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm transition-all duration-300 group-hover:shadow-xl">
-                                <div class="h-52 bg-gray-50 flex items-center justify-center p-6 overflow-hidden">
-                                    <img :src="product.image" class="max-h-full object-contain transition-transform duration-500 group-hover:scale-110" />
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="font-bold text-gray-900 text-lg mb-1" x-html="highlight(product.name)"></h3>
-                                    <p class="text-gray-500 text-sm" x-html="highlight(product.description)"></p>
-                                </div>
-                            </div>
+                    <!-- HEADER -->
+                    <div class="mb-8">
+                        <button
+                            @click="resetSubcategories()"
+                            class="text-blue-600 font-semibold hover:underline mb-2">
+                            ← Back to Products
+                        </button>
 
-                            <div class="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-3xl pointer-events-none">
-                                <button @click="openGallery(product)"
-                                    class="pointer-events-auto bg-white text-blue-600 px-6 py-2.5 rounded-xl font-bold text-sm shadow-2xl flex items-center gap-2 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-105">
-                                    <i class="fas fa-search-plus"></i> View Details
+                        <h2 class="text-2xl font-bold"
+                            x-text="selectedProduct?.name">
+                        </h2>
+                    </div>
+
+                    <!-- SAME GRID AS PRODUCTS -->
+                    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+                        <template x-for="sub in activeSubcategories" :key="sub.name">
+                            <article
+                                @click="openSubCategory(sub)"
+                                class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-xl transition cursor-pointer">
+
+                                <!-- IMAGE (MATCH PRODUCT STYLE EXACTLY) -->
+                                <div class="h-40 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
+                                    <img
+                                        :src="sub.gallery[0]"
+                                        class="max-h-full object-contain">
+                                </div>
+
+                                <!-- TITLE -->
+                                <h2 class="font-bold text-gray-900">
+                                    <span x-text="sub.name"></span>
+                                </h2>
+
+                                <!-- DESCRIPTION (FAKE BUT IMPORTANT FOR BALANCE) -->
+                                <p class="text-sm text-gray-500">
+                                    Sub-category of <span x-text="selectedProduct?.name"></span>
+                                </p>
+
+                                <!-- BUTTON -->
+                                <button
+                                    class="mt-4 text-blue-600 font-semibold">
+                                    View Details
                                 </button>
-                            </div>
+
+                            </article>
+                        </template>
+
+                    </div>
+                </div>
+
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+                    x-show="activeSubcategories.length === 0">
+
+                    @foreach ($products as $category)
+                    @foreach ($category['items'] as $product)
+
+                    <article
+                        @click="openGallery({{ \Illuminate\Support\Js::from($product) }})"
+                        class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-xl transition cursor-pointer"
+                        x-show="filterProduct('{{ strtolower($product['name']) }}', '{{ $category['category'] }}')">
+
+                        <div class="h-40 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
+                            <img
+                                src="{{ $product['image'] }}"
+                                alt="{{ $product['name'] }} Philippines - {{ $product['description'] }}"
+                                loading="lazy"
+                                class="max-h-full object-contain pointer-events-none">
                         </div>
-                    </template>
+
+                        <h2 class="font-bold text-gray-900">
+                            {{ $product['name'] }}
+                        </h2>
+
+                        <p class="text-sm text-gray-500">
+                            {{ $product['description'] }}
+                        </p>
+
+                        <button
+                            @click.stop="openGallery({{ \Illuminate\Support\Js::from($product) }})"
+                            class="mt-4 text-blue-600 font-semibold">
+                            View Details
+                        </button>
+
+                    </article>
+
+                    @endforeach
+                    @endforeach
+
                 </div>
             </div>
+
         </div>
     </div>
 
-    <div x-show="isGalleryOpen"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-[100] bg-slate-900/95 backdrop-blur-sm flex flex-col items-center justify-center p-4 md:p-10"
-        x-cloak>
+    <!-- ================= GALLERY ================= -->
+    <div
+        x-show="isOpen"
+        x-transition
+        @click="close()"
 
-        <div class="absolute top-6 left-6 right-6 flex justify-between items-center text-white">
-            <div>
-                <h2 class="text-xl font-black tracking-tight uppercase" x-text="activeProductName"></h2>
-                <p class="text-xs text-blue-400 font-bold tracking-widest uppercase">
-                    Image <span x-text="currentImgIndex + 1"></span> of <span x-text="currentGallery.length"></span>
-                </p>
+        @keydown.window.escape="close()"
+        @keydown.window.arrow-right.prevent="next()"
+        @keydown.window.arrow-left.prevent="prev()"
+
+        class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+
+        <!-- CLOSE BUTTON -->
+        <button
+            @click="close()"
+            class="absolute top-6 right-6 text-white text-2xl z-50">
+            ✕
+        </button>
+
+        <div class="relative flex items-center justify-center w-full max-w-5xl">
+
+            <!-- LEFT ARROW -->
+            <button
+                @click.stop="prev()"
+                class="absolute -left-12 md:-left-16 top-1/2 -translate-y-1/2 
+           w-12 h-12 flex items-center justify-center
+           bg-white/10 hover:bg-white text-white hover:text-blue-600
+           rounded-full transition-all z-50">
+
+                <i class="fas fa-chevron-left text-xl"></i>
+            </button>
+
+            <!-- IMAGE -->
+            <img
+                :src="gallery.length ? gallery[index] : ''"
+                @click.stop
+                class="max-h-[70vh] object-contain rounded-xl shadow-2xl transition-all duration-300">
+
+            <!-- RIGHT ARROW -->
+            <button
+                @click.stop="next()"
+                class="absolute -right-12 md:-right-16 top-1/2 -translate-y-1/2 
+           w-12 h-12 flex items-center justify-center
+           bg-white/10 hover:bg-white text-white hover:text-blue-600
+           rounded-full transition-all z-50">
+
+                <i class="fas fa-chevron-right text-xl"></i>
+
+            </button>
+
+        </div>
+
+        <div class="absolute bottom-6 left-0 right-0 flex justify-center">
+            <div class="flex gap-3 overflow-x-auto px-4 py-2 bg-white/10 backdrop-blur rounded-xl">
+
+                <template x-for="(img, i) in gallery" :key="i">
+                    <img
+                        :src="img"
+                        @click.stop="index = i"
+                        class="w-16 h-16 object-cover rounded-lg cursor-pointer border-2 transition-all"
+                        :class="index === i 
+                    ? 'border-blue-500 scale-110' 
+                    : 'border-transparent opacity-60 hover:opacity-100'">
+                </template>
+
             </div>
-            <button @click="closeGallery()" class="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
         </div>
 
-        <div class="relative w-full max-w-5xl h-[70vh] flex items-center justify-center" @click.away="closeGallery()">
-            <button @click="currentImgIndex = (currentImgIndex - 1 + currentGallery.length) % currentGallery.length"
-                class="absolute left-0 md:-left-16 z-10 p-4 bg-white/10 hover:bg-white text-white hover:text-blue-600 rounded-full transition-all active:scale-90">
-                <i class="fas fa-chevron-left text-2xl"></i>
-            </button>
-
-            <div class="w-full h-full flex items-center justify-center overflow-hidden rounded-2xl shadow-2xl border border-white/10">
-                <img :src="currentGallery[currentImgIndex]"
-                    class="max-w-full max-h-full object-contain transition-all duration-500 transform"
-                    :key="currentImgIndex" />
-            </div>
-
-            <button @click="currentImgIndex = (currentImgIndex + 1) % currentGallery.length"
-                class="absolute right-0 md:-right-16 z-10 p-4 bg-white/10 hover:bg-white text-white hover:text-blue-600 rounded-full transition-all active:scale-90">
-                <i class="fas fa-chevron-right text-2xl"></i>
-            </button>
-        </div>
-
-        <div class="mt-8 flex gap-3 overflow-x-auto p-2">
-            <template x-for="(img, idx) in currentGallery" :key="idx">
-                <button @click="currentImgIndex = idx"
-                    class="w-16 h-16 rounded-lg overflow-hidden border-2 transition-all"
-                    :class="currentImgIndex === idx ? 'border-blue-500 scale-110 shadow-lg' : 'border-transparent opacity-50 hover:opacity-100'">
-                    <img :src="img" class="w-full h-full object-cover" />
-                </button>
-            </template>
-        </div>
     </div>
 
+
+
+    <!-- ================= SEO PRODUCTS ================= -->
+    @php
+    $seoProducts = [];
+
+    foreach ($products as $category) {
+    foreach ($category['items'] as $product) {
+    $seoProducts[] = [
+    "@type" => "Product",
+    "name" => $product['name'],
+    "description" => $product['description'],
+    "image" => $product['image'],
+    ];
+    }
+    }
+    @endphp
+
+    <!-- ================= STRUCTURED DATA ================= -->
+    <script type="application/ld+json">
+        @json([
+            "@context" => "https://schema.org",
+            "@type" => "ItemList",
+            "itemListElement" => $seoProducts
+        ])
+    </script>
 </section>
+
+<!-- ================= ALPINE ================= -->
+<script>
+    function productPage() {
+        return {
+            searchTerm: '',
+            selected: [],
+            categories: ['Cable Assemblies', 'Power Cords', 'Injection Molding'],
+
+
+            activeSubcategories: [],
+            selectedProduct: null,
+
+            // GALLERY STATE
+            isOpen: false,
+            gallery: [],
+            index: 0,
+            productName: '',
+
+            toggleCategory(cat) {
+                if (this.selected.includes(cat)) {
+                    this.selected = this.selected.filter(c => c !== cat)
+                } else {
+                    this.selected.push(cat)
+                }
+            },
+
+            filterProduct(name, category) {
+                let search = name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                let cat = this.selected.length === 0 || this.selected.includes(category)
+                return search && cat
+            },
+
+            openGallery(product) {
+
+                // ✅ HANDLE SUBCATEGORY
+                if (product.subcategories) {
+                    this.activeSubcategories = product.subcategories
+                    this.selectedProduct = product
+                    return
+                }
+
+                // ✅ NORMAL GALLERY
+                this.gallery = product.gallery || []
+                this.index = 0
+                this.productName = product.name
+                this.isOpen = true
+                document.body.style.overflow = 'hidden'
+            },
+
+            openSubCategory(sub) {
+                this.gallery = sub.gallery || []
+                this.index = 0
+                this.productName = sub.name
+                this.isOpen = true
+                document.body.style.overflow = 'hidden'
+            },
+
+            resetSubcategories() {
+                this.activeSubcategories = []
+                this.selectedProduct = null
+            },
+
+            close() {
+                this.isOpen = false
+                document.body.style.overflow = 'auto'
+            },
+
+            next() {
+                this.index = (this.index + 1) % this.gallery.length
+            },
+
+            prev() {
+                this.index = (this.index - 1 + this.gallery.length) % this.gallery.length
+            }
+        }
+    }
+</script>

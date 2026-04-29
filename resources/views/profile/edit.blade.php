@@ -3,6 +3,10 @@
 
 <style>
     .highlight { background-color: #fef08a; border-radius: 2px; padding: 0 1px; color: #1e293b; }
+    /* Custom scrollbar for the staff list */
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 </style>
 
 <x-app-layout>
@@ -16,7 +20,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
             {{-- Update Profile Info --}}
-            <div class="p-4 sm:p-8 bg-white shadow-sm sm:rounded-[3rem] border border-gray-100">
+            <div class="p-4 sm:p-10 bg-white shadow-sm sm:rounded-[3rem] border border-gray-100">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
                 </div>
@@ -24,10 +28,10 @@
 
             {{-- Administrative Password Reset --}}
             @if(auth()->user()->is_admin)
-                <div class="p-4 sm:p-8 bg-white shadow-sm sm:rounded-[3rem] border border-gray-100">
-                    <div class="max-w-xl">
+                <div class="p-8 sm:p-12 bg-white shadow-sm sm:rounded-[3rem] border border-gray-100">
+                    <div class="max-w-3xl"> {{-- Increased max-width for better internal spacing --}}
                         <section>
-                            <header class="mb-6">
+                            <header class="mb-8">
                                 <div class="flex items-center gap-3 mb-2">
                                     <div class="bg-red-500 p-2 rounded-xl text-white">
                                         <i class="fas fa-user-shield text-sm"></i>
@@ -41,11 +45,11 @@
                                 </p>
                             </header>
 
-                            <form method="post" action="{{ route('admin.password.update') }}" class="mt-6 space-y-4">
+                            <form method="post" action="{{ route('admin.password.update') }}" class="mt-6 space-y-6">
                                 @csrf
                                 @method('put')
 
-                                <div class="relative group">
+                                <div class="relative group max-w-xl">
                                     <x-input-label for="target_email" :value="__('Staff Email Address')" class="text-slate-700 font-bold mb-1" />
                                     <div class="relative">
                                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
@@ -56,7 +60,7 @@
                                     <x-input-error :messages="$errors->get('email')" class="mt-1 text-[10px]" />
                                 </div>
 
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
                                     <div>
                                         <x-input-label for="admin_update_password" :value="__('New Password')" class="text-slate-700 font-bold mb-1" />
                                         <x-text-input id="admin_update_password" name="password" type="password" class="block w-full bg-gray-50/50 border-gray-200 rounded-2xl transition-all" autocomplete="new-password" />
@@ -70,8 +74,8 @@
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-4 pt-4">
-                                    <button type="submit" class="inline-flex items-center px-6 py-3 bg-slate-900 !bg-[#0f172a] border border-transparent rounded-2xl font-black text-[10px] text-white uppercase tracking-[0.2em] hover:bg-slate-800 transition shadow-xl shadow-slate-200">
+                                <div class="flex items-center gap-4 pt-6">
+                                    <button type="submit" class="inline-flex items-center px-8 py-3 bg-slate-900 !bg-[#0f172a] border border-transparent rounded-2xl font-black text-[10px] text-white uppercase tracking-[0.2em] hover:bg-slate-800 transition shadow-xl shadow-slate-200">
                                         <i class="fas fa-key mr-2"></i> {{ __('Override Password') }}
                                     </button>
 
@@ -101,7 +105,7 @@
                             search: '',
                             highlight(text) {
                                 if (!this.search) return text;
-                                const re = new RegExp(`(${this.search})`, 'gi');
+                                const re = new RegExp(`(${this.search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
                                 return text.replace(re, '<span class=\'highlight\'>$1</span>');
                             }
                          }">
@@ -117,7 +121,6 @@
                                 </div>
                             </div>
 
-                            {{-- Search Input --}}
                             <div class="relative group">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                                     <i class="fas fa-search text-[10px]"></i>

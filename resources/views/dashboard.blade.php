@@ -552,10 +552,19 @@ initChart() {
                             <h4 class="text-sm sm:text-base font-bold text-slate-800" x-text="selectedInquiry.subject"></h4>
                         </div>
                         
-                        <div class="bg-slate-50 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-slate-100 shadow-inner">
-                            <p class="text-[9px] sm:text-[10px] font-black text-slate-300 uppercase tracking-widest mb-4">Message Body</p>
-                            <div class="text-xs sm:text-sm text-slate-600 leading-[1.8] whitespace-pre-line font-medium" x-text="selectedInquiry.message"></div>
-                        </div>
+<div class="bg-slate-50 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] border border-slate-100 shadow-inner">
+    <div class="flex justify-between items-center mb-4">
+        <p class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-widest">Message Body</p>
+        <i class="fas fa-envelope-open-text text-slate-300 text-xs"></i>
+    </div>
+
+    <div class="bg-white/70 p-6 sm:p-8 rounded-2xl border border-white shadow-sm min-h-[300px]">
+        <div 
+            class="text-xs sm:text-sm text-slate-700 leading-[1.8] whitespace-pre-wrap break-words font-medium tracking-normal" 
+            x-text="selectedInquiry.message">
+        </div>
+    </div>
+</div>
                     </div>
 
 <div class="p-8 border-t border-slate-50 bg-white flex-shrink-0">

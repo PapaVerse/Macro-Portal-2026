@@ -11,13 +11,16 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
-});
+//Route::middleware('guest')->group(function () {
+//    Route::get('register', [RegisteredUserController::class, 'create'])
+//      ->name('register');
+//});
 
 // Accessible by both guests and logged-in admins to allow staff creation
-Route::post('register', [RegisteredUserController::class, 'store']);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::post('register', [RegisteredUserController::class, 'store'])
+        ->name('admin.register');
+});
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
@@ -59,7 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
     // NEW: Administrative Password Override Route
-Route::put('admin/password-update', [PasswordController::class, 'adminUpdate'])->name('admin.password.update');
+    Route::put('admin/password-update', [PasswordController::class, 'adminUpdate'])->name('admin.password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');

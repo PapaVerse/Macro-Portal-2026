@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
+Route::redirect('/register', '/login', 302);
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -56,6 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/admin/inquiries/{contact}/read', [DashboardController::class, 'markAsRead'])
         ->name('admin.inquiries.read');
 
+
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Profile / Admin Management
@@ -79,5 +85,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 | Auth Routes (Login/Register)
 |--------------------------------------------------------------------------
 */
+Route::middleware(['auth', 'verified'])->get('/admin', function () {
+    return redirect()->route('dashboard');
+});
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
 
 require __DIR__ . '/auth.php';

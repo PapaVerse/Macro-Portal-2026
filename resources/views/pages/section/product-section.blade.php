@@ -3,18 +3,18 @@
     class="bg-gray-50 min-h-screen relative">
 
     <!-- ================= HEADER ================= -->
+
     <div class="tech-header-container text-white py-16 px-6 relative overflow-hidden">
+        <div class="moving-glow"></div>
         <div class="relative z-10 max-w-7xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-black mb-4 uppercase">
+            <h1 class="text-4xl md:text-5xl font-black mb-4 tracking-tight uppercase" style="text-shadow: 0 0 15px rgba(96, 165, 250, 0.6);">
                 Wire Harness & Cable Products
             </h1>
-
-            <p class="text-blue-100 max-w-xl mx-auto text-base md:text-lg">
-                Explore high-quality wire harnesses, cable assemblies, injection molding,
-                and power cords designed for industrial and global standards.
-            </p>
+            <div class="h-1 w-20 bg-blue-500 mx-auto mb-6 rounded-full shadow-[0_0_15px_rgba(59,130,246,0.8)]"></div>
+            <p class="text-blue-100 max-w-xl mx-auto text-base md:text-lg font-light leading-relaxed">
+                Explore high-quality wire harnesses, cable assemblies, subcon assemblies,
+                and power cords designed for industrial and global standards. </p>
         </div>
-
     </div>
 
 
@@ -49,7 +49,18 @@
     asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp1.jpg'),
     asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp2.jpg'),
     asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp3.jpg'),
-    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp4.png')
+    asset('images\images\WIRE-HARNESSES\CUT-CRIMP-WIRES\CUT-CRIMP-LEADWIRE\cut-crimp4.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire1.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire4.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire5.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire7.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire8.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire9.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire10.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire11.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\leadwire12.png')
+
 
     ]
     ],
@@ -151,6 +162,19 @@
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\11.png'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\12.png'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\13.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\litkit.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\soldering.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\wireassy.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\wireassy111.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\wireassy112.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\wireassy113.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\wireassy114.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis1.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis2.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis3.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis4.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis5.png')
 
 
     ]
@@ -178,6 +202,11 @@
     asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\6.jpg'),
     asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\7.png'),
     asset('images\images\WIRE-HARNESSES\RIBBON-CABLE\8.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\flatcable.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\flatcable1.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\flatcable2.png'),
+
+
     ]
     ],
 
@@ -201,7 +230,16 @@
     asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\1.jpg'),
     asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\2.jpg'),
     asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\3.jpg'),
-    asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\4.png')
+    asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\4.png'),
+    asset('images\images\WIRE-HARNESSES\Additional\float.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\float0.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\float1.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\float2.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\float3.png'),
+    asset('images\images\WIRE-HARNESSES\Additional2\float4.png')
+
+
+
     ]
     ]
     ]
@@ -422,10 +460,27 @@
 
             <!-- ================= FILTER ================= -->
             @php
+            function countAllProducts($items) {
+            $count = 0;
+
+            foreach ($items as $item) {
+
+            // Count the main product itself
+            $count += 1;
+
+            // If it has subcategories, count them too
+            if (!empty($item['subcategories']) && is_array($item['subcategories'])) {
+            $count += count($item['subcategories']);
+            }
+            }
+
+            return $count;
+            }
+
             $totalProducts = 0;
 
             foreach ($products as $category) {
-            $totalProducts += count($category['items']);
+            $totalProducts += countAllProducts($category['items']);
             }
             @endphp
             <div class="md:col-span-1">
@@ -479,10 +534,10 @@
                             <span
                                 class="text-[10px] px-2 py-0.5 rounded-md font-bold"
                                 :class="selected.includes('{{ $cat['category'] }}')
-                        ? 'bg-white/20 text-white border border-white/30'
-                        : 'bg-blue-50 text-blue-600 border border-blue-100'">
+                                 ? 'bg-white/20 text-white border border-white/30'
+                                  : 'bg-blue-50 text-blue-600 border border-blue-100'">
 
-                                {{ count($cat['items']) }}
+                                {{ countAllProducts($cat['items']) }}
                             </span>
                         </button>
                         @endforeach
@@ -556,7 +611,11 @@
                     <article
                         @click="openGallery({{ \Illuminate\Support\Js::from($product) }})"
                         class="bg-white p-6 rounded-2xl border shadow-sm hover:shadow-xl transition cursor-pointer"
-                        x-show="filterProduct('{{ strtolower($product['name']) }}', '{{ $category['category'] }}')">
+                        x-show="filterProduct(
+    '{{ strtolower($product['name']) }}',
+    '{{ $category['category'] }}',
+    {{ \Illuminate\Support\Js::from($product['subcategories'] ?? []) }}
+)">
 
                         <div class="h-40 flex items-center justify-center mb-6 bg-gray-50 rounded-xl p-4">
                             <img
@@ -697,7 +756,6 @@
             selected: [],
             categories: ['Cable Assemblies', 'Power Cords', 'Injection Molding'],
 
-
             activeSubcategories: [],
             selectedProduct: null,
 
@@ -707,6 +765,21 @@
             index: 0,
             productName: '',
 
+            // ✅ ADD THIS
+            init() {
+                const params = new URLSearchParams(window.location.search)
+                let category = params.get('category')
+
+                if (category) {
+                    category = decodeURIComponent(category)
+
+                    // optional: normalize (handles + or lowercase cases)
+                    category = category.replace(/\+/g, ' ')
+
+                    this.selected = [category]
+                }
+            },
+
             toggleCategory(cat) {
                 if (this.selected.includes(cat)) {
                     this.selected = this.selected.filter(c => c !== cat)
@@ -715,22 +788,28 @@
                 }
             },
 
-            filterProduct(name, category) {
-                let search = name.toLowerCase().includes(this.searchTerm.toLowerCase())
-                let cat = this.selected.length === 0 || this.selected.includes(category)
-                return search && cat
+            filterProduct(name, category, subcategories = []) {
+                let term = this.searchTerm.toLowerCase()
+
+                let matchName = name.includes(term)
+                let matchCategory = category.toLowerCase().includes(term)
+
+                let matchSub = subcategories.some(sub =>
+                    sub.name.toLowerCase().includes(term)
+                )
+
+                let catFilter = this.selected.length === 0 || this.selected.includes(category)
+
+                return (matchName || matchCategory || matchSub) && catFilter
             },
 
             openGallery(product) {
-
-                // ✅ HANDLE SUBCATEGORY
                 if (product.subcategories) {
                     this.activeSubcategories = product.subcategories
                     this.selectedProduct = product
                     return
                 }
 
-                // ✅ NORMAL GALLERY
                 this.gallery = product.gallery || []
                 this.index = 0
                 this.productName = product.name

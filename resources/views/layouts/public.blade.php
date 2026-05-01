@@ -27,237 +27,227 @@
     @endif
 
     <!-- Styles -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
-        nav {
-            background: #001e30;
-            height: 90px;
-            width: 100%;
-            font-family: "Montserrat", sans-serif;
-            position: sticky;
-            top: 0;
-            z-index: 1001;
-        }
+/* ================= NAVBAR ================= */
+nav {
+    background: #001e30;
+    height: 90px;
+    width: 100%;
+    font-family: "Montserrat", sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 1001;
 
-        label.logo {
-            color: white;
-            font-size: 24px;
-            line-height: 90px;
-            padding: 0 40px;
-            font-weight: 800;
-            cursor: pointer;
-        }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
 
-        nav ul {
-            float: right;
-            margin-right: 30px;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            height: 100%;
-        }
+label.logo {
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: color 0.3s;
 
-        .nav-link-animated {
-            position: relative;
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding-bottom: 8px;
-        }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%;
+}
 
-        .nav-link-animated:hover {
-            color: #60a5fa;
-        }
+/* ================= NAV LINKS ================= */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
 
-        .nav-link-animated::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #60a5fa;
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
+.nav-link-animated {
+    position: relative;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-bottom: 6px;
+    transition: color 0.3s ease;
+}
 
-        #check {
-            display: none;
-        }
+.nav-link-animated:hover {
+    color: #60a5fa;
+}
 
-        .nav-link-animated:hover::after {
-            transform: scaleX(1);
-        }
+.nav-link-animated::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #60a5fa;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
 
-        @keyframes backAndForth {
-            0% {
-                transform: scaleX(0.3);
-                transform-origin: left;
-            }
+.nav-link-animated:hover::after {
+    transform: scaleX(1);
+}
 
-            50% {
-                transform: scaleX(1);
-            }
+/* ACTIVE LINK */
+.active-link {
+    color: #60a5fa !important;
+}
 
-            100% {
-                transform: scaleX(0.3);
-                transform-origin: right;
-            }
-        }
+.active-link::after {
+    transform: scaleX(1);
+    animation: underlineMove 2s infinite;
+}
 
-        .active-link {
-            color: #60a5fa !important;
-        }
+@keyframes underlineMove {
+    0% { transform: scaleX(0.3); transform-origin: left; }
+    50% { transform: scaleX(1); }
+    100% { transform: scaleX(0.3); transform-origin: right; }
+}
 
-        .active-link::after {
-            transform: scaleX(1);
-            animation: backAndForth 2s infinite;
-        }
+/* ================= BURGER ================= */
+#check {
+    display: none;
+}
 
-        .checkbtn {
-            display: none;
-        }
+.checkbtn {
+    display: none;
+    position: relative;
+    width: 35px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 1100;
+}
 
-        @media (max-width: 1100px) {
-            .checkbtn {
-                display: block;
-            }
+/* burger lines */
+.burger,
+.burger::before,
+.burger::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
 
-            nav ul {
-                position: fixed;
-                width: 100%;
-                height: 100vh;
-                background: #0b1120;
-                top: 90px;
-                left: -100%;
-                flex-direction: column;
-                padding-top: 60px;
-                transition: 0.4s;
-            }
+.burger {
+    top: 50%;
+    transform: translateY(-50%);
+}
 
-            #check:checked~ul {
-                left: 0;
-            }
-        }
+.burger::before {
+    top: -10px;
+}
 
-        [x-cloak] {
-            display: none !important;
-        }
+.burger::after {
+    top: 10px;
+}
 
-        .glass-button {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+/* animation */
+#check:checked + .checkbtn .burger {
+    background: transparent;
+}
 
+#check:checked + .checkbtn .burger::before {
+    transform: rotate(45deg);
+    top: 0;
+}
 
-        /* HERO HEADER EFFECT */
-        .tech-header-container {
-            position: relative;
-            isolation: isolate;
-            overflow: hidden;
-            background-color: #020617;
-        }
+#check:checked + .checkbtn .burger::after {
+    transform: rotate(-45deg);
+    top: 0;
+}
 
-        .moving-glow {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(30, 64, 175, 0.4) 0%, rgba(15, 23, 42, 0.2) 50%, transparent 100%);
-            animation: pulse-glow 8s ease-in-out infinite;
-            z-index: -1;
-        }
+/* ================= MOBILE ================= */
+@media (max-width: 1100px) {
 
-        @keyframes pulse-glow {
+    label.logo {
+        font-size: 18px;
+        max-width: 70%;
+    }
 
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: scale(1);
-            }
+    .checkbtn {
+        display: block;
+    }
 
-            50% {
-                opacity: 1;
-                transform: scale(1.1);
-            }
-        }
+    nav ul {
+        position: fixed;
+        top: 90px;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
+        background: #0b1120;
 
-        /* SCROLL BUTTON (optional if you want same behavior) */
-        .glass-button {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 60px;
+        text-align: center;
 
+        transition: 0.3s ease;
+    }
 
-        /*Burger*/
-        /* BURGER CONTAINER */
-        .checkbtn {
-            display: none;
-            position: absolute;
-            right: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 35px;
-            height: 25px;
-            cursor: pointer;
-            z-index: 1100;
-        }
+    nav ul li {
+        margin: 15px 0;
+    }
 
-        /* BURGER LINES */
-        .burger,
-        .burger::before,
-        .burger::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
+    .nav-link-animated {
+        font-size: 20px;
+    }
 
-        /* Middle line */
-        .burger {
-            top: 50%;
-            transform: translateY(-50%);
-        }
+    .nav-link-animated::after {
+        width: 60px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+    }
 
-        /* Top line */
-        .burger::before {
-            top: -10px;
-        }
+    #check:checked ~ ul {
+        left: 0;
+    }
+}
 
-        /* Bottom line */
-        .burger::after {
-            top: 10px;
-        }
+/* ================= HERO ================= */
+.tech-header-container {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background-color: #020617;
+}
 
-        /* SHOW ON MOBILE */
-        @media (max-width: 1100px) {
-            .checkbtn {
-                display: block;
-            }
-        }
+.moving-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(30,64,175,0.4), transparent 70%);
+    animation: pulseGlow 8s ease-in-out infinite;
+    z-index: -1;
+}
 
-        /* ANIMATION WHEN CHECKED */
-        #check:checked+.checkbtn .burger {
-            background: transparent;
-            /* hide middle line */
-        }
+@keyframes pulseGlow {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
 
-        #check:checked+.checkbtn .burger::before {
-            transform: rotate(45deg);
-            top: 0;
-        }
+/* ================= UTIL ================= */
+[x-cloak] {
+    display: none !important;
+}
 
-        #check:checked+.checkbtn .burger::after {
-            transform: rotate(-45deg);
-            top: 0;
-        }
-    </style>
+.glass-button {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+</style>
 </head>
 
 <body
@@ -281,7 +271,7 @@
         </label>
 
         <label class="logo" onclick="window.location.href='{{ url('/') }}'">
-            Macro Wiring
+            Macro Wiring Technologies Co. Inc.
         </label>
 
         <ul>

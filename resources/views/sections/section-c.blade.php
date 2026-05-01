@@ -18,7 +18,7 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{ asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big3.jpg') }}"
+                        src="{{ asset('images/images/WIRE-HARNESSES/wireharnessesfront.png') }}"
                         alt="Wire Harnesses"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
@@ -40,7 +40,7 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{  asset('images\images\CABLE-ASSEMBIES\1.jpg')}}"
+                        src="{{  asset('images\images\CABLE-ASSEMBIES\cableassembliesfront.png')}}"
                         alt="Cable Assemblies"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
@@ -62,7 +62,7 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{ asset('images\images\SUBCON\SPOT-ASSEMBLY\1.jpg')}}"
+                        src="{{ asset('images\images\SUBCON\subconfront.png') }}"
                         alt="Subcon Assemblies"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
@@ -84,7 +84,7 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{ asset('images\images\POWER-CORDS\hubel-leviton-plugs.jpg') }}"
+                        src="{{ asset('images\images\POWER-CORDS\powercordfront.png') }}"
                         alt="Power Cords"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>

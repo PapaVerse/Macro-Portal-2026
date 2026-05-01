@@ -28,6 +28,7 @@
 
         /* --- NAVIGATION BAR (Synced with Login) --- */
         /* --- UPDATED NAVIGATION BAR --- */
+        /* ================= NAVBAR ================= */
         nav {
             background: #001e30;
             height: 90px;
@@ -36,7 +37,7 @@
             position: sticky;
             top: 0;
             z-index: 1001;
-            /* FLEXBOX FIX: Ensures logo and menu stay on opposite sides */
+
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,44 +50,21 @@
             font-weight: 800;
             cursor: pointer;
             transition: color 0.3s;
-            /* TRUNCATION FIX: Prevents text from overlapping menu */
+
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 50%;
-            /* Limits logo to half the screen width */
-            line-height: 90px;
         }
 
-        /* --- MOBILE RESPONSIVE FIX --- */
-        @media (max-width: 1100px) {
-            label.logo {
-                font-size: 18px;
-                /* Smaller font for mobile */
-                max-width: 70%;
-                /* Gives more room to the hamburger icon */
-            }
-
-            .checkbtn {
-                display: block;
-                margin-right: 0;
-                /* Adjusted for flexbox */
-                order: 2;
-                /* Ensures it stays on the right */
-            }
-        }
-
+        /* ================= NAV LINKS ================= */
         nav ul {
-            float: right;
-            margin-right: 30px;
             list-style: none;
             display: flex;
             gap: 2rem;
             align-items: center;
-            height: 100%;
         }
 
-        /* --- ANIMATED LINKS --- */
         .nav-link-animated {
             position: relative;
             color: white;
@@ -94,9 +72,8 @@
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
+            padding-bottom: 6px;
             transition: color 0.3s ease;
-            cursor: pointer;
-            padding-bottom: 8px;
         }
 
         .nav-link-animated:hover {
@@ -112,91 +89,134 @@
             left: 0;
             background-color: #60a5fa;
             transform: scaleX(0);
-            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+            transition: transform 0.3s ease;
         }
 
         .nav-link-animated:hover::after {
             transform: scaleX(1);
         }
 
-        /* --- ACTIVE STATE (BACK & FORTH) --- */
-        @keyframes backAndForth {
-            0% {
-                transform: scaleX(0.3);
-                transform-origin: center left;
-            }
-
-            50% {
-                transform: scaleX(1);
-                transform-origin: center;
-            }
-
-            100% {
-                transform: scaleX(0.3);
-                transform-origin: center right;
-            }
-        }
-
+        /* ACTIVE LINK */
         .active-link {
             color: #60a5fa !important;
         }
 
         .active-link::after {
             transform: scaleX(1);
-            animation: backAndForth 2s ease-in-out infinite;
+            animation: underlineMove 2s infinite;
         }
 
-        /* --- MOBILE MENU --- */
-        .checkbtn {
-            font-size: 30px;
-            color: white;
-            float: right;
-            line-height: 90px;
-            margin-right: 40px;
-            cursor: pointer;
-            display: none;
+        @keyframes underlineMove {
+            0% {
+                transform: scaleX(0.3);
+                transform-origin: left;
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0.3);
+                transform-origin: right;
+            }
         }
 
+        /* ================= BURGER ================= */
         #check {
             display: none;
         }
 
+        .checkbtn {
+            display: none;
+            position: relative;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        /* burger lines */
+        .burger,
+        .burger::before,
+        .burger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .burger::before {
+            top: -10px;
+        }
+
+        .burger::after {
+            top: 10px;
+        }
+
+        /* animation */
+        #check:checked+.checkbtn .burger {
+            background: transparent;
+        }
+
+        #check:checked+.checkbtn .burger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        #check:checked+.checkbtn .burger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* ================= MOBILE ================= */
         @media (max-width: 1100px) {
+
+            label.logo {
+                font-size: 18px;
+                max-width: 70%;
+            }
+
             .checkbtn {
                 display: block;
             }
 
             nav ul {
                 position: fixed;
+                top: 90px;
+                left: -100%;
                 width: 100%;
                 height: 100vh;
                 background: #0b1120;
-                top: 90px;
-                left: -100%;
+
                 flex-direction: column;
-                justify-content: start;
-                text-align: center;
-                transition: all .4s;
+                justify-content: flex-start;
                 padding-top: 60px;
+                text-align: center;
+
+                transition: 0.3s ease;
             }
 
             nav ul li {
-                display: block;
-                width: 100%;
                 margin: 15px 0;
-                line-height: normal;
             }
 
             .nav-link-animated {
                 font-size: 20px;
-                display: inline-block;
             }
 
-            /* Center the line for mobile menu items */
             .nav-link-animated::after {
                 width: 60px;
                 left: 50%;
-                margin-left: -30px;
+                transform: translateX(-50%) scaleX(0);
             }
 
             #check:checked~ul {
@@ -220,10 +240,10 @@
     <nav>
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">
-            <i class="fas fa-bars"></i>
+            <span class="burger"></span>
         </label>
         <label class="logo" onclick="window.location.href='{{ url('/') }}'">
-            {{ \App\Models\User::find(1)->name ?? 'Macro Wiring' }}
+            Macro Wiring Technologies Co. Inc.
         </label>
         <ul>
             <li><a href="{{ url('/') }}" class="nav-link-animated">Home</a></li>

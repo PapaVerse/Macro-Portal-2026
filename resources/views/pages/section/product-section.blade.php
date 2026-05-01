@@ -40,7 +40,8 @@
     asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big4.jpg'),
     asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big5.jpg'),
     asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big6.jpg'),
-    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big7.jpg')
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big7.jpg'),
+    asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/bigwire.png')
     ]
     ],
     [
@@ -108,7 +109,7 @@
     [
     'name' => 'Wire Assemblies',
     'description' => 'Wire Assemblies',
-    'image' => asset('images/images/WIRE-HARNESSES/CUT-CRIMP-WIRES/BIGWIRE/big1.jpg'),
+    'image' => asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\1.jpg'),
 
 
     'subcategories' => [
@@ -118,6 +119,9 @@
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\HOUSING.jpg'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\HOUSING2.jpg'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\HOUSING3.jpg'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\wirehousing.png'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-MATE-N-LOCK-HOUSING\wirehousing1.png'),
+
 
     ]
     ],
@@ -136,6 +140,8 @@
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRES-TO-INLET-OUTLET-ASSY\INLET1.jpg'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRES-TO-INLET-OUTLET-ASSY\INLET2.jpg'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRES-TO-INLET-OUTLET-ASSY\INLET3.jpg'),
+    asset('images\images\WIRE-HARNESSES\Additional\soldering.png'),
+
     ]
     ],
     [
@@ -144,6 +150,10 @@
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\HOUSING1.jpg'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\HOUSING2.jpg'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\HOUSING3.jpg'),
+    asset('images\images\WIRE-HARNESSES\Additional2\float1.png'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\WIRE-WITH-HOUSING\om_assy.png'),
+
+
     ]
     ],
     [
@@ -163,7 +173,6 @@
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\12.png'),
     asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\13.png'),
     asset('images\images\WIRE-HARNESSES\Additional\litkit.png'),
-    asset('images\images\WIRE-HARNESSES\Additional\soldering.png'),
     asset('images\images\WIRE-HARNESSES\Additional\wireassy.png'),
     asset('images\images\WIRE-HARNESSES\Additional\wireassy111.png'),
     asset('images\images\WIRE-HARNESSES\Additional\wireassy112.png'),
@@ -174,7 +183,9 @@
     asset('images\images\WIRE-HARNESSES\Additional2\agilis2.png'),
     asset('images\images\WIRE-HARNESSES\Additional2\agilis3.png'),
     asset('images\images\WIRE-HARNESSES\Additional2\agilis4.png'),
-    asset('images\images\WIRE-HARNESSES\Additional2\agilis5.png')
+    asset('images\images\WIRE-HARNESSES\Additional2\agilis5.png'),
+    asset('images\images\WIRE-HARNESSES\WIRE-ASSEMBLIES\MORE-WIRE-HARNESS-ASSEMBLY\wireassy.png'),
+
 
 
     ]
@@ -233,7 +244,6 @@
     asset('images\images\WIRE-HARNESSES\POWERPOLE-ASSEMBLIES\4.png'),
     asset('images\images\WIRE-HARNESSES\Additional\float.png'),
     asset('images\images\WIRE-HARNESSES\Additional2\float0.png'),
-    asset('images\images\WIRE-HARNESSES\Additional2\float1.png'),
     asset('images\images\WIRE-HARNESSES\Additional2\float2.png'),
     asset('images\images\WIRE-HARNESSES\Additional2\float3.png'),
     asset('images\images\WIRE-HARNESSES\Additional2\float4.png')
@@ -256,10 +266,8 @@
     'image' => asset('images\images\CABLE-ASSEMBIES\1.jpg'),
     'gallery' => [
     asset('images\images\CABLE-ASSEMBIES\1.jpg'),
-    asset('images\images\CABLE-ASSEMBIES\2.jpg'),
     asset('images\images\CABLE-ASSEMBIES\3.jpg'),
     asset('images\images\CABLE-ASSEMBIES\4.jpg'),
-    asset('images\images\CABLE-ASSEMBIES\5.jpg'),
     asset('images\images\CABLE-ASSEMBIES\6.jpg'),
     asset('images\images\CABLE-ASSEMBIES\7.jpg')
     ]
@@ -374,6 +382,8 @@
     asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\3.jpg'),
     asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\4.jpg'),
     asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\5.jpg'),
+    asset('images\images\SUBCON\REAR-PANEL\METAL-BEZZEL\s_pannel.png')
+
 
     ]
     ],
@@ -397,7 +407,8 @@
     asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\1.jpg'),
     asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\2.jpg'),
     asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\3.jpg'),
-
+    asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\rearpanel.png'),
+    asset('images\images\SUBCON\REAR-PANEL\RACKMOUNT-ASSEMBLY\rearpanel1.png'),
 
 
     ]
@@ -424,7 +435,10 @@
     'name' => 'IEC Cords',
     'description' => 'IEC Cords',
     'image' => asset('images\images\POWER-CORDS\ice-cords.jpg'),
-    'gallery' => [asset('images\images\POWER-CORDS\ice-cords.jpg')]
+    'gallery' => [
+    asset('images\images\POWER-CORDS\ice-cords.jpg'),
+    asset('images\images\POWER-CORDS\24.png'),
+    ]
     ],
     [
     'name' => 'Hubbel-Leviton',
@@ -432,6 +446,7 @@
     'image' => asset('images\images\POWER-CORDS\hubel-leviton-plugs.jpg'),
     'gallery' => [asset('images\images\POWER-CORDS\hubel-leviton-plugs.jpg')]
     ],
+
     [
     'name' => 'Bussbar Assemblies',
     'description' => 'Bussbar Assemblies',
@@ -443,10 +458,24 @@
     ],
 
     [
+    'name' => 'AUX Cable Connectors',
+    'description' => 'AUX Cable Connectors ',
+    'image' => asset('images\images\POWER-CORDS\powercord5.png'),
+    'gallery' => [
+    asset('images\images\POWER-CORDS\powercord5.png'),
+
+    ]
+    ],
+
+    [
     'name' => 'Three Prong Cords',
     'description' => 'Three Prong Cords',
-    'image' => asset('images/images/POWER CORDS/ice-cords.jpg'),
-    'gallery' => [asset('images/images/POWER CORDS/ice-cords.jpg')
+    'image' => asset('images\images\POWER-CORDS\44.png'),
+    'gallery' => [
+    asset('images\images\POWER-CORDS\powercord.png'),
+    asset('images\images\POWER-CORDS\powercord3.png'),
+    asset('images\images\POWER-CORDS\powercord6.png'),
+    asset('images\images\POWER-CORDS\44.png')
     ]
     ]
     ]

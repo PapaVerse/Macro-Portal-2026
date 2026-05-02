@@ -143,6 +143,7 @@
             padding: 0 20px;
         }
 
+        /* ================= NAV LINKS ================= */
         nav ul {
             position: fixed;
             width: 100%;

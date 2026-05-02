@@ -62,29 +62,24 @@
             list-style: none;
         }
 
-        .nav-link-animated {
-            position: relative;
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
-            padding-bottom: 8px;
-        }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50%;
+}
 
         .nav-link-animated:hover { color: #60a5fa; }
 
-        .nav-link-animated::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #60a5fa;
-            transform: scaleX(0);
-            transition: transform 0.4s;
-        }
+.nav-link-animated {
+    position: relative;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-bottom: 6px;
+    transition: color 0.3s ease;
+}
 
         .nav-link-animated:hover::after, .active-link::after { transform: scaleX(1); }
 

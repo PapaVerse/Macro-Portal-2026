@@ -26,7 +26,11 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
+<<<<<<< HEAD
 
+=======
+        /* ================= NAVBAR ================= */
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         nav {
             background: #001e30;
             height: 90px;
@@ -35,6 +39,14 @@
             position: sticky;
             top: 0;
             z-index: 1001;
+<<<<<<< HEAD
+=======
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         }
 
         label.logo {
@@ -44,15 +56,28 @@
             padding: 0 40px;
             font-weight: 800;
             cursor: pointer;
+<<<<<<< HEAD
+=======
+            transition: color 0.3s;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 50%;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         }
 
+        /* ================= NAV LINKS ================= */
         nav ul {
+<<<<<<< HEAD
             float: right;
             margin-right: 30px;
+=======
+            list-style: none;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
             display: flex;
             gap: 2rem;
             align-items: center;
-            height: 100%;
         }
 
         .nav-link-animated {
@@ -62,7 +87,12 @@
             font-weight: 700;
             text-transform: uppercase;
             text-decoration: none;
+<<<<<<< HEAD
             padding-bottom: 8px;
+=======
+            padding-bottom: 6px;
+            transition: color 0.3s ease;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         }
 
         .nav-link-animated:hover {
@@ -78,17 +108,22 @@
             left: 0;
             background-color: #60a5fa;
             transform: scaleX(0);
+<<<<<<< HEAD
             transition: transform 0.4s;
         }
 
         #check {
             display: none;
+=======
+            transition: transform 0.3s ease;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         }
 
         .nav-link-animated:hover::after {
             transform: scaleX(1);
         }
 
+<<<<<<< HEAD
         @keyframes backAndForth {
             0% {
                 transform: scaleX(0.3);
@@ -105,12 +140,16 @@
             }
         }
 
+=======
+        /* ACTIVE LINK */
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         .active-link {
             color: #60a5fa !important;
         }
 
         .active-link::after {
             transform: scaleX(1);
+<<<<<<< HEAD
             animation: backAndForth 2s infinite;
         }
 
@@ -119,7 +158,90 @@
         }
 
 /* MOBILE VIEW ADJUSTMENTS */
+=======
+            animation: underlineMove 2s infinite;
+        }
+
+        @keyframes underlineMove {
+            0% {
+                transform: scaleX(0.3);
+                transform-origin: left;
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0.3);
+                transform-origin: right;
+            }
+        }
+
+        /* ================= BURGER ================= */
+        #check {
+            display: none;
+        }
+
+        .checkbtn {
+            display: none;
+            position: relative;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        /* burger lines */
+        .burger,
+        .burger::before,
+        .burger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .burger::before {
+            top: -10px;
+        }
+
+        .burger::after {
+            top: 10px;
+        }
+
+        /* animation */
+        #check:checked+.checkbtn .burger {
+            background: transparent;
+        }
+
+        #check:checked+.checkbtn .burger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        #check:checked+.checkbtn .burger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* ================= MOBILE ================= */
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         @media (max-width: 1100px) {
+
+            label.logo {
+                font-size: 18px;
+                max-width: 70%;
+            }
+
             .checkbtn {
                 display: block;
             }
@@ -133,14 +255,36 @@
 
             nav ul {
                 position: fixed;
+                top: 90px;
+                left: -100%;
                 width: 100%;
                 height: 100vh;
                 background: #0b1120;
-                top: 90px;
-                left: -100%;
+
                 flex-direction: column;
+                justify-content: flex-start;
                 padding-top: 60px;
+<<<<<<< HEAD
                 transition: 0.4s;
+=======
+                text-align: center;
+
+                transition: 0.3s ease;
+            }
+
+            nav ul li {
+                margin: 15px 0;
+            }
+
+            .nav-link-animated {
+                font-size: 20px;
+            }
+
+            .nav-link-animated::after {
+                width: 60px;
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
             }
 
             #check:checked~ul {
@@ -148,6 +292,7 @@
             }
         }
 
+<<<<<<< HEAD
         /* EXTRA SMALL PHONES (e.g., iPhone SE, small Androids) */
         @media (max-width: 450px) {
             label.logo {
@@ -159,10 +304,53 @@
                 right: 15px; /* Moves the burger slightly closer to the edge to save space */
             }
         }
+=======
+        /* ================= HERO ================= */
+        .tech-header-container {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background-color: #020617;
+        }
+
+        .moving-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(30, 64, 175, 0.4), transparent 70%);
+            animation: pulseGlow 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* ================= UTIL ================= */
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         [x-cloak] {
             display: none !important;
         }
 
+<<<<<<< HEAD
+=======
+        .glass-button {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         /* --- CONSENT & WELCOME ANIMATIONS --- */
         @keyframes welcomeText {
             0% {
@@ -460,6 +648,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
 <nav>
     <input type="checkbox" id="check">
     
@@ -490,6 +679,36 @@
         @endauth
     </ul>
 </nav>
+=======
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <span class="burger"></span>
+        </label>
+        <label class="logo" onclick="window.location.href='{{ url('/') }}'">
+            Macro Wiring Technologies Co. Inc.
+        </label>
+        <ul>
+            <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
+
+            <li>
+                <a href="{{ route('products') }}"
+                    class="nav-link-animated"
+                    :class="currentPath.includes('products') ? 'active-link' : ''">
+                    Products
+                </a>
+            </li>
+            <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
+            <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
+            <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
+            <li>
+                <a href="{{ route('login') }}" class="nav-link-animated" :class="currentPath.includes('login') ? 'active-link' : ''">
+                    Admin
+                </a>
+            </li>
+        </ul>
+    </nav>
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
 
     <main>
         @include('sections.section-a')

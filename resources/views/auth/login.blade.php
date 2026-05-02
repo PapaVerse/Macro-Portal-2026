@@ -143,8 +143,36 @@
             padding: 0 20px;
         }
 
+        /* ================= NAV LINKS ================= */
         nav ul {
+<<<<<<< HEAD
             position: fixed;
+=======
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link-animated {
+            position: relative;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding-bottom: 6px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link-animated:hover {
+            color: #60a5fa;
+        }
+
+        .nav-link-animated::after {
+            content: '';
+            position: absolute;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
             width: 100%;
             height: 100vh;
             background: #0b1120;
@@ -159,6 +187,12 @@
 
         #check:checked~ul {
             left: 0;
+<<<<<<< HEAD
+=======
+            background-color: #60a5fa;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         }
     }
 
@@ -168,12 +202,41 @@
             font-size: 14px; /* Scaled down to fit between edge and burger icon */
             padding: 0 15px;
         }
+<<<<<<< HEAD
         
         .checkbtn {
             right: 15px;
+=======
+
+        /* ACTIVE LINK */
+        .active-link {
+            color: #60a5fa !important;
+        }
+
+        .active-link::after {
+            transform: scaleX(1);
+            animation: underlineMove 2s infinite;
+        }
+
+        @keyframes underlineMove {
+            0% {
+                transform: scaleX(0.3);
+                transform-origin: left;
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0.3);
+                transform-origin: right;
+            }
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
         }
     }
 
+<<<<<<< HEAD
     #check:checked+.checkbtn .burger {
         background: transparent;
     }
@@ -200,6 +263,119 @@
         padding: 2rem;
     }
 </style>
+=======
+        /* ================= BURGER ================= */
+        #check {
+            display: none;
+        }
+
+        .checkbtn {
+            display: none;
+            position: relative;
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        /* burger lines */
+        .burger,
+        .burger::before,
+        .burger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .burger::before {
+            top: -10px;
+        }
+
+        .burger::after {
+            top: 10px;
+        }
+
+        /* animation */
+        #check:checked+.checkbtn .burger {
+            background: transparent;
+        }
+
+        #check:checked+.checkbtn .burger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        #check:checked+.checkbtn .burger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        /* ================= MOBILE ================= */
+        @media (max-width: 1100px) {
+
+            label.logo {
+                font-size: 18px;
+                max-width: 70%;
+            }
+
+            .checkbtn {
+                display: block;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 90px;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: #0b1120;
+
+                flex-direction: column;
+                justify-content: flex-start;
+                padding-top: 60px;
+                text-align: center;
+
+                transition: 0.3s ease;
+            }
+
+            nav ul li {
+                margin: 15px 0;
+            }
+
+            .nav-link-animated {
+                font-size: 20px;
+            }
+
+            .nav-link-animated::after {
+                width: 60px;
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+            }
+
+            #check:checked~ul {
+                left: 0;
+            }
+        }
+
+        /* Login Layout */
+        .login-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+    </style>
+>>>>>>> 2761380f8e95b1b55fb5f31b3b8e2b8659f10819
 </head>
 
 <body x-data="{ currentPath: window.location.pathname }">

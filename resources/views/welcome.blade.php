@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Home | Macro Wiring Technologies Co. Inc.</title>
-git add .
+
 
 
     <!--BASIC SEO-->
@@ -26,6 +26,7 @@ git add .
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
+
         nav {
             background: #001e30;
             height: 90px;
@@ -45,13 +46,13 @@ git add .
             cursor: pointer;
         }
 
-        /* ================= NAV LINKS ================= */
         nav ul {
             float: right;
             margin-right: 30px;
             display: flex;
             gap: 2rem;
             align-items: center;
+            height: 100%;
         }
 
         .nav-link-animated {
@@ -119,12 +120,6 @@ git add .
 
 /* MOBILE VIEW ADJUSTMENTS */
         @media (max-width: 1100px) {
-
-            label.logo {
-                font-size: 18px;
-                max-width: 70%;
-            }
-
             .checkbtn {
                 display: block;
             }
@@ -138,14 +133,12 @@ git add .
 
             nav ul {
                 position: fixed;
-                top: 90px;
-                left: -100%;
                 width: 100%;
                 height: 100vh;
                 background: #0b1120;
-
+                top: 90px;
+                left: -100%;
                 flex-direction: column;
-                justify-content: flex-start;
                 padding-top: 60px;
                 transition: 0.4s;
             }

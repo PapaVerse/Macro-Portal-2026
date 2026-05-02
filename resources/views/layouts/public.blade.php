@@ -26,8 +26,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     @endif
 
-    <!-- Styles -->
-    <style>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
         nav {
@@ -38,24 +37,29 @@
             position: sticky;
             top: 0;
             z-index: 1001;
+            display: flex; /* Added flex to help alignment */
+            align-items: center;
         }
 
         label.logo {
             color: white;
             font-size: 24px;
-            line-height: 90px;
-            padding: 0 40px;
             font-weight: 800;
             cursor: pointer;
+            white-space: nowrap;
+            padding: 0 40px;
+            transition: all 0.3s ease;
         }
 
         nav ul {
             float: right;
+            margin-left: auto; /* Pushes menu to the right */
             margin-right: 30px;
             display: flex;
             gap: 2rem;
             align-items: center;
             height: 100%;
+            list-style: none;
         }
 
         .nav-link-animated {
@@ -68,9 +72,7 @@
             padding-bottom: 8px;
         }
 
-        .nav-link-animated:hover {
-            color: #60a5fa;
-        }
+        .nav-link-animated:hover { color: #60a5fa; }
 
         .nav-link-animated::after {
             content: '';
@@ -84,46 +86,56 @@
             transition: transform 0.4s;
         }
 
-        #check {
-            display: none;
-        }
+        .nav-link-animated:hover::after, .active-link::after { transform: scaleX(1); }
 
-        .nav-link-animated:hover::after {
-            transform: scaleX(1);
-        }
+        #check { display: none; }
 
-        @keyframes backAndForth {
-            0% {
-                transform: scaleX(0.3);
-                transform-origin: left;
-            }
-
-            50% {
-                transform: scaleX(1);
-            }
-
-            100% {
-                transform: scaleX(0.3);
-                transform-origin: right;
-            }
-        }
-
-        .active-link {
-            color: #60a5fa !important;
-        }
-
-        .active-link::after {
-            transform: scaleX(1);
-            animation: backAndForth 2s infinite;
-        }
-
+        /* BURGER BUTTON BASE */
         .checkbtn {
-            display: none;
+            display: none; /* Hidden on Desktop */
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1100;
         }
 
+        .burger, .burger::before, .burger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .burger { top: 50%; transform: translateY(-50%); }
+        .burger::before { top: -10px; }
+        .burger::after { top: 10px; }
+
+        /* ANIMATIONS */
+        @keyframes backAndForth {
+            0% { transform: scaleX(0.3); transform-origin: left; }
+            50% { transform: scaleX(1); }
+            100% { transform: scaleX(0.3); transform-origin: right; }
+        }
+
+        .active-link { color: #60a5fa !important; }
+        .active-link::after { animation: backAndForth 2s infinite; }
+
+        /* MOBILE VIEW (TABLETS & PHONES) */
         @media (max-width: 1100px) {
             .checkbtn {
-                display: block;
+                display: block; /* Hamburger is explicitly ON here */
+            }
+
+            label.logo {
+                font-size: 18px; /* Shrink font */
+                padding: 0 20px;
             }
 
             nav ul {
@@ -136,126 +148,45 @@
                 flex-direction: column;
                 padding-top: 60px;
                 transition: 0.4s;
+                margin: 0;
             }
 
-            #check:checked~ul {
-                left: 0;
+            #check:checked~ul { left: 0; }
+
+            #check:checked+.checkbtn .burger { background: transparent; }
+            #check:checked+.checkbtn .burger::before { transform: rotate(45deg); top: 0; }
+            #check:checked+.checkbtn .burger::after { transform: rotate(-45deg); top: 0; }
+        }
+
+        /* EXTRA SMALL PHONES */
+        @media (max-width: 480px) {
+            label.logo {
+                font-size: 13px; /* Smaller font to ensure full name fits next to burger */
+                padding: 0 15px;
+            }
+            .checkbtn {
+                right: 15px; /* Keep burger visible and spaced well */
             }
         }
 
-        [x-cloak] {
-            display: none !important;
-        }
-
-        .glass-button {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-
-        /* HERO HEADER EFFECT */
+        /* UTILS */
         .tech-header-container {
             position: relative;
-            isolation: isolate;
-            overflow: hidden;
             background-color: #020617;
+            overflow: hidden;
         }
 
         .moving-glow {
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(30, 64, 175, 0.4) 0%, rgba(15, 23, 42, 0.2) 50%, transparent 100%);
-            animation: pulse-glow 8s ease-in-out infinite;
+            background: radial-gradient(circle at 50% 50%, rgba(30, 64, 175, 0.4) 0%, transparent 100%);
+            animation: pulse-glow 8s infinite;
             z-index: -1;
         }
 
         @keyframes pulse-glow {
-
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.1);
-            }
-        }
-
-        /* SCROLL BUTTON (optional if you want same behavior) */
-        .glass-button {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-
-        /*Burger*/
-        /* BURGER CONTAINER */
-        .checkbtn {
-            display: none;
-            position: absolute;
-            right: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 35px;
-            height: 25px;
-            cursor: pointer;
-            z-index: 1100;
-        }
-
-        /* BURGER LINES */
-        .burger,
-        .burger::before,
-        .burger::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: white;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        /* Middle line */
-        .burger {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        /* Top line */
-        .burger::before {
-            top: -10px;
-        }
-
-        /* Bottom line */
-        .burger::after {
-            top: 10px;
-        }
-
-        /* SHOW ON MOBILE */
-        @media (max-width: 1100px) {
-            .checkbtn {
-                display: block;
-            }
-        }
-
-        /* ANIMATION WHEN CHECKED */
-        #check:checked+.checkbtn .burger {
-            background: transparent;
-            /* hide middle line */
-        }
-
-        #check:checked+.checkbtn .burger::before {
-            transform: rotate(45deg);
-            top: 0;
-        }
-
-        #check:checked+.checkbtn .burger::after {
-            transform: rotate(-45deg);
-            top: 0;
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
     </style>
 </head>
@@ -273,33 +204,36 @@
     @scroll.window="handleScroll"
     class="bg-slate-50 font-sans antialiased text-slate-900">
 
-    <!-- NAVBAR -->
-    <nav>
-        <input type="checkbox" id="check">
-        <label for="check" class="checkbtn">
-            <span class="burger"></span>
-        </label>
+ <nav>
+    <input type="checkbox" id="check">
+    
+    <!-- Burger Icon -->
+    <label for="check" class="checkbtn">
+        <span class="burger"></span>
+    </label>
 
-        <label class="logo" onclick="window.location.href='{{ url('/') }}'">
-            Macro Wiring
-        </label>
+    <!-- Logo with Responsive Text -->
+    <label class="logo" onclick="window.location.href='{{ url('/') }}'">
+        <span class="full-text">Macro Wiring Technologies Co. Inc.</span>
+    </label>
 
-        <ul>
-            <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
-            <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''">Products</a></li>
-            <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
-            <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
-            <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
+    <!-- Navigation Links -->
+    <ul>
+        <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
+        <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''">Products</a></li>
+        <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
+        <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
+        <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
 
-            @guest
+        @guest
             <li><a href="{{ route('login') }}" class="nav-link-animated">Admin</a></li>
-            @endguest
+        @endguest
 
-            @auth
+        @auth
             <li><a href="{{ route('dashboard') }}" class="nav-link-animated">Dashboard</a></li>
-            @endauth
-        </ul>
-    </nav>
+        @endauth
+    </ul>
+</nav>
 
     <!-- CONTENT -->
     <main>

@@ -1,8 +1,12 @@
+
+
 <section
+
     x-data="productPage()"
     class="bg-gray-50 min-h-screen relative">
 
     <!-- ================= HEADER ================= -->
+     
 
     <div class="tech-header-container text-white py-16 px-6 relative overflow-hidden">
         <div class="moving-glow"></div>

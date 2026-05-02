@@ -174,10 +174,11 @@
                     {{-- Item 1 --}}
                     <div class="space-y-2 group">
                         <div class="flex items-center gap-2 text-blue-600">
-                            <i class="fas fa-plug-circle-bolt"></i>
+                            <!-- Swapped to a more universal icon -->
+                            <i class="fas fa-plug"></i> 
                             <p class="font-bold text-slate-900 text-sm uppercase">Home Appliances</p>
                         </div>
-                        <p class="text-[12px] text-slate-500 leading-snug pl-6">Refrigerators, Freezers, AC units, Washing Machines</p>
+                        <p class="text-[12px] text-slate-500 leading-snug pl-6">Refrigerator, Freezers, Room Air Conditioners, Washing Machine, Gas Ranges & other small appliances.</p>
                     </div>
 
                     {{-- Item 2 --}}
@@ -186,7 +187,7 @@
                             <i class="fas fa-tv"></i>
                             <p class="font-bold text-slate-900 text-sm uppercase">Electronics</p>
                         </div>
-                        <p class="text-[12px] text-slate-500 leading-snug pl-6">Computers, TV, Karaoke, Monitors, AVRs</p>
+                        <p class="text-[12px] text-slate-500 leading-snug pl-6">Computers, TV sets, Radio cassettes, Karaoke , Monitors, AVRs, etc.</p>
                     </div>
 
                     {{-- Item 3 --}}
@@ -205,6 +206,14 @@
                             <p class="font-bold text-slate-900 text-sm uppercase">Power Supplies</p>
                         </div>
                         <p class="text-[12px] text-slate-500 leading-snug pl-6">UPS & specialized assemblies</p>
+                    </div>
+                    {{-- Item 5 --}}
+                    <div class="space-y-2 group">
+                        <div class="flex items-center gap-2 text-blue-600">
+                            <i class="fas fa-battery-three-quarters"></i>
+                            <p class="font-bold text-slate-900 text-sm uppercase">Telecommunications / Semi – Conductors</p>
+                        </div>
+                        <p class="text-[12px] text-slate-500 leading-snug pl-6">Telephone, PCBS, etc</p>
                     </div>
                 </div>
 
@@ -228,12 +237,12 @@
                 <div class="relative z-10 max-w-4xl mx-auto text-center space-y-4">
                     <h2 class="text-sm font-black uppercase tracking-[0.3em] text-blue-100 opacity-80">Our Vision</h2>
 
-                    <p class="text-lg md:text-xl text-white leading-relaxed font-medium italic">
-                        "To see the spawning of the <span class="not-italic font-bold">Macro Wiring Technologies Co. Inc.</span>
+                    <p class="text-lg md:text-xl text-white leading-relaxed font-medium">
+                        To see the spawning of the <span class="not-italic font-bold">Macro Wiring Technologies Co. Inc.</span>
                         logo on the assembly lines of tech companies and allied businesses
                         in the export processing zones of the country, and catch the nod
                         of approval of our customers as they make our wire harnesses and
-                        assemblies their own."
+                        assemblies their own.
                     </p>
 
                     <p class="text-[9px] text-blue-200 font-bold uppercase tracking-widest pt-4">
@@ -282,6 +291,114 @@
             </div>
 
         </section>
+        
+        <section class="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden mt-12">
+
+            {{-- background icon --}}
+            <div class="absolute top-0 right-0 p-8 opacity-5 text-blue-600">
+                <i class="fas fa-shield-alt text-[250px]"></i>
+            </div>
+
+            <div class="relative z-10 max-w-full mb-12">
+
+                <div class="flex items-center gap-3 text-blue-600 font-black uppercase text-xs tracking-[0.3em] mb-4">
+                    <i class="fas fa-shield-alt text-sm"></i>
+                    Integrated Management System
+                </div>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-6 uppercase">
+                    IMS Policy
+                </h2>
+
+<div class="border-l-4 border-blue-600 pl-6">
+    <p class="text-gray-600 leading-relaxed text-lg">
+        Macro Wiring Technologies Co. Inc. is a reliable manufacturer of high-quality wire harnesses, committed to delivering superior products that meet customer requirements, stakeholder expectations, and regulatory obligations, while protecting the environment, promoting sustainability, and ensuring the health, safety, and well-being of all employees and interested parties.
+    </p>
+    
+    <br>
+    
+    <p class="text-gray-600 leading-relaxed text-lg">
+        In line with the requirements of ISO 9001, ISO 14001, and ISO 45001, we adopt an Integrated Management System that fosters quality excellence, environmental stewardship, occupational health and safety, and continuous improvement throughout our operations.
+    </p>
+</div>
+
+<div class="flex justify-center mt-12 mb-8">
+    <span class="bg-blue-100 text-blue-700 px-6 py-2 rounded-xl text-1xl font-bold uppercase tracking-tight">
+        Our Commitments:
+    </span>
+</div>
+  </div>
+
+
+            @php
+            $imsPolicies = [
+            [
+            "t" => "Customer Focus and Satisfaction",
+            "d" => "We are committed to understanding and fulfilling customer-specific requirements, industry standards, and applicable statutory and regulatory requirements to ensure consistent delivery of world-class wire harness products and services."
+            ],
+            [
+            "t" => "Environmental Protection and Sustainability",
+            "d" => "We take proactive steps to minimize environmental impacts by promoting resource conservation, responsible waste management, and pollution prevention. We continuously improve our energy efficiency and strive to reduce our carbon footprint across our manufacturing processes."
+            ],
+            [
+            "t" => "Occupational Health and Safety",
+            "d" => "Provide a safe and healthy workplace for all employees, contractors, and visitors. Identify hazards, assess risks, and implement appropriate controls to prevent work-related injury or ill health and promote active participation and consultation of workers in health and safety matters."
+            ],
+            [
+            "t" => "Stakeholder Engagement",
+            "d" => "We recognize the importance of addressing the needs and expectations of all relevant stakeholders, including customers, employees, suppliers, regulatory authorities, stakeholders and communities where we operate."
+            ],
+            [
+            "t" => "Compliance with Legal and Other Requirements",
+            "d" => "We ensure strict compliance with applicable legal requirements, customer specifications, environmental regulations, and other obligations relevant to our operations and products."
+            ],
+            [
+            "t" => "Energy Initiatives",
+            "d" => "We are committed to enhance energy efficiency in our facilities adopting energy-saving technologies, optimizing resource utilization, and promoting awareness among employees"
+            ],
+            [
+            "t" => "Continuous Improvement and Innovation",
+            "d" => "We drive continual improvement in quality, environmental performance and operational efficiency by setting measurable objectives, monitoring key performance indicators, and applying risk-based thinking in all processes."
+            ],
+            [
+            "t" => "Employee Involvement and Competency Development",
+            "d" => "We provide training and development programs to ensure all employees are competent, fully aware of their responsibilities, and actively engaged in achieving our quality, environmental, and sustainability goals."
+            ],
+            ];
+            @endphp
+
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+
+                @foreach($imsPolicies as $item)
+
+                <div class="p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-blue-100 group">
+
+                    <p class="font-bold text-gray-900 mb-2 flex items-center gap-2 group-hover:text-blue-600">
+
+                        <i class="fas fa-chevron-right text-blue-600 text-xs"></i>
+
+                        {{ $item['t'] }}
+
+                    </p>
+
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        {{ $item['d'] }}
+                    </p>
+
+                </div>
+
+                @endforeach
+
+            </div>
+            
+<p class="text-[10px] text-gray-400 mt-4 font-bold uppercase tracking-widest text-center">
+    Effectivity Date: July 18, 2025
+</p>
+
+        </section>
+
+
 
         {{-- GROUP OF COMPANIES --}}
         <section class="py-16 border-t border-slate-100 bg-white">
@@ -297,17 +414,17 @@
                 <div class="flex flex-wrap justify-center items-center gap-10 md:gap-20">
 
                     <template x-for="logo in companies">
-                        <div class="group cursor-pointer">
-
-                            {{-- Default: Grayscale | Hover: Original Full Color --}}
-                            <img
-                                :src="logo"
-                                class="h-12 md:h-14 w-auto object-contain 
-                               filter grayscale opacity-40 
-                               group-hover:grayscale-0 group-hover:opacity-100 
-                               group-hover:scale-110 transition-all duration-500" />
-
-                        </div>
+<!-- Ensure the parent container has the class 'group' -->
+<div class="group cursor-pointer inline-block">
+<img
+    :src="logo"
+    alt="Logo"
+    class="h-12 md:h-14 w-auto object-contain transition-all duration-500 ease-in-out cursor-pointer"
+    style="filter: grayscale(100%);"
+    onmouseover="this.style.filter='grayscale(0%)'; this.style.transform='scale(1.1)';"
+    onmouseout="this.style.filter='grayscale(100%)'; this.style.transform='scale(1)';"
+/>
+</div>
                     </template>
 
                 </div>
@@ -362,106 +479,7 @@
 
         </section>
 
-        <section class="bg-white p-10 md:p-16 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden mt-12">
 
-            {{-- background icon --}}
-            <div class="absolute top-0 right-0 p-8 opacity-5 text-blue-600">
-                <i class="fas fa-shield-alt text-[250px]"></i>
-            </div>
-
-            <div class="relative z-10 max-w-4xl mb-12">
-
-                <div class="flex items-center gap-3 text-blue-600 font-black uppercase text-xs tracking-[0.3em] mb-4">
-                    <i class="fas fa-shield-alt text-sm"></i>
-                    Integrated Management System
-                </div>
-
-                <h2 class="text-3xl font-bold text-gray-900 mb-6 uppercase">
-                    IMS Policy
-                </h2>
-
-                <p class="text-gray-600 leading-relaxed border-l-4 border-blue-600 pl-6 text-lg italic">
-                    "We adopt an Integrated Management System that fosters quality
-                    excellence, environmental stewardship, and continuous improvement
-                    throughout our operations."
-                </p>
-
-                <div class="flex gap-4 mt-6">
-                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-[10px] font-bold">
-                        ISO 9001:2015
-                    </span>
-
-                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded text-[10px] font-bold">
-                        ISO 14001:2015
-                    </span>
-                </div>
-
-                <p class="text-[10px] text-gray-400 mt-4 font-bold uppercase tracking-widest">
-                    Effectivity Date: July 18, 2025
-                </p>
-
-            </div>
-
-
-            @php
-            $imsPolicies = [
-            [
-            "t" => "Customer Focus and Satisfaction",
-            "d" => "We are committed to understanding and fulfilling customer-specific requirements, industry standards, and applicable statutory and regulatory requirements to ensure consistent delivery of world-class wire harness products and services."
-            ],
-            [
-            "t" => "Environmental Protection and Sustainability",
-            "d" => "We take proactive steps to minimize environmental impacts by promoting resource conservation, responsible waste management, and pollution prevention. We continuously improve our energy efficiency and strive to reduce our carbon footprint across our manufacturing processes."
-            ],
-            [
-            "t" => "Stakeholder Engagement",
-            "d" => "We recognize the importance of addressing the needs and expectations of all relevant stakeholders, including customers, employees, suppliers, regulatory authorities, stakeholders and communities where we operate."
-            ],
-            [
-            "t" => "Compliance with Legal and Other Requirements",
-            "d" => "We ensure strict compliance with applicable legal requirements, customer specifications, environmental regulations, and other obligations relevant to our operations and products."
-            ],
-            [
-            "t" => "Energy Initiatives",
-            "d" => "We are committed to enhance energy efficiency in our facilities adopting energy-saving technologies, optimizing resource utilization, and promoting awareness among employees"
-            ],
-            [
-            "t" => "Continuous Improvement and Innovation",
-            "d" => "We drive continual improvement in quality, environmental performance and operational efficiency by setting measurable objectives, monitoring key performance indicators, and applying risk-based thinking in all processes."
-            ],
-            [
-            "t" => "Employee Involvement and Competency Development",
-            "d" => "We provide training and development programs to ensure all employees are competent, fully aware of their responsibilities, and actively engaged in achieving our quality, environmental, and sustainability goals."
-            ],
-            ];
-            @endphp
-
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-
-                @foreach($imsPolicies as $item)
-
-                <div class="p-6 bg-gray-50 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-transparent hover:border-blue-100 group">
-
-                    <p class="font-bold text-gray-900 mb-2 flex items-center gap-2 group-hover:text-blue-600">
-
-                        <i class="fas fa-chevron-right text-blue-600 text-xs"></i>
-
-                        {{ $item['t'] }}
-
-                    </p>
-
-                    <p class="text-xs text-gray-500 leading-relaxed">
-                        {{ $item['d'] }}
-                    </p>
-
-                </div>
-
-                @endforeach
-
-            </div>
-
-        </section>
 
         <section class="bg-green-50 p-8 md:p-12 rounded-[2.5rem] border border-green-100 relative overflow-hidden mt-12">
 
@@ -564,62 +582,7 @@
             }
         </style>
 
-        <section class="bg-slate-900 text-white p-10 md:p-16 rounded-[3rem] relative overflow-hidden shadow-2xl mt-12 border border-slate-800">
-
-            {{-- Background Icon - Positioned to stay inside the rounded corner --}}
-            <div class="absolute -left-20 -bottom-20 text-white/5 text-[400px] pointer-events-none">
-                <i class="fa-solid fa-heart-pulse"></i>
-            </div>
-
-            <div class="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-
-                <div class="space-y-6">
-                    <div class="inline-flex items-center gap-2 bg-red-500/10 text-red-400 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-red-500/20">
-                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]"></span>
-                        Safety First Culture
-                    </div>
-
-                    <h2 class="text-3xl font-bold uppercase tracking-tight leading-tight">
-                        Occupational Health <br> & <span class="text-blue-500">Safety Policy</span>
-                    </h2>
-
-                    <p class="text-gray-400 leading-relaxed text-lg border-l-4 border-blue-600 pl-6">
-                        Macro Wiring Technologies Co. Inc. is committed to providing a
-                        safe and healthy workplace for all employees, contractors, and
-                        visitors.
-                    </p>
-
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em]">
-                        Effectivity Date: Feb. 01, 2026
-                    </p>
-                </div>
-
-                @php
-                $policies = [
-                ["t" => "Safe Conditions", "d" => "Establish and maintain safe systems of work and appropriate controls to eliminate hazards."],
-                ["t" => "Legal Fulfillment", "d" => "Comply with all applicable occupational health and safety laws and regulatory requirements."],
-                ["t" => "Eliminate Hazards", "d" => "Apply the hierarchy of controls in identifying hazards and determining proactive measures."],
-                ["t" => "Participation", "d" => "Ensure active consultation and participation of workers in OH&S decision-making."],
-                ["t" => "Continuous Improvement", "d" => "Continually improve OH&S performance through monitoring, audits, and management reviews."],
-                ["t" => "Resources", "d" => "Ensure workers are competent through training and provide adequate resources to support safety."]
-                ];
-                @endphp
-
-                <div class="grid sm:grid-cols-2 gap-4">
-                    @foreach($policies as $policy)
-                    <div class="group bg-white/5 backdrop-blur-sm p-6 rounded-2xl border border-white/10 hover:border-blue-500/50 hover:bg-white/[0.07] transition-all duration-300">
-                        <p class="font-bold text-blue-400 text-[13px] mb-2 uppercase tracking-wide group-hover:translate-x-1 transition-transform">
-                            {{ $policy['t'] }}
-                        </p>
-                        <p class="text-[11px] text-gray-400 leading-relaxed">
-                            {{ $policy['d'] }}
-                        </p>
-                    </div>
-                    @endforeach
-                </div>
-
-            </div>
-        </section>
+ 
 
 
 

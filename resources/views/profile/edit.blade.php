@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Admin Profile') {{-- This changes the tab text to "Admin | Admin Portal" --}}
 @section('content')
 
 <header class="bg-white shadow">

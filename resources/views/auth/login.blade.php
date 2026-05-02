@@ -13,229 +13,222 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
-        body {
-            background-color: #f8fafc;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-        }
+    body {
+        background-color: #f8fafc;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+    }
 
+    nav {
+        background: #001e30;
+        height: 90px;
+        width: 100%;
+        font-family: "Montserrat", sans-serif;
+        position: sticky;
+        top: 0;
+        z-index: 1001;
+    }
 
-        /* --- NAVIGATION BAR (Synced with Login) --- */
-        /* --- UPDATED NAVIGATION BAR --- */
-        nav {
-            background: #001e30;
-            height: 90px;
-            width: 100%;
-            font-family: "Montserrat", sans-serif;
-            position: sticky;
-            top: 0;
-            z-index: 1001;
-            /* FLEXBOX FIX: Ensures logo and menu stay on opposite sides */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
+    label.logo {
+        color: white;
+        font-size: 24px;
+        line-height: 90px;
+        padding: 0 40px;
+        font-weight: 800;
+        cursor: pointer;
+        /* Keeps the full name on one line */
+        white-space: nowrap; 
+        transition: all 0.3s ease;
+    }
+
+    nav ul {
+        float: right;
+        margin-right: 30px;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        height: 100%;
+    }
+
+    .nav-link-animated {
+        position: relative;
+        color: white;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding-bottom: 8px;
+    }
+
+    .nav-link-animated:hover {
+        color: #60a5fa;
+    }
+
+    .nav-link-animated::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #60a5fa;
+        transform: scaleX(0);
+        transition: transform 0.4s;
+    }
+
+    #check {
+        display: none;
+    }
+
+    .nav-link-animated:hover::after {
+        transform: scaleX(1);
+    }
+
+    @keyframes backAndForth {
+        0% { transform: scaleX(0.3); transform-origin: left; }
+        50% { transform: scaleX(1); }
+        100% { transform: scaleX(0.3); transform-origin: right; }
+    }
+
+    .active-link {
+        color: #60a5fa !important;
+    }
+
+    .active-link::after {
+        transform: scaleX(1);
+        animation: backAndForth 2s infinite;
+    }
+
+    .checkbtn {
+        display: none;
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 35px;
+        height: 25px;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    /* BURGER LINES */
+    .burger, .burger::before, .burger::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background: white;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .burger { top: 50%; transform: translateY(-50%); }
+    .burger::before { top: -10px; }
+    .burger::after { top: 10px; }
+
+    /* RESPONSIVE MEDIA QUERIES */
+    @media (max-width: 1100px) {
+        .checkbtn {
+            display: block;
         }
 
         label.logo {
-            color: white;
-            font-size: 24px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: color 0.3s;
-            /* TRUNCATION FIX: Prevents text from overlapping menu */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 50%;
-            /* Limits logo to half the screen width */
-            line-height: 90px;
-        }
-
-        /* --- MOBILE RESPONSIVE FIX --- */
-        @media (max-width: 1100px) {
-            label.logo {
-                font-size: 18px;
-                /* Smaller font for mobile */
-                max-width: 70%;
-                /* Gives more room to the hamburger icon */
-            }
-
-            .checkbtn {
-                display: block;
-                margin-right: 0;
-                /* Adjusted for flexbox */
-                order: 2;
-                /* Ensures it stays on the right */
-            }
+            font-size: 18px; /* Initial reduction for tablets/laptops */
+            padding: 0 20px;
         }
 
         nav ul {
-            float: right;
-            margin-right: 30px;
-            list-style: none;
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            height: 100%;
-        }
-
-        /* --- ANIMATED LINKS --- */
-        .nav-link-animated {
-            position: relative;
-            color: white;
-            font-size: 14px;
-            font-weight: 700;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: color 0.3s ease;
-            cursor: pointer;
-            padding-bottom: 8px;
-        }
-
-        .nav-link-animated:hover {
-            color: #60a5fa;
-        }
-
-        .nav-link-animated::after {
-            content: '';
-            position: absolute;
+            position: fixed;
             width: 100%;
-            height: 2px;
-            bottom: 0;
+            height: 100vh;
+            background: #0b1120;
+            top: 90px;
+            left: -100%;
+            flex-direction: column;
+            padding-top: 60px;
+            transition: 0.4s;
+            float: none;
+            margin-right: 0;
+        }
+
+        #check:checked~ul {
             left: 0;
-            background-color: #60a5fa;
-            transform: scaleX(0);
-            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
         }
+    }
 
-        .nav-link-animated:hover::after {
-            transform: scaleX(1);
+    /* Adjustments for smaller phones */
+    @media (max-width: 480px) {
+        label.logo {
+            font-size: 14px; /* Scaled down to fit between edge and burger icon */
+            padding: 0 15px;
         }
-
-        /* --- ACTIVE STATE (BACK & FORTH) --- */
-        @keyframes backAndForth {
-            0% {
-                transform: scaleX(0.3);
-                transform-origin: center left;
-            }
-
-            50% {
-                transform: scaleX(1);
-                transform-origin: center;
-            }
-
-            100% {
-                transform: scaleX(0.3);
-                transform-origin: center right;
-            }
-        }
-
-        .active-link {
-            color: #60a5fa !important;
-        }
-
-        .active-link::after {
-            transform: scaleX(1);
-            animation: backAndForth 2s ease-in-out infinite;
-        }
-
-        /* --- MOBILE MENU --- */
+        
         .checkbtn {
-            font-size: 30px;
-            color: white;
-            float: right;
-            line-height: 90px;
-            margin-right: 40px;
-            cursor: pointer;
-            display: none;
+            right: 15px;
         }
+    }
 
-        #check {
-            display: none;
-        }
+    #check:checked+.checkbtn .burger {
+        background: transparent;
+    }
 
-        @media (max-width: 1100px) {
-            .checkbtn {
-                display: block;
-            }
+    #check:checked+.checkbtn .burger::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
 
-            nav ul {
-                position: fixed;
-                width: 100%;
-                height: 100vh;
-                background: #0b1120;
-                top: 90px;
-                left: -100%;
-                flex-direction: column;
-                justify-content: start;
-                text-align: center;
-                transition: all .4s;
-                padding-top: 60px;
-            }
+    #check:checked+.checkbtn .burger::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
 
-            nav ul li {
-                display: block;
-                width: 100%;
-                margin: 15px 0;
-                line-height: normal;
-            }
+    [x-cloak] {
+        display: none !important;
+    }
 
-            .nav-link-animated {
-                font-size: 20px;
-                display: inline-block;
-            }
-
-            /* Center the line for mobile menu items */
-            .nav-link-animated::after {
-                width: 60px;
-                left: 50%;
-                margin-left: -30px;
-            }
-
-            #check:checked~ul {
-                left: 0;
-            }
-        }
-
-        /* Login Layout */
-        .login-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-    </style>
+    .login-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+</style>
 </head>
 
 <body x-data="{ currentPath: window.location.pathname }">
 
+     <!-- NAVBAR -->
     <nav>
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">
-            <i class="fas fa-bars"></i>
+            <span class="burger"></span>
         </label>
+
         <label class="logo" onclick="window.location.href='{{ url('/') }}'">
-            {{ \App\Models\User::find(1)->name ?? 'Macro Wiring' }}
+            Macro Wiring Technologies Co. Inc.
         </label>
+
         <ul>
-            <li><a href="{{ url('/') }}" class="nav-link-animated">Home</a></li>
-            <li><a href="/products" class="nav-link-animated">Products</a></li>
-            <li><a href="/certifications" class="nav-link-animated">Certifications</a></li>
-            <li><a href="/about-us" class="nav-link-animated">About Us</a></li>
-            <li><a href="/contact" class="nav-link-animated">Contact Us</a></li>
-            <li>
-                <a href="{{ route('login') }}" class="nav-link-animated" :class="currentPath.includes('login') ? 'active-link' : ''">
-                    Admin
-                </a>
-            </li>
+            <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
+            <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''">Products</a></li>
+            <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
+            <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
+            <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
+
+            @guest
+            <li><a href="{{ route('login') }}" class="nav-link-animated">Admin</a></li>
+            @endguest
+
+            @auth
+            <li><a href="{{ route('dashboard') }}" class="nav-link-animated">Dashboard</a></li>
+            @endauth
         </ul>
     </nav>
 

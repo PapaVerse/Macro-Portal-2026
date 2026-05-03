@@ -150,7 +150,7 @@
                     alt: "ISO 14001:2015 Environmental Management"
                 },
                 {
-                    img: "{{ asset('images/certificates/ul-lo.png') }}",
+                    img: "{{ asset('images/certificates/ul-logo.png') }}",
                     alt: "UL Listed / Recognition"
                 },
                 {

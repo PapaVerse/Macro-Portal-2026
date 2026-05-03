@@ -26,7 +26,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     @endif
 
-<style>
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
         nav {
@@ -37,7 +37,8 @@
             position: sticky;
             top: 0;
             z-index: 1001;
-            display: flex; /* Added flex to help alignment */
+            display: flex;
+            /* Added flex to help alignment */
             align-items: center;
         }
 
@@ -53,7 +54,8 @@
 
         nav ul {
             float: right;
-            margin-left: auto; /* Pushes menu to the right */
+            margin-left: auto;
+            /* Pushes menu to the right */
             margin-right: 30px;
             display: flex;
             gap: 2rem;
@@ -62,32 +64,35 @@
             list-style: none;
         }
 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 50%;
-}
 
-        .nav-link-animated:hover { color: #60a5fa; }
+        .nav-link-animated:hover {
+            color: #60a5fa;
+        }
 
-.nav-link-animated {
-    position: relative;
-    color: white;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding-bottom: 6px;
-    transition: color 0.3s ease;
-}
+        .nav-link-animated {
+            position: relative;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding-bottom: 6px;
+            transition: color 0.3s ease;
+        }
 
-        .nav-link-animated:hover::after, .active-link::after { transform: scaleX(1); }
+        .nav-link-animated:hover::after,
+        .active-link::after {
+            transform: scaleX(1);
+        }
 
-        #check { display: none; }
+        #check {
+            display: none;
+        }
 
         /* BURGER BUTTON BASE */
         .checkbtn {
-            display: none; /* Hidden on Desktop */
+            display: none;
+            /* Hidden on Desktop */
             position: absolute;
             right: 25px;
             top: 50%;
@@ -98,7 +103,9 @@
             z-index: 1100;
         }
 
-        .burger, .burger::before, .burger::after {
+        .burger,
+        .burger::before,
+        .burger::after {
             content: '';
             position: absolute;
             width: 100%;
@@ -108,28 +115,54 @@
             transition: all 0.3s ease;
         }
 
-        .burger { top: 50%; transform: translateY(-50%); }
-        .burger::before { top: -10px; }
-        .burger::after { top: 10px; }
+        .burger {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .burger::before {
+            top: -10px;
+        }
+
+        .burger::after {
+            top: 10px;
+        }
 
         /* ANIMATIONS */
         @keyframes backAndForth {
-            0% { transform: scaleX(0.3); transform-origin: left; }
-            50% { transform: scaleX(1); }
-            100% { transform: scaleX(0.3); transform-origin: right; }
+            0% {
+                transform: scaleX(0.3);
+                transform-origin: left;
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0.3);
+                transform-origin: right;
+            }
         }
 
-        .active-link { color: #60a5fa !important; }
-        .active-link::after { animation: backAndForth 2s infinite; }
+        .active-link {
+            color: #60a5fa !important;
+        }
+
+        .active-link::after {
+            animation: backAndForth 2s infinite;
+        }
 
         /* MOBILE VIEW (TABLETS & PHONES) */
         @media (max-width: 1100px) {
             .checkbtn {
-                display: block; /* Hamburger is explicitly ON here */
+                display: block;
+                /* Hamburger is explicitly ON here */
             }
 
             label.logo {
-                font-size: 18px; /* Shrink font */
+                font-size: 18px;
+                /* Shrink font */
                 padding: 0 20px;
             }
 
@@ -146,21 +179,36 @@
                 margin: 0;
             }
 
-            #check:checked~ul { left: 0; }
+            #check:checked~ul {
+                left: 0;
+            }
 
-            #check:checked+.checkbtn .burger { background: transparent; }
-            #check:checked+.checkbtn .burger::before { transform: rotate(45deg); top: 0; }
-            #check:checked+.checkbtn .burger::after { transform: rotate(-45deg); top: 0; }
+            #check:checked+.checkbtn .burger {
+                background: transparent;
+            }
+
+            #check:checked+.checkbtn .burger::before {
+                transform: rotate(45deg);
+                top: 0;
+            }
+
+            #check:checked+.checkbtn .burger::after {
+                transform: rotate(-45deg);
+                top: 0;
+            }
         }
 
         /* EXTRA SMALL PHONES */
         @media (max-width: 480px) {
             label.logo {
-                font-size: 13px; /* Smaller font to ensure full name fits next to burger */
+                font-size: 13px;
+                /* Smaller font to ensure full name fits next to burger */
                 padding: 0 15px;
             }
+
             .checkbtn {
-                right: 15px; /* Keep burger visible and spaced well */
+                right: 15px;
+                /* Keep burger visible and spaced well */
             }
         }
 
@@ -180,8 +228,17 @@
         }
 
         @keyframes pulse-glow {
-            0%, 100% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
+
+            0%,
+            100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
         }
     </style>
 </head>
@@ -199,36 +256,36 @@
     @scroll.window="handleScroll"
     class="bg-slate-50 font-sans antialiased text-slate-900">
 
- <nav>
-    <input type="checkbox" id="check">
-    
-    <!-- Burger Icon -->
-    <label for="check" class="checkbtn">
-        <span class="burger"></span>
-    </label>
+    <nav>
+        <input type="checkbox" id="check">
 
-    <!-- Logo with Responsive Text -->
-    <label class="logo" onclick="window.location.href='{{ url('/') }}'">
-        <span class="full-text">Macro Wiring Technologies Co. Inc.</span>
-    </label>
+        <!-- Burger Icon -->
+        <label for="check" class="checkbtn">
+            <span class="burger"></span>
+        </label>
 
-    <!-- Navigation Links -->
-    <ul>
-        <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
-        <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''">Products</a></li>
-        <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
-        <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
-        <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
+        <!-- Logo with Responsive Text -->
+        <label class="logo" onclick="window.location.href='{{ url('/') }}'">
+            <span class="full-text">Macro Wiring Technologies Co. Inc.</span>
+        </label>
 
-        @guest
+        <!-- Navigation Links -->
+        <ul>
+            <li><a href="{{ url('/') }}" class="nav-link-animated" :class="currentPath === '/' ? 'active-link' : ''">Home</a></li>
+            <li><a href="{{ url('/products') }}" class="nav-link-animated" :class="currentPath.includes('products') ? 'active-link' : ''">Products</a></li>
+            <li><a href="{{ url('/certifications') }}" class="nav-link-animated" :class="currentPath.includes('certifications') ? 'active-link' : ''">Certifications</a></li>
+            <li><a href="{{ url('/about-us') }}" class="nav-link-animated" :class="currentPath.includes('about-us') ? 'active-link' : ''">About Us</a></li>
+            <li><a href="{{ url('/contact') }}" class="nav-link-animated" :class="currentPath.includes('contact') ? 'active-link' : ''">Contact Us</a></li>
+
+            @guest
             <li><a href="{{ route('login') }}" class="nav-link-animated">Admin</a></li>
-        @endguest
+            @endguest
 
-        @auth
+            @auth
             <li><a href="{{ route('dashboard') }}" class="nav-link-animated">Dashboard</a></li>
-        @endauth
-    </ul>
-</nav>
+            @endauth
+        </ul>
+    </nav>
 
     <!-- CONTENT -->
     <main>

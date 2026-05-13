@@ -390,7 +390,8 @@
                     </div>
 
                     {{-- MAIN CAROUSEL --}}
-                    <div class="relative bg-black rounded-2xl overflow-hidden" style="height: 460px;">
+                    <div class="relative bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden backdrop-blur-sm"
+                        style="height: 460px;">
 
                         {{-- COUNTER --}}
                         <div class="absolute top-4 right-4 z-20 bg-black/50 text-white text-xs px-3 py-1 rounded-full"
@@ -409,22 +410,20 @@
                         </template>
 
                         {{-- GRADIENT OVERLAY --}}
-                        <div class="absolute inset-0 pointer-events-none"
-                            style="background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%)">
-                        </div>
+
 
                         {{-- SLIDE LABEL --}}
-                        <div class="absolute bottom-16 left-6 z-10 text-white" x-show="filtered.length > 0">
+                        <div class="absolute bottom-16 left-6 z-10 text-black" x-show="filtered.length > 0">
                             <div class="text-lg font-semibold" style="text-shadow: 0 1px 6px rgba(0,0,0,0.6)"
                                 x-text="filtered[idx]?.name"></div>
-                            <div class="text-sm text-white/60"
+                            <div class="text-sm text-black"
                                 x-text="filtered[idx]?.cat"></div>
                         </div>
 
                         {{-- LEFT ARROW --}}
                         <button @click="prev()"
                             class="absolute left-4 top-1/2 -translate-y-1/2 z-20
-                           w-10 h-10 rounded-full bg-white/10 hover:bg-white/30
+                           w-10 h-10 rounded-full bg-black/50 hover:bg-black/70
                            text-white flex items-center justify-center transition-all">
                             <i class="fas fa-chevron-left text-sm"></i>
                         </button>
@@ -432,7 +431,7 @@
                         {{-- RIGHT ARROW --}}
                         <button @click="next()"
                             class="absolute right-4 top-1/2 -translate-y-1/2 z-20
-                           w-10 h-10 rounded-full bg-white/10 hover:bg-white/30
+                           w-10 h-10 rounded-full bg-black/50 hover:bg-black/70
                            text-white flex items-center justify-center transition-all">
                             <i class="fas fa-chevron-right text-sm"></i>
                         </button>

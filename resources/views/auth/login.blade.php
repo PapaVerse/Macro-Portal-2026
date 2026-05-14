@@ -6,206 +6,229 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | Macro Wiring Technologies</title>
     <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="{{ asset('images/M.png') }}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Inter:wght@400;700;900&display=swap');
 
-    body {
-        background-color: #f8fafc;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        margin: 0;
-        font-family: 'Inter', sans-serif;
-    }
-
-    nav {
-        background: #001e30;
-        height: 90px;
-        width: 100%;
-        font-family: "Montserrat", sans-serif;
-        position: sticky;
-        top: 0;
-        z-index: 1001;
-    }
-
-    label.logo {
-        color: white;
-        font-size: 24px;
-        line-height: 90px;
-        padding: 0 40px;
-        font-weight: 800;
-        cursor: pointer;
-        /* Keeps the full name on one line */
-        white-space: nowrap; 
-        transition: all 0.3s ease;
-    }
-
-    nav ul {
-        float: right;
-        margin-right: 30px;
-        display: flex;
-        gap: 2rem;
-        align-items: center;
-        height: 100%;
-    }
-
-    .nav-link-animated {
-        position: relative;
-        color: white;
-        font-size: 14px;
-        font-weight: 700;
-        text-transform: uppercase;
-        text-decoration: none;
-        padding-bottom: 8px;
-    }
-
-    .nav-link-animated:hover {
-        color: #60a5fa;
-    }
-
-    .nav-link-animated::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 2px;
-        bottom: 0;
-        left: 0;
-        background-color: #60a5fa;
-        transform: scaleX(0);
-        transition: transform 0.4s;
-    }
-
-    #check {
-        display: none;
-    }
-
-    .nav-link-animated:hover::after {
-        transform: scaleX(1);
-    }
-
-    @keyframes backAndForth {
-        0% { transform: scaleX(0.3); transform-origin: left; }
-        50% { transform: scaleX(1); }
-        100% { transform: scaleX(0.3); transform-origin: right; }
-    }
-
-    .active-link {
-        color: #60a5fa !important;
-    }
-
-    .active-link::after {
-        transform: scaleX(1);
-        animation: backAndForth 2s infinite;
-    }
-
-    .checkbtn {
-        display: none;
-        position: absolute;
-        right: 25px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 35px;
-        height: 25px;
-        cursor: pointer;
-        z-index: 1100;
-    }
-
-    /* BURGER LINES */
-    .burger, .burger::before, .burger::after {
-        content: '';
-        position: absolute;
-        width: 100%;
-        height: 3px;
-        background: white;
-        border-radius: 2px;
-        transition: all 0.3s ease;
-    }
-
-    .burger { top: 50%; transform: translateY(-50%); }
-    .burger::before { top: -10px; }
-    .burger::after { top: 10px; }
-
-    /* RESPONSIVE MEDIA QUERIES */
-    @media (max-width: 1100px) {
-        .checkbtn {
-            display: block;
-        }
-
-        label.logo {
-            font-size: 18px; /* Initial reduction for tablets/laptops */
-            padding: 0 20px;
-        }
-
-        /* ================= NAV LINKS ================= */
-        nav ul {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            background: #0b1120;
-            top: 90px;
-            left: -100%;
+        body {
+            background-color: #f8fafc;
+            display: flex;
             flex-direction: column;
-            padding-top: 60px;
-            transition: 0.4s;
-            float: none;
-            margin-right: 0;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
         }
 
-        #check:checked~ul {
-            left: 0;
+        nav {
+            background: #001e30;
+            height: 90px;
+            width: 100%;
+            font-family: "Montserrat", sans-serif;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
         }
-    }
 
-    /* Adjustments for smaller phones */
-    @media (max-width: 480px) {
         label.logo {
-            font-size: 14px; /* Scaled down to fit between edge and burger icon */
-            padding: 0 15px;
+            color: white;
+            font-size: 24px;
+            line-height: 90px;
+            padding: 0 40px;
+            font-weight: 800;
+            cursor: pointer;
+            /* Keeps the full name on one line */
+            white-space: nowrap;
+            transition: all 0.3s ease;
         }
-        
+
+        nav ul {
+            float: right;
+            margin-right: 30px;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            height: 100%;
+        }
+
+        .nav-link-animated {
+            position: relative;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding-bottom: 8px;
+        }
+
+        .nav-link-animated:hover {
+            color: #60a5fa;
+        }
+
+        .nav-link-animated::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #60a5fa;
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        #check {
+            display: none;
+        }
+
+        .nav-link-animated:hover::after {
+            transform: scaleX(1);
+        }
+
+        @keyframes backAndForth {
+            0% {
+                transform: scaleX(0.3);
+                transform-origin: left;
+            }
+
+            50% {
+                transform: scaleX(1);
+            }
+
+            100% {
+                transform: scaleX(0.3);
+                transform-origin: right;
+            }
+        }
+
+        .active-link {
+            color: #60a5fa !important;
+        }
+
+        .active-link::after {
+            transform: scaleX(1);
+            animation: backAndForth 2s infinite;
+        }
+
         .checkbtn {
-            right: 15px;
+            display: none;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 25px;
+            cursor: pointer;
+            z-index: 1100;
         }
-    }
 
-    #check:checked+.checkbtn .burger {
-        background: transparent;
-    }
+        /* BURGER LINES */
+        .burger,
+        .burger::before,
+        .burger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
 
-    #check:checked+.checkbtn .burger::before {
-        transform: rotate(45deg);
-        top: 0;
-    }
+        .burger {
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
-    #check:checked+.checkbtn .burger::after {
-        transform: rotate(-45deg);
-        top: 0;
-    }
+        .burger::before {
+            top: -10px;
+        }
 
-    [x-cloak] {
-        display: none !important;
-    }
+        .burger::after {
+            top: 10px;
+        }
 
-    .login-container {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-    }
-</style>
+        /* RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 1100px) {
+            .checkbtn {
+                display: block;
+            }
+
+            label.logo {
+                font-size: 18px;
+                /* Initial reduction for tablets/laptops */
+                padding: 0 20px;
+            }
+
+            /* ================= NAV LINKS ================= */
+            nav ul {
+                position: fixed;
+                width: 100%;
+                height: 100vh;
+                background: #0b1120;
+                top: 90px;
+                left: -100%;
+                flex-direction: column;
+                padding-top: 60px;
+                transition: 0.4s;
+                float: none;
+                margin-right: 0;
+            }
+
+            #check:checked~ul {
+                left: 0;
+            }
+        }
+
+        /* Adjustments for smaller phones */
+        @media (max-width: 480px) {
+            label.logo {
+                font-size: 14px;
+                /* Scaled down to fit between edge and burger icon */
+                padding: 0 15px;
+            }
+
+            .checkbtn {
+                right: 15px;
+            }
+        }
+
+        #check:checked+.checkbtn .burger {
+            background: transparent;
+        }
+
+        #check:checked+.checkbtn .burger::before {
+            transform: rotate(45deg);
+            top: 0;
+        }
+
+        #check:checked+.checkbtn .burger::after {
+            transform: rotate(-45deg);
+            top: 0;
+        }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .login-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+    </style>
 </head>
 
 <body x-data="{ currentPath: window.location.pathname }">
 
-     <!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav>
         <input type="checkbox" id="check">
         <label for="check" class="checkbtn">

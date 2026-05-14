@@ -54,7 +54,8 @@
 
 
 
-
+    /* Zero Images Cable Assemblies - Sir Pau*/
+    /* | asset('images\images\Wire-Assembly\12.png'), | Example start after " | " */
 
     [
     'category' => 'Cable Assemblies',
@@ -208,6 +209,11 @@
     ]
     ],
 
+    /* Zero Images Cable Assemblies - Sir Pau*/
+    /* | asset('images\images\Wire-Assembly\12.png'), | Example start after " | " */
+
+
+
     [
     'category' => 'Communication Cables',
     'items' => [
@@ -222,6 +228,8 @@
     ]
     ],
 
+    /* Zero Images Fan Motors - Sir Pau*/
+    /* | asset('images\images\Wire-Assembly\12.png'), | Example start after " | " */
 
     [
     'category' => 'Fan Motor Assemblies',

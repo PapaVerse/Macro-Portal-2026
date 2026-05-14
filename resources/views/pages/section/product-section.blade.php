@@ -143,7 +143,7 @@
     'description' => 'Cable Assemblies',
     'image' => asset('images\images\Battery-Cable\3.png'),
     'gallery' => [
-    asset('images\images\Battery-Cable\3.png'),
+
     asset('images\images\Battery-Cable\5.png'),
     asset('images\images\Battery-Cable\7.png'),
     asset('images\images\Battery-Cable\9.png'),
@@ -414,10 +414,9 @@
 
                         {{-- SLIDE LABEL --}}
                         <div class="absolute bottom-16 left-6 z-10 text-black" x-show="filtered.length > 0">
-                            <div class="text-lg font-semibold" style="text-shadow: 0 1px 6px rgba(0,0,0,0.6)"
+                            <div class="text-lg font-semibold"
                                 x-text="filtered[idx]?.name"></div>
-                            <div class="text-sm text-black"
-                                x-text="filtered[idx]?.cat"></div>
+
                         </div>
 
                         {{-- LEFT ARROW --}}

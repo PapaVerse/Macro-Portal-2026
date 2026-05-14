@@ -18,7 +18,7 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{ asset('images/images/WIRE-HARNESSES/wireharnessesfront.png') }}"
+                        src="{{ asset('images\images\fronts\wireharnessesfront.png') }}"
                         alt="Wire Harnesses"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
@@ -40,19 +40,19 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{  asset('images\images\CABLE-ASSEMBIES\cableassembliesfront.png')}}"
-                        alt="Cable Assemblies"
+                        src="{{  asset('images\images\fronts\wireassemblyfront.png')}}"
+                        alt="Wire Assemblies"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-3">
-                        Cable Assemblies
+                        Wire Assemblies
                     </h3>
                     <p class="text-gray-600 mb-4 text-sm leading-relaxed">
                         Safe and durable electrical components designed for modern
                         industrial and residential housing.
                     </p>
-                    <a href="{{ url('/products?category=Cable+Assemblies') }}"
+                    <a href="{{ url('/products?category=Wire+Assemblies') }}"
                         class="inline-block text-blue-600 font-bold hover:text-blue-800 transition-colors">
                         Learn More →
                     </a>
@@ -62,19 +62,19 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{ asset('images\images\SUBCON\subconfront.png') }}"
-                        alt="Subcon Assemblies"
+                        src="{{ asset('images\images\fronts\leadwiresfront.png') }}"
+                        alt="Lead Wires"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-3">
-                        Subcon Assemblies
+                        Lead Wires
                     </h3>
                     <p class="text-gray-600 mb-4 text-sm leading-relaxed">
                         Reliable and efficient cables engineered for business and office
                         infrastructures.
                     </p>
-                    <a href="{{ url('/products?category=Subcon+Assemblies') }}"
+                    <a href="{{ url('/products?category=Lead+Wires') }}"
                         class="inline-block text-blue-600 font-bold hover:text-blue-800 transition-colors">
                         Learn More →
                     </a>
@@ -84,19 +84,19 @@
             <div class="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-2">
                 <div class="h-56 overflow-hidden bg-gray-200">
                     <img
-                        src="{{ asset('images\images\POWER-CORDS\powercordfront.png') }}"
-                        alt="Power Cords"
+                        src="{{ asset('images\images\fronts\batteryfront.png') }}"
+                        alt="Battery Cable Assemblies"
                         class="w-full h-full object-cover group-hover:scale-110 transition duration-500" />
                 </div>
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-800 mb-3">
-                        Power Cords
+                        Battery Cable Assemblies
                     </h3>
                     <p class="text-gray-600 mb-4 text-sm leading-relaxed">
                         Premium quality wiring built for flexibility,
                         conductivity, and long-term durability in automotive and energy sectors.
                     </p>
-                    <a href="{{ url('/products?category=Power+Cords') }}"
+                    <a href="{{ url('/products?category=Battery+Cable+Assemblies') }}"
                         class="inline-block text-blue-600 font-bold hover:text-blue-800 transition-colors">
                         Learn More →
                     </a>
